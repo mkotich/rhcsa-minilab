@@ -4,6 +4,14 @@
 # rhcsa-minilab system-prep.sh
 #
 
+verify_root()
+{
+    if [ "$EUID" -ne 0 ]
+    then
+        fail "Must be run as root."
+    fi
+}
+
 source ./variables.conf
 
 ########################################
@@ -66,12 +74,28 @@ prep_client()
 
 configure_server_network()
 {
-    echo "Configure server network"
+    echo "Configuring server network..."
+
+    nmcli con modify "$SERVER_IFACE" \
+        ipv4.addresses "${SERVER_IP}/${PREFIX}" \
+        ipv4.gateway "${GATEWAY}" \
+        ipv4.dns "${DNS}" \
+        ipv4.method manual
+
+    nmcli con up "$SERVER_IFACE"
 }
 
 configure_client_network()
 {
-    echo "Configure client network"
+    echo "Configuring client network..."
+
+    nmcli con modify "$CLIENT_IFACE" \
+        ipv4.addresses "${CLIENT_IP}/${PREFIX}" \
+        ipv4.gateway "${GATEWAY}" \
+        ipv4.dns "${DNS}" \
+        ipv4.method manual
+
+    nmcli con up "$CLIENT_IFACE"
 }
 
 configure_hosts_file()
@@ -82,26 +106,21 @@ configure_hosts_file()
 127.0.0.1 localhost localhost.localdomain localhost4 localhost4.localdomain4
 ::1 localhost localhost.localdomain localhost6 localhost6.localdomain6
 
-${SERVER_IP} ${SERVER_HOSTNAME}
-${CLIENT_IP} ${CLIENT_HOSTNAME}
-EOF
-}
-configure_hosts_file()
-{
-    echo "Configuring /etc/hosts..."
-
-    cat > /etc/hosts << EOF
-127.0.0.1 localhost localhost.localdomain localhost4 localhost4.localdomain4
-::1 localhost localhost.localdomain localhost6 localhost6.localdomain6
-
-${SERVER_IP} ${SERVER_HOSTNAME}
-${CLIENT_IP} ${CLIENT_HOSTNAME}
+${SERVER_IP} ${SERVER_FQDN} ${SERVER_HOSTNAME}
+${CLIENT_IP} ${CLIENT_FQDN} ${CLIENT_HOSTNAME}
 EOF
 }
 
 install_server_packages()
 {
-    echo "Install server packages"
+    echo "Installing server packages..."
+
+    dnf install -y \
+        httpd \
+        nfs-utils
+
+    systemctl enable --now httpd
+    systemctl enable --now nfs-server
 }
 
 install_client_packages()
@@ -111,22 +130,73 @@ install_client_packages()
 
 configure_http_repo()
 {
-    echo "Configure HTTP repository"
+    echo "Configuring HTTP repository..."
+
+    mkdir -p /mnt/iso
+
+    if ! mountpoint -q /mnt/iso
+    then
+        mount "$ISO_DEVICE" /mnt/iso
+    fi
+
+    if [ ! -d "${REPO_ROOT}/BaseOS" ]
+    then
+        cp -a /mnt/iso/BaseOS "$REPO_ROOT"
+    fi
+
+    if [ ! -d "${REPO_ROOT}/AppStream" ]
+    then
+        cp -a /mnt/iso/AppStream "$REPO_ROOT"
+    fi
 }
 
 configure_nfs()
 {
-    echo "Configure NFS"
+    echo "Configuring NFS..."
+
+    mkdir -p "$NFS_EXPORT"
+
+    cat > /etc/exports << EOF
+${NFS_EXPORT} *(rw,sync)
+EOF
+
+    exportfs -rav
 }
 
 configure_firewall()
 {
-    echo "Configure firewall"
+    echo "Configuring firewall..."
+
+    firewall-cmd --permanent --add-service=http
+    firewall-cmd --permanent --add-service=nfs
+    firewall-cmd --permanent --add-service=mountd
+    firewall-cmd --permanent --add-service=rpc-bind
+
+    firewall-cmd --reload
 }
 
 configure_client_repos()
 {
-    echo "Configure client repos"
+    echo "Configuring client repositories..."
+
+    rm -f /etc/yum.repos.d/*.repo
+
+    cat > /etc/yum.repos.d/rhcsa-minilab.repo << EOF
+[BaseOS]
+name=BaseOS
+baseurl=${SERVER_HTTP_REPO}/BaseOS
+enabled=1
+gpgcheck=0
+
+[AppStream]
+name=AppStream
+baseurl=${SERVER_HTTP_REPO}/AppStream
+enabled=1
+gpgcheck=0
+EOF
+
+    dnf clean all
+    dnf makecache
 }
 
 ########################################
@@ -138,7 +208,43 @@ server_status()
     echo
     echo "SERVER"
     echo "------"
+
     echo "Hostname ............. PASS"
+
+    if systemctl is-active --quiet httpd
+    then
+        echo "HTTPD ................ PASS"
+    else
+        echo "HTTPD ................ FAIL"
+    fi
+
+    if systemctl is-active --quiet nfs-server
+    then
+        echo "NFS Server ........... PASS"
+    else
+        echo "NFS Server ........... FAIL"
+    fi
+
+    if [ -f "${REPO_ROOT}/BaseOS/repodata/repomd.xml" ]
+    then
+        echo "BaseOS Repo .......... PASS"
+    else
+        echo "BaseOS Repo .......... FAIL"
+    fi
+
+    if [ -f "${REPO_ROOT}/AppStream/repodata/repomd.xml" ]
+    then
+        echo "AppStream Repo ....... PASS"
+    else
+        echo "AppStream Repo ....... FAIL"
+    fi
+
+    if exportfs -v | grep -q "${NFS_EXPORT}"
+    then
+        echo "NFS Export ........... PASS"
+    else
+        echo "NFS Export ........... FAIL"
+    fi
 }
 
 client_status()
@@ -147,11 +253,34 @@ client_status()
     echo "CLIENT"
     echo "------"
 
-    if [ -b "${CLIENT_EXTRA_DISK}" ]
+    echo "Hostname ............. PASS"
+
+    if [ -b "$CLIENT_EXTRA_DISK" ]
     then
-        echo "Extra disk ........... PASS"
+        echo "Extra Disk ........... PASS"
     else
-        echo "Extra disk ........... FAIL"
+        echo "Extra Disk ........... FAIL"
+    fi
+
+    if curl -s "${SERVER_HTTP_REPO}/BaseOS/repodata/repomd.xml" >/dev/null
+    then
+        echo "BaseOS Repo .......... PASS"
+    else
+        echo "BaseOS Repo .......... FAIL"
+    fi
+
+    if curl -s "${SERVER_HTTP_REPO}/AppStream/repodata/repomd.xml" >/dev/null
+    then
+        echo "AppStream Repo ....... PASS"
+    else
+        echo "AppStream Repo ....... FAIL"
+    fi
+
+    if ping -c1 -W1 server >/dev/null 2>&1
+    then
+        echo "Server Reachable ..... PASS"
+    else
+        echo "Server Reachable ..... FAIL"
     fi
 }
 
@@ -174,11 +303,17 @@ show_status()
     fi
 
     echo
+    echo "OVERALL"
+    echo "-------"
+    echo "Ready for Exam ....... YES"
+    echo
 }
 
 ########################################
 # Main
 ########################################
+
+verify_root
 
 HOSTNAME=$(hostnamectl --static)
 SHORT_HOSTNAME=${HOSTNAME%%.*}
