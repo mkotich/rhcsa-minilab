@@ -125,7 +125,11 @@ install_server_packages()
 
 install_client_packages()
 {
-    echo "Install client packages"
+    echo "Installing client packages..."
+
+    dnf install -y \
+        bash-completion \
+        vim-enhanced
 }
 
 configure_http_repo()
