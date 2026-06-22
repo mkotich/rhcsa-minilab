@@ -28,12 +28,41 @@ case "$MODE" in
         ;;
 esac
 
-SELECTED=$(
-    jq -c '.[]' objectives/*.json |
-    shuf |
-    head -n "$OBJECTIVES" |
-    jq -s '.'
-)
+SELECTED=$(mktemp)
+
+declare -A USED_RESOURCE_GROUPS
+
+jq -c '.[]' objectives/*.json |
+shuf |
+while read OBJECT
+do
+    RESOURCE_GROUP=$(echo "$OBJECT" | jq -r '.resource_group')
+
+    #
+    # Skip if resource group already used
+    #
+    if [ "$RESOURCE_GROUP" != "none" ]
+    then
+        if [ -n "${USED_RESOURCE_GROUPS[$RESOURCE_GROUP]}" ]
+        then
+            continue
+        fi
+
+        USED_RESOURCE_GROUPS[$RESOURCE_GROUP]=1
+    fi
+
+    echo "$OBJECT" >> "$SELECTED"
+
+    CURRENT=$(wc -l < "$SELECTED")
+
+    if [ "$CURRENT" -ge "$OBJECTIVES" ]
+    then
+        break
+    fi
+
+done
+
+jq -s '.' "$SELECTED" > /home/student/exam-state.json
 
 {
 echo "================================================="
@@ -47,19 +76,17 @@ echo
 
 COUNT=1
 
-while IFS= read -r OBJECTIVE
+while IFS= read -r TEXT
 do
-    echo "$COUNT. $OBJECTIVE"
+    echo "$COUNT. $TEXT"
     COUNT=$((COUNT+1))
 done < <(
-    echo "$SELECTED" | jq -r '.[].text'
+    jq -r '.[].text' /home/student/exam-state.json
 )
 
 echo
 echo "================================================="
 } > /home/student/EXAM.txt
-
-echo "$SELECTED" > /home/student/exam-state.json
 
 chown student:student \
     /home/student/EXAM.txt \
@@ -68,6 +95,8 @@ chown student:student \
 chmod 600 \
     /home/student/EXAM.txt \
     /home/student/exam-state.json
+
+rm -f "$SELECTED"
 
 echo
 echo "================================================="

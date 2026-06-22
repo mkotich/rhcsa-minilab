@@ -16,6 +16,7 @@ echo "Resetting client..."
 echo
 
 rm -f /home/student/EXAM.txt
+rm -f /home/student/exam-state.json
 
 rsync -aAXH --delete \
     --exclude=/baseline \
