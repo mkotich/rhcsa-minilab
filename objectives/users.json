@@ -1,0 +1,63 @@
+[
+  {
+    "id": "users-001",
+    "category": "users",
+    "difficulty": 1,
+    "text": "Create group developers.",
+    "hint": "groupadd",
+    "answer": {
+      "group": "developers"
+    }
+  },
+
+  {
+    "id": "users-002",
+    "category": "users",
+    "difficulty": 1,
+    "text": "Create user alice with UID 1505 and expiration date 2027-12-31.",
+    "hint": "useradd",
+    "answer": {
+      "username": "alice",
+      "uid": 1505,
+      "expire": "2027-12-31"
+    }
+  },
+
+  {
+    "id": "users-003",
+    "category": "users",
+    "difficulty": 1,
+    "text": "Create user bob with UID 2001 and supplementary group developers.",
+    "hint": "id bob",
+    "answer": {
+      "username": "bob",
+      "uid": 2001,
+      "group": "developers"
+    }
+  },
+
+  {
+    "id": "users-004",
+    "category": "users",
+    "difficulty": 1,
+    "text": "Create group admins with GID 3000.",
+    "hint": "getent group admins",
+    "answer": {
+      "group": "admins",
+      "gid": 3000
+    }
+  },
+
+  {
+    "id": "users-005",
+    "category": "users",
+    "difficulty": 1,
+    "text": "Configure user carol with a login shell of /bin/bash and expiration date 2028-06-30.",
+    "hint": "chsh / chage",
+    "answer": {
+      "username": "carol",
+      "shell": "/bin/bash",
+      "expire": "2028-06-30"
+    }
+  }
+]

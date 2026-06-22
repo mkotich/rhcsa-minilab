@@ -1,0 +1,32 @@
+[
+  {
+    "id": "services-001",
+    "category": "services",
+    "difficulty": 1,
+    "text": "Install and enable httpd."
+  },
+  {
+    "id": "services-002",
+    "category": "services",
+    "difficulty": 1,
+    "text": "Install and enable rsyncd."
+  },
+  {
+    "id": "services-003",
+    "category": "services",
+    "difficulty": 1,
+    "text": "Install and enable mariadb."
+  },
+  {
+    "id": "services-004",
+    "category": "services",
+    "difficulty": 1,
+    "text": "Configure firewalld to allow the http service."
+  },
+  {
+    "id": "services-005",
+    "category": "services",
+    "difficulty": 1,
+    "text": "Install and enable cockpit.socket."
+  }
+]
