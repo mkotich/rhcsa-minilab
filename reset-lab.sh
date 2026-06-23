@@ -9,6 +9,7 @@ echo
 #
 rm -f /home/student/EXAM.txt
 rm -f /home/student/exam-state.json
+rm -f /home/student/exam-start.time
 
 #
 # Storage cleanup
@@ -22,10 +23,27 @@ for MOUNT in \
     /archive \
     /apps \
     /backup \
-    /data
+    /data \
+    /mnt/share \
+    /mnt/nfs
 do
     umount -lf "$MOUNT" >/dev/null 2>&1
 done
+
+#
+# Unmount any NFS filesystems
+#
+while read MOUNTPOINT
+do
+    umount -lf "$MOUNTPOINT" >/dev/null 2>&1
+done < <(
+    mount -t nfs,nfs4 | awk '{print $3}'
+)
+
+#
+# Remove NFS entries from fstab
+#
+sed -i '\|server.rhcsa.local:/exports/share|d' /etc/fstab
 
 # Deactivate student logical volumes
 lvchange -an vgarchive/lvarchive >/dev/null 2>&1
@@ -66,7 +84,7 @@ rsync -aAXH --delete \
     --exclude=/sys \
     --exclude=/run \
     --exclude=/tmp \
-    --exclude=/var/lib/nfs/rpc_pipefs \
+    --exclude=/var/lib \
     --exclude=/var/tmp \
     --exclude=/mnt \
     --exclude=/media \
