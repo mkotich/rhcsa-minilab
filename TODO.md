@@ -1,74 +1,51 @@
-# TODO
+v0.9.0
+======
 
-## v0.9.0
+[ ] Intelligent objective selection
+    - user/group/password families
+    - lvm/swap/mount families
+    - selinux mode/boolean/context families
+    - service families
+    - finer resource groups
 
-### Intelligent Objective Selection
+[ ] Take exams
+[ ] Fix grading bugs when found
+[ ] Minor grading improvements only
 
-- [ ] Refine resource groups
-- [ ] Split users into user/group/password families
-- [ ] Split storage into lvm/swap/mount families
-- [ ] Split SELinux into mode/boolean/context families
-- [ ] Improve service resource groups
+--------------------------------------------
 
-### Grader Improvements
+v1.0
+=====
 
-- [ ] Grade objectives instead of implementations
-- [ ] Improve permissions grading
-- [ ] Improve archive verification
-- [ ] Improve script verification
-- [ ] Improve SELinux grading
+[ ] Stabilization
+[ ] More realistic exam distribution
+[ ] Documentation
+[ ] Objective authoring guide
+[ ] Grader authoring guide
+[ ] Resource group documentation
 
-### Objective Expansion
+--------------------------------------------
 
-- [ ] Add more objective variants
-- [ ] Increase hostname choices
-- [ ] Increase user and group choices
-- [ ] Increase package choices
-- [ ] Increase timer choices
+v1.x
+=====
 
-## v1.0
+[ ] Podman category
+[ ] Ansible category
+[ ] Git category
 
-### Feature Complete RHCSA MiniLab
+[ ] Multi-VM objectives
+    - NFS exports
+    - NFS mounts
+    - HTTP client/server
+    - Database client/server
 
-- [ ] Documentation cleanup
-- [ ] Architecture documentation
-- [ ] Objective authoring guide
-- [ ] Grader authoring guide
-- [ ] Resource group documentation
-- [ ] Additional objective variants
-- [ ] More realistic exam distribution
+--------------------------------------------
 
-## Future
+Future
+======
 
-### Recovery Mode
-
-- [ ] Root password recovery
-- [ ] GRUB recovery
-- [ ] Broken fstab
-- [ ] Emergency mode
-- [ ] Rescue mode
-- [ ] SELinux relabel
-
-### Optional Categories
-
-- [ ] Podman
-- [ ] Ansible
-- [ ] Git
-
-### Multi-VM Features
-
-- [ ] NFS server/client objectives
-- [ ] HTTP server/client objectives
-- [ ] Database exercises
-
-### CI
-
-- [ ] shellcheck
-- [ ] JSON validation
-- [ ] GitHub Actions
-
-### Statistics
-
-- [ ] Historical scores
-- [ ] Category performance tracking
-- [ ] Weak-area reporting
+[ ] Recovery mode
+[ ] Historical statistics
+[ ] Category performance
+[ ] Weak area reporting
+[ ] CI

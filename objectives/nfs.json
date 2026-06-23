@@ -5,10 +5,57 @@
     "difficulty": 1,
     "points": 1,
     "resource_group": "nfs",
-    "text": "Install the nfs-utils package.",
-    "hint": "rpm -q nfs-utils",
+    "text": "Mount server.rhcsa.local:/exports/share persistently at /mnt/share.",
+    "hint": "showmount -e server.rhcsa.local",
     "answer": {
-      "package": "nfs-utils"
+      "server": "server.rhcsa.local",
+      "export": "/exports/share",
+      "mountpoint": "/mnt/share"
+    }
+  },
+
+  {
+    "id": "nfs-002",
+    "category": "nfs",
+    "difficulty": 1,
+    "points": 1,
+    "resource_group": "nfs",
+    "text": "Mount server.rhcsa.local:/exports/share persistently at /backup.",
+    "hint": "showmount -e server.rhcsa.local",
+    "answer": {
+      "server": "server.rhcsa.local",
+      "export": "/exports/share",
+      "mountpoint": "/backup"
+    }
+  },
+
+  {
+    "id": "nfs-003",
+    "category": "nfs",
+    "difficulty": 1,
+    "points": 1,
+    "resource_group": "nfs",
+    "text": "Mount server.rhcsa.local:/exports/share persistently at /data.",
+    "hint": "showmount -e server.rhcsa.local",
+    "answer": {
+      "server": "server.rhcsa.local",
+      "export": "/exports/share",
+      "mountpoint": "/data"
+    }
+  },
+
+  {
+    "id": "nfs-004",
+    "category": "nfs",
+    "difficulty": 1,
+    "points": 1,
+    "resource_group": "nfs",
+    "text": "Mount server.rhcsa.local:/exports/share persistently at /mnt/nfs.",
+    "hint": "showmount -e server.rhcsa.local",
+    "answer": {
+      "server": "server.rhcsa.local",
+      "export": "/exports/share",
+      "mountpoint": "/mnt/nfs"
     }
   }
 ]
