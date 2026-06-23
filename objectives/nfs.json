@@ -1,0 +1,14 @@
+[
+  {
+    "id": "nfs-001",
+    "category": "nfs",
+    "difficulty": 1,
+    "points": 1,
+    "resource_group": "nfs",
+    "text": "Install the nfs-utils package.",
+    "hint": "rpm -q nfs-utils",
+    "answer": {
+      "package": "nfs-utils"
+    }
+  }
+]

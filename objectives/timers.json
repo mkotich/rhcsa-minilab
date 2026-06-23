@@ -1,0 +1,27 @@
+[
+  {
+    "id": "timers-001",
+    "category": "timers",
+    "difficulty": 1,
+    "points": 1,
+    "resource_group": "timers",
+    "text": "Enable and start logrotate.timer.",
+    "hint": "systemctl status logrotate.timer",
+    "answer": {
+      "timer": "logrotate.timer"
+    }
+  },
+
+  {
+    "id": "timers-002",
+    "category": "timers",
+    "difficulty": 1,
+    "points": 1,
+    "resource_group": "timers",
+    "text": "Enable and start dnf-makecache.timer.",
+    "hint": "systemctl status dnf-makecache.timer",
+    "answer": {
+      "timer": "dnf-makecache.timer"
+    }
+  }
+]

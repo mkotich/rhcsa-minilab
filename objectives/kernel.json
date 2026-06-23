@@ -1,0 +1,15 @@
+[
+  {
+    "id": "kernel-001",
+    "category": "kernel",
+    "difficulty": 1,
+    "points": 1,
+    "resource_group": "kernel",
+    "text": "Configure net.ipv4.ip_forward to 1 persistently.",
+    "hint": "sysctl net.ipv4.ip_forward",
+    "answer": {
+      "name": "net.ipv4.ip_forward",
+      "value": "1"
+    }
+  }
+]

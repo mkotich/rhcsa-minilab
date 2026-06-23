@@ -1,0 +1,29 @@
+[
+  {
+    "id": "cron-001",
+    "category": "cron",
+    "difficulty": 1,
+    "points": 1,
+    "resource_group": "none",
+    "text": "Configure a cron job for root to run /usr/bin/date every day at 01:00.",
+    "hint": "crontab -l",
+    "answer": {
+      "schedule": "0 1 * * *",
+      "command": "/usr/bin/date"
+    }
+  },
+
+  {
+    "id": "cron-002",
+    "category": "cron",
+    "difficulty": 1,
+    "points": 1,
+    "resource_group": "none",
+    "text": "Configure a cron job for root to run /usr/bin/uptime every day at 02:30.",
+    "hint": "crontab -l",
+    "answer": {
+      "schedule": "30 2 * * *",
+      "command": "/usr/bin/uptime"
+    }
+  }
+]

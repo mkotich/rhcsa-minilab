@@ -1,0 +1,53 @@
+[
+  {
+    "id": "flatpak-001",
+    "category": "flatpak",
+    "difficulty": 1,
+    "points": 1,
+    "resource_group": "none",
+    "text": "Install the flatpak package.",
+    "hint": "rpm -q flatpak",
+    "answer": {
+      "package": "flatpak"
+    }
+  },
+
+  {
+    "id": "flatpak-002",
+    "category": "flatpak",
+    "difficulty": 1,
+    "points": 1,
+    "resource_group": "none",
+    "text": "Add the Flathub remote.",
+    "hint": "flatpak remotes",
+    "answer": {
+      "remote": "flathub"
+    }
+  },
+
+  {
+    "id": "flatpak-003",
+    "category": "flatpak",
+    "difficulty": 1,
+    "points": 1,
+    "resource_group": "none",
+    "text": "Install the org.mozilla.firefox Flatpak application.",
+    "hint": "flatpak list",
+    "answer": {
+      "application": "org.mozilla.firefox"
+    }
+  },
+
+  {
+    "id": "flatpak-004",
+    "category": "flatpak",
+    "difficulty": 1,
+    "points": 1,
+    "resource_group": "none",
+    "text": "Install the org.libreoffice.LibreOffice Flatpak application.",
+    "hint": "flatpak list",
+    "answer": {
+      "application": "org.libreoffice.LibreOffice"
+    }
+  }
+]

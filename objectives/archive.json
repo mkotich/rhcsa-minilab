@@ -1,0 +1,14 @@
+[
+  {
+    "id": "archive-001",
+    "category": "archive",
+    "difficulty": 1,
+    "points": 1,
+    "resource_group": "none",
+    "text": "Create a gzip compressed tar archive named /root/etc.tar.gz containing /etc.",
+    "hint": "tar tf",
+    "answer": {
+      "archive": "/root/etc.tar.gz"
+    }
+  }
+]

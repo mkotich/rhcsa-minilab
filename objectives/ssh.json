@@ -1,0 +1,40 @@
+[
+  {
+    "id": "ssh-001",
+    "category": "ssh",
+    "difficulty": 1,
+    "points": 1,
+    "resource_group": "ssh",
+    "text": "Enable and start sshd.",
+    "hint": "systemctl status sshd",
+    "answer": {
+      "service": "sshd"
+    }
+  },
+
+  {
+    "id": "ssh-002",
+    "category": "ssh",
+    "difficulty": 1,
+    "points": 1,
+    "resource_group": "ssh",
+    "text": "Configure sshd to prohibit root login.",
+    "hint": "sshd -T",
+    "answer": {
+      "permitrootlogin": "no"
+    }
+  },
+
+  {
+    "id": "ssh-003",
+    "category": "ssh",
+    "difficulty": 1,
+    "points": 1,
+    "resource_group": "ssh",
+    "text": "Configure sshd to disable password authentication.",
+    "hint": "sshd -T",
+    "answer": {
+      "passwordauthentication": "no"
+    }
+  }
+]

@@ -1,0 +1,40 @@
+[
+  {
+    "id": "time-001",
+    "category": "time",
+    "difficulty": 1,
+    "points": 1,
+    "resource_group": "time-timezone",
+    "text": "Configure the system timezone to America/New_York.",
+    "hint": "timedatectl",
+    "answer": {
+      "timezone": "America/New_York"
+    }
+  },
+
+  {
+    "id": "time-002",
+    "category": "time",
+    "difficulty": 1,
+    "points": 1,
+    "resource_group": "time-timezone",
+    "text": "Configure the system timezone to America/Chicago.",
+    "hint": "timedatectl",
+    "answer": {
+      "timezone": "America/Chicago"
+    }
+  },
+
+  {
+    "id": "time-003",
+    "category": "time",
+    "difficulty": 1,
+    "points": 1,
+    "resource_group": "time-chrony",
+    "text": "Enable and start chronyd.",
+    "hint": "systemctl status chronyd",
+    "answer": {
+      "service": "chronyd"
+    }
+  }
+]

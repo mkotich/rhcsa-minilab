@@ -1,0 +1,53 @@
+[
+  {
+    "id": "networking-001",
+    "category": "networking",
+    "difficulty": 1,
+    "points": 1,
+    "resource_group": "network",
+    "text": "Set the hostname to server.rhcsa.local.",
+    "hint": "hostnamectl",
+    "answer": {
+      "hostname": "server.rhcsa.local"
+    }
+  },
+
+  {
+    "id": "networking-002",
+    "category": "networking",
+    "difficulty": 1,
+    "points": 1,
+    "resource_group": "network",
+    "text": "Set the hostname to web.rhcsa.local.",
+    "hint": "hostnamectl",
+    "answer": {
+      "hostname": "web.rhcsa.local"
+    }
+  },
+
+  {
+    "id": "networking-003",
+    "category": "networking",
+    "difficulty": 1,
+    "points": 1,
+    "resource_group": "network",
+    "text": "Set the hostname to backup.rhcsa.local.",
+    "hint": "hostnamectl",
+    "answer": {
+      "hostname": "backup.rhcsa.local"
+    }
+  },
+
+  {
+    "id": "networking-004",
+    "category": "networking",
+    "difficulty": 1,
+    "points": 1,
+    "resource_group": "network",
+    "text": "Configure a secondary IPv4 address of 192.168.13.100/24.",
+    "hint": "ip addr",
+    "answer": {
+      "address": "192.168.13.100/24"
+    }
+  }
+]

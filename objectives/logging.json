@@ -1,0 +1,14 @@
+[
+  {
+    "id": "logging-001",
+    "category": "logging",
+    "difficulty": 1,
+    "points": 1,
+    "resource_group": "logging",
+    "text": "Configure persistent systemd journals.",
+    "hint": "ls /var/log/journal",
+    "answer": {
+      "persistent": true
+    }
+  }
+]

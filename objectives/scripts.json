@@ -1,0 +1,43 @@
+[
+  {
+    "id": "scripts-001",
+    "category": "scripts",
+    "difficulty": 1,
+    "points": 1,
+    "resource_group": "none",
+    "text": "Create an executable script named /usr/local/bin/showdate.sh that displays the current date.",
+    "hint": "cat /usr/local/bin/showdate.sh",
+    "answer": {
+      "script": "/usr/local/bin/showdate.sh",
+      "contains": "date"
+    }
+  },
+
+  {
+    "id": "scripts-002",
+    "category": "scripts",
+    "difficulty": 1,
+    "points": 1,
+    "resource_group": "none",
+    "text": "Create an executable script named /usr/local/bin/showuptime.sh that displays the system uptime.",
+    "hint": "cat /usr/local/bin/showuptime.sh",
+    "answer": {
+      "script": "/usr/local/bin/showuptime.sh",
+      "contains": "uptime"
+    }
+  },
+
+  {
+    "id": "scripts-003",
+    "category": "scripts",
+    "difficulty": 1,
+    "points": 1,
+    "resource_group": "none",
+    "text": "Create an executable script named /usr/local/bin/showusers.sh that displays the contents of /etc/passwd.",
+    "hint": "cat /usr/local/bin/showusers.sh",
+    "answer": {
+      "script": "/usr/local/bin/showusers.sh",
+      "contains": "/etc/passwd"
+    }
+  }
+]

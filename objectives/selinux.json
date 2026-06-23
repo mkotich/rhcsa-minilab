@@ -1,0 +1,56 @@
+[
+  {
+    "id": "selinux-001",
+    "category": "selinux",
+    "difficulty": 1,
+    "points": 1,
+    "resource_group": "selinux",
+    "text": "Set SELinux to enforcing mode.",
+    "hint": "getenforce",
+    "answer": {
+      "mode": "Enforcing"
+    }
+  },
+
+  {
+    "id": "selinux-002",
+    "category": "selinux",
+    "difficulty": 1,
+    "points": 1,
+    "resource_group": "selinux",
+    "text": "Enable the SELinux boolean httpd_enable_homedirs.",
+    "hint": "getsebool",
+    "answer": {
+      "boolean": "httpd_enable_homedirs",
+      "value": "on"
+    }
+  },
+
+  {
+    "id": "selinux-003",
+    "category": "selinux",
+    "difficulty": 1,
+    "points": 1,
+    "resource_group": "selinux",
+    "text": "Configure /webdata with the SELinux context httpd_sys_content_t.",
+    "hint": "ls -Zd /webdata",
+    "answer": {
+      "path": "/webdata",
+      "context": "httpd_sys_content_t"
+    }
+  },
+
+  {
+    "id": "selinux-004",
+    "category": "selinux",
+    "difficulty": 1,
+    "points": 1,
+    "resource_group": "selinux",
+    "text": "Restore SELinux contexts on /webdata.",
+    "hint": "restorecon",
+    "answer": {
+      "path": "/webdata",
+      "context": "httpd_sys_content_t"
+    }
+  }
+]

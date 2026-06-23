@@ -6,18 +6,22 @@ case "$MODE" in
     mini)
         OBJECTIVES=5
         TIME_LIMIT="15 minutes"
+        CATEGORY_LIMIT=1
         ;;
     small)
         OBJECTIVES=15
         TIME_LIMIT="90 minutes"
+        CATEGORY_LIMIT=2
         ;;
     full)
         OBJECTIVES=25
         TIME_LIMIT="180 minutes"
+        CATEGORY_LIMIT=3
         ;;
     nightmare)
         OBJECTIVES=40
         TIME_LIMIT="Unlimited"
+        CATEGORY_LIMIT=999
         ;;
     *)
         echo
@@ -31,12 +35,12 @@ esac
 SELECTED=$(mktemp)
 
 declare -A USED_RESOURCE_GROUPS
+declare -A CATEGORY_COUNT
 
-jq -c '.[]' objectives/*.json |
-shuf |
 while read OBJECT
 do
-    RESOURCE_GROUP=$(echo "$OBJECT" | jq -r '.resource_group')
+    CATEGORY=$(echo "$OBJECT" | jq -r '.category')
+    RESOURCE_GROUP=$(echo "$OBJECT" | jq -r '.resource_group // "none"')
 
     #
     # Skip if resource group already used
@@ -47,11 +51,27 @@ do
         then
             continue
         fi
-
-        USED_RESOURCE_GROUPS[$RESOURCE_GROUP]=1
     fi
 
+    #
+    # Skip if category limit reached
+    #
+    if [ "${CATEGORY_COUNT[$CATEGORY]:-0}" -ge "$CATEGORY_LIMIT" ]
+    then
+        continue
+    fi
+
+    #
+    # Accept objective
+    #
     echo "$OBJECT" >> "$SELECTED"
+
+    CATEGORY_COUNT[$CATEGORY]=$(( ${CATEGORY_COUNT[$CATEGORY]:-0} + 1 ))
+
+    if [ "$RESOURCE_GROUP" != "none" ]
+    then
+        USED_RESOURCE_GROUPS[$RESOURCE_GROUP]=1
+    fi
 
     CURRENT=$(wc -l < "$SELECTED")
 
@@ -60,7 +80,9 @@ do
         break
     fi
 
-done
+done < <(
+    jq -c '.[]' objectives/*.json | shuf
+)
 
 jq -s '.' "$SELECTED" > /home/student/exam-state.json
 
@@ -88,13 +110,17 @@ echo
 echo "================================================="
 } > /home/student/EXAM.txt
 
+date +%s > /home/student/exam-start.time
+
 chown student:student \
     /home/student/EXAM.txt \
-    /home/student/exam-state.json
+    /home/student/exam-state.json \
+    /home/student/exam-start.time
 
 chmod 600 \
     /home/student/EXAM.txt \
-    /home/student/exam-state.json
+    /home/student/exam-state.json \
+    /home/student/exam-start.time
 
 rm -f "$SELECTED"
 

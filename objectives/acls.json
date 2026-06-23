@@ -1,0 +1,16 @@
+[
+  {
+    "id": "acls-001",
+    "category": "acls",
+    "difficulty": 1,
+    "points": 1,
+    "resource_group": "none",
+    "text": "Configure user student to have rwx access to /shared using ACLs.",
+    "hint": "getfacl",
+    "answer": {
+      "path": "/shared",
+      "user": "student",
+      "perms": "rwx"
+    }
+  }
+]

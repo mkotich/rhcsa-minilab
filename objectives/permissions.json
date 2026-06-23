@@ -1,0 +1,43 @@
+[
+  {
+    "id": "permissions-001",
+    "category": "permissions",
+    "difficulty": 1,
+    "points": 1,
+    "resource_group": "permissions",
+    "text": "Set the sticky bit on /public.",
+    "hint": "stat -c %a /public",
+    "answer": {
+      "path": "/public",
+      "mode": "1777"
+    }
+  },
+
+  {
+    "id": "permissions-002",
+    "category": "permissions",
+    "difficulty": 1,
+    "points": 1,
+    "resource_group": "permissions",
+    "text": "Set the setgid bit on /shared.",
+    "hint": "stat -c %a /shared",
+    "answer": {
+      "path": "/shared",
+      "mode": "2775"
+    }
+  },
+
+  {
+    "id": "permissions-003",
+    "category": "permissions",
+    "difficulty": 1,
+    "points": 1,
+    "resource_group": "permissions",
+    "text": "Configure /shared with permissions 2770.",
+    "hint": "stat -c %a /shared",
+    "answer": {
+      "path": "/shared",
+      "mode": "2770"
+    }
+  }
+]

@@ -1,0 +1,53 @@
+[
+  {
+    "id": "firewall-001",
+    "category": "firewall",
+    "difficulty": 1,
+    "points": 1,
+    "resource_group": "none",
+    "text": "Configure firewalld to allow the http service.",
+    "hint": "firewall-cmd",
+    "answer": {
+      "service": "http"
+    }
+  },
+
+  {
+    "id": "firewall-002",
+    "category": "firewall",
+    "difficulty": 1,
+    "points": 1,
+    "resource_group": "none",
+    "text": "Configure firewalld to allow the https service.",
+    "hint": "firewall-cmd",
+    "answer": {
+      "service": "https"
+    }
+  },
+
+  {
+    "id": "firewall-003",
+    "category": "firewall",
+    "difficulty": 1,
+    "points": 1,
+    "resource_group": "none",
+    "text": "Configure firewalld to allow the ssh service.",
+    "hint": "firewall-cmd",
+    "answer": {
+      "service": "ssh"
+    }
+  },
+
+  {
+    "id": "firewall-004",
+    "category": "firewall",
+    "difficulty": 1,
+    "points": 1,
+    "resource_group": "none",
+    "text": "Configure firewalld to allow the cockpit service.",
+    "hint": "firewall-cmd",
+    "answer": {
+      "service": "cockpit"
+    }
+  }
+]
