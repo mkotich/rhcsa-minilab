@@ -1,51 +1,114 @@
-v0.9.0
-======
+# RHCSA MiniLab Roadmap
 
-[ ] Intelligent objective selection
-    - user/group/password families
-    - lvm/swap/mount families
-    - selinux mode/boolean/context families
-    - service families
-    - finer resource groups
+## v0.9.0 - Quality Improvements
 
-[ ] Take exams
-[ ] Fix grading bugs when found
-[ ] Minor grading improvements only
+### Intelligent objective selection
+- [ ] Balance categories across exams
+- [ ] Prevent repetitive objective combinations
+- [ ] Split resource families into finer groups
+- [ ] Fill remaining slots intelligently
 
---------------------------------------------
+### Objective wording improvements
+- [ ] Eliminate hidden assumptions
+- [ ] Improve permissions objectives
+- [ ] State initial permissions when testing sticky/setgid bits
+- [ ] Clarify archive wording
+- [ ] Clarify service wording
+- [ ] Review all objectives for ambiguity
 
-v1.0
-=====
+### Grading polish
+- [ ] Fix discovered grading bugs
+- [ ] Keep grading strict
+- [ ] Continue real-world exam testing
 
-[ ] Stabilization
-[ ] More realistic exam distribution
-[ ] Documentation
-[ ] Objective authoring guide
-[ ] Grader authoring guide
-[ ] Resource group documentation
+---
 
---------------------------------------------
+## v1.0.0 - Single Node Mode (Default)
 
-v1.x
-=====
+### Single node support
+- [ ] Make single-node mode the default
+- [ ] Do not modify redhat.repo
+- [ ] Use CDN repositories normally
+- [ ] No server VM required
 
-[ ] Podman category
-[ ] Ansible category
-[ ] Git category
+### Capability-aware objective filtering
+- [ ] Exclude NFS objectives in single-node mode
+- [ ] Add capability flags
+- [ ] Filter objective pool automatically
 
-[ ] Multi-VM objectives
-    - NFS exports
-    - NFS mounts
-    - HTTP client/server
-    - Database client/server
+### Configuration flags
+- [ ] ENABLE_SERVER
+- [ ] ENABLE_NFS
+- [ ] ENABLE_PODMAN
+- [ ] ENABLE_ANSIBLE
+- [ ] ENABLE_RECOVERY
 
---------------------------------------------
+---
 
-Future
-======
+## v1.1.0 - Multi-Node Support
 
-[ ] Recovery mode
-[ ] Historical statistics
-[ ] Category performance
-[ ] Weak area reporting
-[ ] CI
+### Server VM objectives
+- [ ] NFS objectives
+- [ ] Additional NFS variants
+- [ ] HTTP objectives
+- [ ] Database objectives
+- [ ] Future rsync objectives
+
+### Multi-machine capabilities
+- [ ] Internal repositories
+- [ ] Shared services
+- [ ] Capability detection
+
+---
+
+## v1.2.0 - Optional Categories
+
+### Podman
+- [ ] Podman objectives
+- [ ] Optional category
+- [ ] Disable by default
+
+### Ansible
+- [ ] Ansible objectives
+- [ ] Optional category
+- [ ] Disable by default
+
+---
+
+## v2.0.0 - Recovery Mode
+
+### Boot recovery
+- [ ] Root password recovery
+- [ ] GRUB recovery
+- [ ] SELinux relabeling
+- [ ] Broken bootloader scenarios
+- [ ] Separate recovery exam mode
+
+---
+
+## Future Ideas
+
+### Statistics
+- [ ] Track exams completed
+- [ ] Track scores
+- [ ] Category statistics
+- [ ] Progress reports
+
+### Reporting
+- [ ] Historical scores
+- [ ] Objective frequency analysis
+- [ ] Weak area reporting
+
+### CI
+- [ ] Automated tests
+- [ ] Objective validation
+- [ ] Grading validation
+
+### Objective Expansion
+- [ ] More variants
+- [ ] More SELinux objectives
+- [ ] More storage objectives
+- [ ] More networking objectives
+
+### Continue Practicing
+- [ ] Let real usage drive development
