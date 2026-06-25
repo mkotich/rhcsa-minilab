@@ -3,6 +3,7 @@
     "id": "archive-001",
     "category": "archive",
     "difficulty": 1,
+    "importance": "optional",
     "points": 1,
     "resource_group": "none",
     "text": "Create a gzip compressed tar archive named /root/etc.tar.gz containing /etc.",

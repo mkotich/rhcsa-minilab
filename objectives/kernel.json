@@ -3,6 +3,7 @@
     "id": "kernel-001",
     "category": "kernel",
     "difficulty": 1,
+    "importance": "optional",
     "points": 1,
     "resource_group": "kernel",
     "text": "Configure net.ipv4.ip_forward to 1 persistently.",

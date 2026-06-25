@@ -12,6 +12,22 @@ RHCSA MiniLab is a lightweight RHCSA v10 practice environment designed for rapid
 - Category limits and resource groups
 - Broad RHCSA v10 coverage
 
+Installation Modes
+
+Standalone (default)
+--------------------
+• One RHEL VM
+• Uses existing repositories
+• No server required
+• NFS objectives automatically omitted
+
+Full Lab
+--------
+• Client + Server
+• Internal HTTP repository
+• NFS server
+• Full objective pool
+
 ## Exam Modes
 
 | Mode | Objectives | Time |

@@ -42,8 +42,11 @@ prep_server()
     configure_server_network
     configure_hosts_file
     install_server_packages
-    configure_http_repo
-    configure_nfs
+    if [ "$LAB_MODE" = "full" ]
+    then
+        configure_http_repo
+        configure_nfs
+    fi
     configure_firewall
 
     echo
@@ -186,9 +189,11 @@ configure_client_repos()
 {
     echo "Configuring client repositories..."
 
-    rm -f /etc/yum.repos.d/*.repo
+    if [ "$LAB_MODE" = "full" ]
+    then
+        rm -f /etc/yum.repos.d/*.repo
 
-    cat > /etc/yum.repos.d/rhcsa-minilab.repo << EOF
+        cat > /etc/yum.repos.d/rhcsa-minilab.repo << EOF
 [BaseOS]
 name=BaseOS
 baseurl=${SERVER_HTTP_REPO}/BaseOS
@@ -202,8 +207,11 @@ enabled=1
 gpgcheck=0
 EOF
 
-    dnf clean all
-    dnf makecache
+        dnf clean all
+        dnf makecache
+    else
+        echo "Standalone mode: leaving existing repositories unchanged."
+    fi
 }
 
 ########################################
@@ -331,9 +339,18 @@ case "$1" in
         ;;
 
     "")
-        if [ "$SHORT_HOSTNAME" = "$SERVER_HOSTNAME" ]
-        then
-            prep_server
+    if [ "$LAB_MODE" = "full" ] &&
+       [ "$SHORT_HOSTNAME" = "$SERVER_HOSTNAME" ]
+    then
+        prep_server
+
+    elif [ "$SHORT_HOSTNAME" = "$CLIENT_HOSTNAME" ]
+    then
+        prep_client
+
+    else
+        fail "Unknown hostname: $HOSTNAME"
+    fi
 
         elif [ "$SHORT_HOSTNAME" = "$CLIENT_HOSTNAME" ]
         then

@@ -3,6 +3,7 @@
     "id": "logging-001",
     "category": "logging",
     "difficulty": 1,
+    "importance": "optional",
     "points": 1,
     "resource_group": "logging",
     "text": "Configure persistent systemd journals.",
