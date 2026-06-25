@@ -3,6 +3,10 @@
     "id": "nfs-001",
     "category": "nfs",
     "difficulty": 1,
+    "importance": "optional",
+    "requires": [
+        "server"
+    ],
     "points": 1,
     "resource_group": "nfs",
     "text": "Mount server.rhcsa.local:/exports/share persistently at /mnt/share.",
@@ -18,6 +22,10 @@
     "id": "nfs-002",
     "category": "nfs",
     "difficulty": 1,
+    "importance": "optional",
+    "requires": [
+        "server"
+    ],
     "points": 1,
     "resource_group": "nfs",
     "text": "Mount server.rhcsa.local:/exports/share persistently at /backup.",
@@ -33,6 +41,10 @@
     "id": "nfs-003",
     "category": "nfs",
     "difficulty": 1,
+    "importance": "optional",
+    "requires": [
+        "server"
+    ],
     "points": 1,
     "resource_group": "nfs",
     "text": "Mount server.rhcsa.local:/exports/share persistently at /data.",
@@ -48,6 +60,10 @@
     "id": "nfs-004",
     "category": "nfs",
     "difficulty": 1,
+    "importance": "optional",
+    "requires": [
+        "server"
+    ],
     "points": 1,
     "resource_group": "nfs",
     "text": "Mount server.rhcsa.local:/exports/share persistently at /mnt/nfs.",

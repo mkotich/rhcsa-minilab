@@ -78,6 +78,24 @@ esac
 SELECTED=$(mktemp)
 
 ALL_OBJECTIVES=$(jq -cs 'add' objectives/*.json)
+#
+# Filter objectives based on lab mode
+#
+if [ "$LAB_MODE" = "standalone" ]
+then
+    ALL_OBJECTIVES=$(
+        echo "$ALL_OBJECTIVES" |
+        jq '
+            map(
+                select(
+                    (.requires // [])
+                    | index("server")
+                    | not
+                )
+            )
+        '
+    )
+fi
 
 declare -A USED_RESOURCE_GROUPS
 declare -A CATEGORY_COUNT
