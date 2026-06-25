@@ -7,23 +7,63 @@ case "$MODE" in
         OBJECTIVES=5
         TIME_LIMIT="15 minutes"
         CATEGORY_LIMIT=1
+
+        CRITICAL_CATEGORIES=(
+            networking
+            firewall
+            selinux
+        )
+
+        CORE_COUNT=2
+        COMMON_COUNT=0
+        OPTIONAL_COUNT=0
         ;;
     small)
         OBJECTIVES=15
         TIME_LIMIT="90 minutes"
         CATEGORY_LIMIT=2
+
+        CRITICAL_CATEGORIES=(
+            networking
+            firewall
+            selinux
+        )
+
+        CORE_COUNT=4
+        COMMON_COUNT=8
+        OPTIONAL_COUNT=0
         ;;
     full)
         OBJECTIVES=25
         TIME_LIMIT="180 minutes"
         CATEGORY_LIMIT=3
+
+        CRITICAL_CATEGORIES=(
+            networking
+            firewall
+            selinux
+        )
+
+        CORE_COUNT=6
+        COMMON_COUNT=12
+        OPTIONAL_COUNT=4
         ;;
     nightmare)
         OBJECTIVES=40
         TIME_LIMIT="Unlimited"
         CATEGORY_LIMIT=999
+
+        CRITICAL_CATEGORIES=(
+            networking
+            firewall
+            selinux
+        )
+
+        CORE_COUNT=8
+        COMMON_COUNT=20
+        OPTIONAL_COUNT=9
         ;;
-    *)
+   *)
         echo
         echo "Usage:"
         echo "    $0 mini|small|full|nightmare"
@@ -34,36 +74,44 @@ esac
 
 SELECTED=$(mktemp)
 
+ALL_OBJECTIVES=$(jq -cs 'add' objectives/*.json)
+
 declare -A USED_RESOURCE_GROUPS
 declare -A CATEGORY_COUNT
 
-while read OBJECT
-do
+add_objective()
+{
+    OBJECT="$1"
+
+    CURRENT=$(wc -l < "$SELECTED")
+
+    if [ "$CURRENT" -ge "$OBJECTIVES" ]
+    then
+        return
+    fi
+
     CATEGORY=$(echo "$OBJECT" | jq -r '.category')
     RESOURCE_GROUP=$(echo "$OBJECT" | jq -r '.resource_group // "none"')
 
     #
-    # Skip if resource group already used
+    # Category limit
+    #
+    if [ "${CATEGORY_COUNT[$CATEGORY]:-0}" -ge "$CATEGORY_LIMIT" ]
+    then
+        return
+    fi
+
+    #
+    # Resource group already used?
     #
     if [ "$RESOURCE_GROUP" != "none" ]
     then
         if [ -n "${USED_RESOURCE_GROUPS[$RESOURCE_GROUP]}" ]
         then
-            continue
+            return
         fi
     fi
 
-    #
-    # Skip if category limit reached
-    #
-    if [ "${CATEGORY_COUNT[$CATEGORY]:-0}" -ge "$CATEGORY_LIMIT" ]
-    then
-        continue
-    fi
-
-    #
-    # Accept objective
-    #
     echo "$OBJECT" >> "$SELECTED"
 
     CATEGORY_COUNT[$CATEGORY]=$(( ${CATEGORY_COUNT[$CATEGORY]:-0} + 1 ))
@@ -72,17 +120,96 @@ do
     then
         USED_RESOURCE_GROUPS[$RESOURCE_GROUP]=1
     fi
+}
 
-    CURRENT=$(wc -l < "$SELECTED")
+select_category()
+{
+    CATEGORY="$1"
 
-    if [ "$CURRENT" -ge "$OBJECTIVES" ]
-    then
-        break
-    fi
+    echo "$ALL_OBJECTIVES" |
+    jq -c --arg category "$CATEGORY" '
+        .[]
+        | select(.category == $category)
+    ' |
+    shuf |
+    while read OBJECT
+    do
+        BEFORE=$(wc -l < "$SELECTED")
 
-done < <(
-    jq -c '.[]' objectives/*.json | shuf
-)
+        add_objective "$OBJECT"
+
+        AFTER=$(wc -l < "$SELECTED")
+
+        [ "$AFTER" -gt "$BEFORE" ] && break
+    done
+}
+
+select_importance()
+{
+    IMPORTANCE="$1"
+    TARGET="$2"
+    ADDED=0
+
+    while read OBJECT
+    do
+        BEFORE=$(wc -l < "$SELECTED")
+
+        add_objective "$OBJECT"
+
+        AFTER=$(wc -l < "$SELECTED")
+
+        if [ "$AFTER" -gt "$BEFORE" ]
+        then
+            ADDED=$((ADDED+1))
+        fi
+
+        [ "$ADDED" -ge "$TARGET" ] && break
+
+    done < <(
+        echo "$ALL_OBJECTIVES" |
+        jq -c --arg importance "$IMPORTANCE" '
+            .[]
+            | select(.importance == $importance)
+        ' |
+        shuf
+    )
+}
+
+fill_remaining()
+{
+    echo "$ALL_OBJECTIVES" |
+    jq -c '.[]' |
+    shuf |
+    while read OBJECT
+    do
+        add_objective "$OBJECT"
+
+        CURRENT=$(wc -l < "$SELECTED")
+
+        [ "$CURRENT" -ge "$OBJECTIVES" ] && break
+    done
+}
+
+#
+# Mandatory categories
+#
+for CATEGORY in "${CRITICAL_CATEGORIES[@]}"
+do
+    select_category "$CATEGORY"
+done
+
+#
+# Remaining objectives
+#
+select_importance core "$CORE_COUNT"
+select_importance common "$COMMON_COUNT"
+select_importance optional "$OPTIONAL_COUNT"
+
+#
+# Fill remaining slots
+#
+fill_remaining
+
 
 jq -s '.' "$SELECTED" > /home/student/exam-state.json
 
