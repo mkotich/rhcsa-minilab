@@ -3,6 +3,8 @@
 ## v0.9.0 - Quality Improvements
 
 ### Intelligent objective selection
+- [ ] Eliminate all objectives that pass the baseline audit.
+- [ ] Document baseline audit workflow for developers in README.
 - [ ] Balance categories across exams
 - [ ] Prevent repetitive objective combinations
 - [ ] Split resource families into finer groups

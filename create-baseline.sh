@@ -9,35 +9,161 @@ verify_root()
     fi
 }
 
+show_help()
+{
+    cat << HELP
+Usage:
+    $0 [OPTION]
+
+Options:
+
+    --help
+        Display this help message.
+
+    --audit-all-objectives
+    Create a temporary exam containing every objective,
+    run the grading engine against the current baseline,
+    and report objectives that are already satisfied.
+
+    Intended for developers after adding or modifying
+    objectives prior to release.
+
+No option:
+
+    Create a new baseline from the current system.
+
+HELP
+}
+
+audit_all_objectives()
+{
+    TMPDIR=$(mktemp -d)
+
+    trap 'rm -rf "$TMPDIR"' EXIT
+
+    jq -cs 'add' objectives/*.json \
+        > "$TMPDIR/exam-state.json"
+
+    echo
+    echo "Running baseline audit..."
+    echo
+
+    OUTPUT=$(
+        STATE="$TMPDIR/exam-state.json" \
+        GRADE_MODE=audit \
+        ./grade-exam.sh
+    )
+
+    TOTAL=$(printf '%s\n' "$OUTPUT" | wc -l)
+
+    PASSING=$(printf '%s\n' "$OUTPUT" | grep '^PASS|')
+
+    PASS_COUNT=$(printf '%s\n' "$OUTPUT" | grep -c '^PASS|')
+
+    FAIL_COUNT=$((TOTAL - PASS_COUNT))
+
+    echo
+    echo "================================================="
+    echo "RHCSA MiniLab Baseline Audit"
+    echo "================================================="
+    echo
+
+    printf "%-24s %s\n" "Objectives Evaluated" "$TOTAL"
+    printf "%-24s %s\n" "Objectives Passing" "$PASS_COUNT"    
+    printf "%-24s %s\n" "Require Student Work" "$FAIL_COUNT"
+
+echo
+
+if [ "$PASS_COUNT" -gt 0 ]
+then
+    echo "Objectives already satisfied"
+    echo "----------------------------"
+    echo
+
+    echo "$PASSING" |
+    cut -d'|' -f2 |
+    while read LINE
+    do
+        printf "  - %s\n" "$LINE"
+    done
+fi
+
+echo
+echo "-------------------------------------------------"
+echo
+
+if [ "$PASS_COUNT" -eq 0 ]
+then
+    echo "Baseline validation successful."
+    echo
+    echo "Every objective requires student intervention."
+else
+    echo "Recommendation"
+    echo
+    echo "Modify or replace the objectives above before"
+    echo "creating the next release baseline."
+fi
+
+echo
+}
+
+create_baseline()
+{
+    BASELINE=/baseline
+
+    echo
+    echo "Creating baseline..."
+    echo
+
+    mkdir -p "$BASELINE"
+
+    rsync -aAXH --delete \
+        --exclude="$BASELINE" \
+        --exclude=/home/student \
+        --exclude=/opt/rhcsa-minilab \
+        --exclude=/dev \
+        --exclude=/proc \
+        --exclude=/sys \
+        --exclude=/run \
+        --exclude=/tmp \
+        --exclude=/var/lib/nfs/rpc_pipefs \
+        --exclude=/var/tmp \
+        --exclude=/mnt \
+        --exclude=/media \
+        --exclude=/lost+found \
+        / "$BASELINE"
+
+    git rev-parse HEAD > /baseline.version
+
+    echo
+    echo "Baseline created successfully."
+    echo "Commit: $(cat /baseline.version)"
+    echo
+}
+
+########################################
+# Main
+########################################
+
 verify_root
 
-BASELINE=/baseline
+case "$1" in
+    --help)
+        show_help
+        ;;
 
-echo
-echo "Creating baseline..."
-echo
+    --audit-all-objectives)
+        audit_all_objectives
+        ;;
 
-mkdir -p "$BASELINE"
+    "")
+        create_baseline
+        ;;
 
-rsync -aAXH --delete \
-    --exclude="$BASELINE" \
-    --exclude=/home/student \
-    --exclude=/opt/rhcsa-minilab \
-    --exclude=/dev \
-    --exclude=/proc \
-    --exclude=/sys \
-    --exclude=/run \
-    --exclude=/tmp \
-    --exclude=/var/lib/nfs/rpc_pipefs \
-    --exclude=/var/tmp \
-    --exclude=/mnt \
-    --exclude=/media \
-    --exclude=/lost+found \
-    / "$BASELINE"
-
-git rev-parse HEAD > /baseline.version
-
-echo
-echo "Baseline created successfully."
-echo "Commit: $(cat /baseline.version)"
-echo
+    *)
+        echo "Unknown option: $1"
+        echo
+        show_help
+        exit 1
+        ;;
+esac

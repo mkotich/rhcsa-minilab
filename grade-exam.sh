@@ -3,7 +3,8 @@
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 source "${SCRIPT_DIR}/variables.conf"
 
-STATE=/home/student/exam-state.json
+STATE="${STATE:-/home/student/exam-state.json}"
+GRADE_MODE="${GRADE_MODE:-normal}"
 
 #
 # Load all graders
@@ -17,18 +18,28 @@ PASS_COUNT=0
 IMPLEMENTED_COUNT=0
 TOTAL_COUNT=0
 
-echo
-echo "================================================="
-echo "RHCSA MiniLab Results"
-echo "================================================="
-echo
+########################################
+# Header
+########################################
+
+if [ "$GRADE_MODE" = "normal" ]
+then
+    echo
+    echo "================================================="
+    echo "RHCSA MiniLab Results"
+    echo "================================================="
+    echo
+fi
+
+########################################
+# Persistence
+########################################
 
 PERSISTENCE="UNKNOWN"
 
 if [ -f /home/student/exam-start.time ]
 then
     EXAM_START=$(cat /home/student/exam-start.time)
-
     BOOT_TIME=$(date -d "$(uptime -s)" +%s)
 
     if [ "$BOOT_TIME" -gt "$EXAM_START" ]
@@ -39,19 +50,26 @@ then
     fi
 fi
 
-printf "%-20s %s\n" "Persistence Check" "$PERSISTENCE"
-
-if [ "$PERSISTENCE" = "NOT VERIFIED" ]
+if [ "$GRADE_MODE" = "normal" ]
 then
+    printf "%-20s %s\n" "Persistence Check" "$PERSISTENCE"
+
+    if [ "$PERSISTENCE" = "NOT VERIFIED" ]
+    then
+        echo
+        echo "No reboot has been detected since the exam was launched."
+        echo "For best results, reboot and grade again to verify"
+        echo "storage, services, networking, firewall, and SELinux persistence."
+    fi
+
     echo
-    echo "No reboot has been detected since the exam was launched."
-    echo "For best results, reboot and grade again to verify"
-    echo "storage, services, networking, firewall, and SELinux persistence."
+    echo "================================================="
+    echo
 fi
 
-echo
-echo "================================================="
-echo
+########################################
+# Grade Objectives
+########################################
 
 while IFS= read -r OBJECT
 do
@@ -68,7 +86,12 @@ do
         "$FUNCTION"
     fi
 
-    printf "[%s] %s\n" "$RESULT" "$TEXT"
+    if [ "$GRADE_MODE" = "audit" ]
+    then
+        printf "%s|%s\n" "$RESULT" "$TEXT"
+    else
+        printf "[%s] %s\n" "$RESULT" "$TEXT"
+    fi
 
     TOTAL_COUNT=$((TOTAL_COUNT + 1))
 
@@ -86,19 +109,29 @@ done < <(
     jq -c '.[]' "$STATE"
 )
 
-echo
+########################################
+# Summary
+########################################
 
-printf "%-20s %s/%s\n" "Implemented" "$IMPLEMENTED_COUNT" "$TOTAL_COUNT"
-
-if [ "$IMPLEMENTED_COUNT" -gt 0 ]
+if [ "$GRADE_MODE" = "normal" ]
 then
-    SCORE=$((PASS_COUNT * 100 / IMPLEMENTED_COUNT))
-else
-    SCORE=0
+    echo
+
+    printf "%-20s %s/%s\n" \
+        "Implemented" \
+        "$IMPLEMENTED_COUNT" \
+        "$TOTAL_COUNT"
+
+    if [ "$IMPLEMENTED_COUNT" -gt 0 ]
+    then
+        SCORE=$((PASS_COUNT * 100 / IMPLEMENTED_COUNT))
+    else
+        SCORE=0
+    fi
+
+    printf "%-20s %s%%\n" "Score" "$SCORE"
+
+    echo
+    echo "================================================="
+    echo
 fi
-
-printf "%-20s %s%%\n" "Score" "$SCORE"
-
-echo
-echo "================================================="
-echo

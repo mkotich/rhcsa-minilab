@@ -85,6 +85,18 @@ Inspect the current exam:
 
     ./peek-exam.sh
 
+## DEVELOPERS:
+## Adding or Modifying Objectives
+
+After creating or modifying objectives, validate the baseline before
+creating a release:
+
+    ./create-baseline.sh --audit-all-objectives
+
+The audit identifies objectives that are already satisfied by the
+baseline installation. Every objective should require student
+intervention before release.
+
 ## Design Goals
 
 - Fast repetition
@@ -96,4 +108,4 @@ Inspect the current exam:
 
 ## Current Release
 
-v0.8.0
+v0.9.0
