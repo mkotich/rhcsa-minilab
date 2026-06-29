@@ -1,46 +1,80 @@
 [
   {
-    "id": "scripts-001",
+    "id": "script-001",
     "category": "scripts",
+    "domain": "simple",
     "difficulty": 1,
-    "importance": "optional",
+    "importance": "common",
     "points": 1,
     "resource_group": "none",
     "text": "Create an executable script named /usr/local/bin/showdate.sh that displays the current date.",
-    "hint": "cat /usr/local/bin/showdate.sh",
+    "hint": "chmod +x",
     "answer": {
       "script": "/usr/local/bin/showdate.sh",
-      "contains": "date"
+      "command": "date"
     }
   },
 
   {
-    "id": "scripts-002",
+    "id": "script-002",
     "category": "scripts",
+    "domain": "simple",
     "difficulty": 1,
-    "importance": "optional",
+    "importance": "common",
     "points": 1,
     "resource_group": "none",
     "text": "Create an executable script named /usr/local/bin/showuptime.sh that displays the system uptime.",
-    "hint": "cat /usr/local/bin/showuptime.sh",
+    "hint": "uptime",
     "answer": {
       "script": "/usr/local/bin/showuptime.sh",
-      "contains": "uptime"
+      "command": "uptime"
     }
   },
 
   {
-    "id": "scripts-003",
+    "id": "script-003",
     "category": "scripts",
+    "domain": "simple",
     "difficulty": 1,
-    "importance": "optional",
+    "importance": "common",
     "points": 1,
     "resource_group": "none",
     "text": "Create an executable script named /usr/local/bin/showusers.sh that displays the contents of /etc/passwd.",
-    "hint": "cat /usr/local/bin/showusers.sh",
+    "hint": "cat",
     "answer": {
       "script": "/usr/local/bin/showusers.sh",
-      "contains": "/etc/passwd"
+      "command": "cat /etc/passwd"
+    }
+  },
+
+  {
+    "id": "script-010",
+    "category": "scripts",
+    "domain": "file-processing",
+    "difficulty": 2,
+    "importance": "common",
+    "points": 1,
+    "resource_group": "none",
+    "text": "Create an executable script named /usr/local/bin/findrecent.sh that finds all files in /home created between 7 and 30 days ago and stores the results in /home/student/scriptout.txt.",
+    "hint": "find",
+    "answer": {
+      "script": "/usr/local/bin/findrecent.sh",
+      "output": "/home/student/scriptout.txt"
+    }
+  },
+
+  {
+    "id": "script-020",
+    "category": "scripts",
+    "domain": "reporting",
+    "difficulty": 2,
+    "importance": "optional",
+    "points": 1,
+    "resource_group": "none",
+    "text": "Create an executable script named /usr/local/bin/diskreport.sh that displays mounted filesystems and available disk space.",
+    "hint": "df",
+    "answer": {
+      "script": "/usr/local/bin/diskreport.sh"
     }
   }
 ]

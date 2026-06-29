@@ -2,6 +2,7 @@
   {
     "id": "users-001",
     "category": "users",
+    "domain": "users",
     "difficulty": 1,
     "importance": "core",
     "points": 1,
@@ -16,6 +17,7 @@
   {
     "id": "users-002",
     "category": "users",
+    "domain": "users",
     "difficulty": 1,
     "importance": "core",
     "points": 1,
@@ -32,6 +34,7 @@
   {
     "id": "users-003",
     "category": "users",
+    "domain": "users",
     "difficulty": 1,
     "importance": "core",
     "points": 1,
@@ -48,6 +51,7 @@
   {
     "id": "users-004",
     "category": "users",
+    "domain": "users",
     "difficulty": 1,
     "importance": "core",
     "points": 1,
@@ -63,6 +67,7 @@
   {
     "id": "users-005",
     "category": "users",
+    "domain": "users",
     "difficulty": 1,
     "importance": "core",
     "points": 1,

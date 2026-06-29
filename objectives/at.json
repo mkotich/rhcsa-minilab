@@ -1,0 +1,48 @@
+[
+  {
+    "id": "at-001",
+    "category": "at",
+    "domain": "creation",
+    "difficulty": 1,
+    "importance": "common",
+    "points": 1,
+    "resource_group": "none",
+    "text": "Schedule /usr/bin/date to run in 10 minutes using at.",
+    "hint": "atq",
+    "answer": {
+      "command": "/usr/bin/date",
+      "schedule": "10 minutes"
+    }
+  },
+
+  {
+    "id": "at-002",
+    "category": "at",
+    "domain": "creation",
+    "difficulty": 1,
+    "importance": "common",
+    "points": 1,
+    "resource_group": "none",
+    "text": "Schedule /usr/bin/uptime to run in one hour using at.",
+    "hint": "atq",
+    "answer": {
+      "command": "/usr/bin/uptime",
+      "schedule": "1 hour"
+    }
+  },
+
+  {
+    "id": "at-010",
+    "category": "at",
+    "domain": "management",
+    "difficulty": 2,
+    "importance": "optional",
+    "points": 1,
+    "resource_group": "none",
+    "text": "Remove all pending at jobs.",
+    "hint": "atrm",
+    "answer": {
+      "action": "clear"
+    }
+  }
+]

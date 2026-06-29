@@ -3,12 +3,14 @@
     "id": "firewall-001",
     "category": "firewall",
     "difficulty": 1,
+    "domain": "services",
     "importance": "critical",
     "points": 1,
     "resource_group": "none",
-    "text": "Configure firewalld to allow the http service.",
+    "text": "Configure firewalld to permanently allow the http service in the public zone.",
     "hint": "firewall-cmd",
     "answer": {
+      "zone": "public",
       "service": "http"
     }
   },
@@ -17,12 +19,14 @@
     "id": "firewall-002",
     "category": "firewall",
     "difficulty": 1,
+    "domain": "services",
     "importance": "critical",
     "points": 1,
     "resource_group": "none",
-    "text": "Configure firewalld to allow the https service.",
+    "text": "Configure firewalld to permanently allow the https service in the public zone.",
     "hint": "firewall-cmd",
     "answer": {
+      "zone": "public",
       "service": "https"
     }
   },
@@ -30,28 +34,32 @@
   {
     "id": "firewall-003",
     "category": "firewall",
+    "domain": "services",
     "difficulty": 1,
     "importance": "critical",
     "points": 1,
     "resource_group": "none",
-    "text": "Configure firewalld to allow the ssh service.",
+    "text": "Configure firewalld to permanently allow the mysql service in the public zone.",
     "hint": "firewall-cmd",
     "answer": {
-      "service": "ssh"
+      "zone": "public",
+      "service": "mysql"
     }
   },
 
   {
     "id": "firewall-004",
     "category": "firewall",
+    "domain": "services",
     "difficulty": 1,
     "importance": "critical",
     "points": 1,
     "resource_group": "none",
-    "text": "Configure firewalld to allow the cockpit service.",
+    "text": "Configure firewalld to permanently allow the nfs service in the public zone.",
     "hint": "firewall-cmd",
     "answer": {
-      "service": "cockpit"
+      "zone": "public",
+      "service": "nfs"
     }
   }
 ]

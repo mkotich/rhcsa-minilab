@@ -2,56 +2,127 @@
   {
     "id": "flatpak-001",
     "category": "flatpak",
+    "domain": "remote",
     "difficulty": 1,
-    "importance": "optional",
+    "importance": "common",
     "points": 1,
     "resource_group": "none",
-    "text": "Install the flatpak package.",
-    "hint": "rpm -q flatpak",
+    "text": "Add the Flathub system remote.",
+    "hint": "flatpak remote-add",
     "answer": {
-      "package": "flatpak"
+      "action": "remote-add",
+      "remote": "flathub"
     }
   },
 
   {
     "id": "flatpak-002",
     "category": "flatpak",
+    "domain": "remote",
     "difficulty": 1,
-    "importance": "optional",
+    "importance": "common",
     "points": 1,
     "resource_group": "none",
-    "text": "Add the Flathub remote.",
-    "hint": "flatpak remotes",
+    "text": "Remove the Flathub system remote.",
+    "hint": "flatpak remote-delete",
     "answer": {
+      "action": "remote-delete",
       "remote": "flathub"
     }
   },
 
   {
-    "id": "flatpak-003",
+    "id": "flatpak-010",
     "category": "flatpak",
+    "domain": "install",
     "difficulty": 1,
-    "importance": "optional",
+    "importance": "common",
     "points": 1,
     "resource_group": "none",
-    "text": "Install the org.mozilla.firefox Flatpak application.",
-    "hint": "flatpak list",
+    "text": "Install the Flatpak application org.mozilla.firefox.",
+    "hint": "flatpak install",
     "answer": {
+      "action": "install",
       "application": "org.mozilla.firefox"
     }
   },
 
   {
-    "id": "flatpak-004",
+    "id": "flatpak-011",
     "category": "flatpak",
+    "domain": "install",
+    "difficulty": 1,
+    "importance": "common",
+    "points": 1,
+    "resource_group": "none",
+    "text": "Install the Flatpak application org.libreoffice.LibreOffice.",
+    "hint": "flatpak install",
+    "answer": {
+      "action": "install",
+      "application": "org.libreoffice.LibreOffice"
+    }
+  },
+
+  {
+    "id": "flatpak-012",
+    "category": "flatpak",
+    "domain": "install",
     "difficulty": 1,
     "importance": "optional",
     "points": 1,
     "resource_group": "none",
-    "text": "Install the org.libreoffice.LibreOffice Flatpak application.",
-    "hint": "flatpak list",
+    "text": "Install the Flatpak application org.gnome.Calculator.",
+    "hint": "flatpak install",
     "answer": {
-      "application": "org.libreoffice.LibreOffice"
+      "action": "install",
+      "application": "org.gnome.Calculator"
+    }
+  },
+
+  {
+    "id": "flatpak-013",
+    "category": "flatpak",
+    "domain": "install",
+    "difficulty": 1,
+    "importance": "optional",
+    "points": 1,
+    "resource_group": "none",
+    "text": "Install the Flatpak application org.gnome.TextEditor.",
+    "hint": "flatpak install",
+    "answer": {
+      "action": "install",
+      "application": "org.gnome.TextEditor"
+    }
+  },
+
+  {
+    "id": "flatpak-020",
+    "category": "flatpak",
+    "domain": "remove",
+    "difficulty": 2,
+    "importance": "optional",
+    "points": 1,
+    "resource_group": "none",
+    "text": "Remove the Flatpak application org.mozilla.firefox.",
+    "hint": "flatpak uninstall",
+    "answer": {
+      "action": "remove",
+      "application": "org.mozilla.firefox"
+    }
+  },
+
+  {
+    "id": "flatpak-030",
+    "category": "flatpak",
+    "domain": "update",
+    "difficulty": 2,
+    "importance": "optional",
+    "points": 1,
+    "resource_group": "none",
+    "text": "Update all installed Flatpak applications.",
+    "hint": "flatpak update",
+    "answer": {
+      "action": "update-all"
     }
   }
 ]

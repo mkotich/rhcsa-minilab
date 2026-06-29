@@ -2,6 +2,7 @@
   {
     "id": "time-001",
     "category": "time",
+    "domain": "timezone",
     "difficulty": 1,
     "importance": "common",
     "points": 1,
@@ -16,6 +17,7 @@
   {
     "id": "time-002",
     "category": "time",
+    "domain": "timezone",
     "difficulty": 1,
     "importance": "common",
     "points": 1,
@@ -25,19 +27,6 @@
     "answer": {
       "timezone": "America/Chicago"
     }
-  },
-
-  {
-    "id": "time-003",
-    "category": "time",
-    "difficulty": 1,
-    "importance": "common",
-    "points": 1,
-    "resource_group": "time-chrony",
-    "text": "Enable and start chronyd.",
-    "hint": "systemctl status chronyd",
-    "answer": {
-      "service": "chronyd"
-    }
   }
+
 ]

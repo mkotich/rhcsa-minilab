@@ -1,29 +1,91 @@
 [
   {
-    "id": "timers-001",
+    "id": "timer-001",
     "category": "timers",
-    "difficulty": 1,
+    "domain": "creation",
+    "difficulty": 2,
     "importance": "common",
     "points": 1,
-    "resource_group": "timers",
-    "text": "Enable and start logrotate.timer.",
-    "hint": "systemctl status logrotate.timer",
+    "resource_group": "none",
+    "text": "Create a systemd timer that runs /usr/bin/date every day at 01:00.",
+    "hint": "systemctl list-timers",
     "answer": {
-      "timer": "logrotate.timer"
+      "service": "date.service",
+      "timer": "date.timer",
+      "schedule": "daily-0100",
+      "command": "/usr/bin/date"
     }
   },
 
   {
-    "id": "timers-002",
+    "id": "timer-002",
     "category": "timers",
-    "difficulty": 1,
+    "domain": "creation",
+    "difficulty": 2,
     "importance": "common",
     "points": 1,
-    "resource_group": "timers",
-    "text": "Enable and start dnf-makecache.timer.",
-    "hint": "systemctl status dnf-makecache.timer",
+    "resource_group": "none",
+    "text": "Create a systemd timer that runs /usr/bin/uptime every day at 02:30.",
+    "hint": "systemctl list-timers",
     "answer": {
-      "timer": "dnf-makecache.timer"
+      "service": "uptime.service",
+      "timer": "uptime.timer",
+      "schedule": "daily-0230",
+      "command": "/usr/bin/uptime"
+    }
+  },
+
+  {
+    "id": "timer-010",
+    "category": "timers",
+    "domain": "creation",
+    "difficulty": 2,
+    "importance": "optional",
+    "points": 1,
+    "resource_group": "none",
+    "text": "Create a systemd timer that runs /usr/bin/hostname every hour.",
+    "hint": "systemctl list-timers",
+    "answer": {
+      "service": "hostname.service",
+      "timer": "hostname.timer",
+      "schedule": "hourly",
+      "command": "/usr/bin/hostname"
+    }
+  },
+
+  {
+    "id": "timer-020",
+    "category": "timers",
+    "domain": "boot",
+    "difficulty": 2,
+    "importance": "optional",
+    "points": 1,
+    "resource_group": "none",
+    "text": "Create a systemd timer that runs /usr/bin/date five minutes after boot.",
+    "hint": "OnBootSec",
+    "answer": {
+      "service": "bootdate.service",
+      "timer": "bootdate.timer",
+      "schedule": "boot+5m",
+      "command": "/usr/bin/date"
+    }
+  },
+
+  {
+    "id": "timer-030",
+    "category": "timers",
+    "domain": "verification",
+    "difficulty": 2,
+    "importance": "optional",
+    "points": 1,
+    "resource_group": "none",
+    "text": "Create and enable a systemd timer that runs /usr/bin/echo 'Hello' every Monday at 08:00.",
+    "hint": "systemctl status",
+    "answer": {
+      "service": "hello.service",
+      "timer": "hello.timer",
+      "schedule": "weekly",
+      "command": "/usr/bin/echo Hello"
     }
   }
 ]

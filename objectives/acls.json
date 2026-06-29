@@ -2,6 +2,7 @@
   {
     "id": "acls-001",
     "category": "acls",
+    "domain": "permissions",
     "difficulty": 1,
     "importance": "common",
     "points": 1,

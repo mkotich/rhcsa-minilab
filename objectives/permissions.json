@@ -2,6 +2,7 @@
   {
     "id": "permissions-001",
     "category": "permissions",
+    "domain": "permissions",
     "difficulty": 1,
     "importance": "common",
     "points": 1,
@@ -17,6 +18,7 @@
   {
     "id": "permissions-002",
     "category": "permissions",
+    "domain": "permissions",
     "difficulty": 1,
     "importance": "common",
     "points": 1,
@@ -32,6 +34,7 @@
   {
     "id": "permissions-003",
     "category": "permissions",
+    "domain": "permissions",
     "difficulty": 1,
     "importance": "common",
     "points": 1,

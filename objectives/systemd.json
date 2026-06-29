@@ -2,6 +2,7 @@
   {
     "id": "systemd-001",
     "category": "systemd",
+    "domain": "targets",
     "difficulty": 1,
     "importance": "common",
     "points": 1,
@@ -16,6 +17,7 @@
   {
     "id": "systemd-002",
     "category": "systemd",
+    "domain": "targets",
     "difficulty": 1,
     "importance": "common",
     "points": 1,

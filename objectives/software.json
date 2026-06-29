@@ -2,42 +2,45 @@
   {
     "id": "software-001",
     "category": "software",
+    "domain": "packages",
     "difficulty": 1,
     "importance": "core",
     "points": 1,
     "resource_group": "software-install",
-    "text": "Install the tcpdump package.",
-    "hint": "rpm -q tcpdump",
+    "text": "Install the nmap package.",
+    "hint": "rpm -q nmap",
     "answer": {
-      "package": "tcpdump"
+      "package": "nmap"
     }
   },
 
   {
     "id": "software-002",
     "category": "software",
+    "domain": "packages",
     "difficulty": 1,
     "importance": "core",
     "points": 1,
     "resource_group": "software-install",
-    "text": "Install the strace package.",
-    "hint": "rpm -q strace",
+    "text": "Install the screen package.",
+    "hint": "rpm -q screen",
     "answer": {
-      "package": "strace"
+      "package": "screen"
     }
   },
 
   {
     "id": "software-003",
     "category": "software",
+    "domain": "packages",
     "difficulty": 1,
     "importance": "core",
     "points": 1,
     "resource_group": "software-install",
-    "text": "Install the bind-utils package.",
-    "hint": "rpm -q bind-utils",
+    "text": "Install the tmux package.",
+    "hint": "rpm -q tmux",
     "answer": {
-      "package": "bind-utils"
+      "package": "tmux"
     }
   }
 ]

@@ -1,0 +1,49 @@
+[
+  {
+    "id": "sshd-001",
+    "category": "sshd",
+    "domain": "configuration",
+    "difficulty": 1,
+    "importance": "critical",
+    "points": 1,
+    "resource_group": "none",
+    "text": "Configure sshd to prohibit root login.",
+    "hint": "sshd_config",
+    "answer": {
+      "option": "PermitRootLogin",
+      "value": "no"
+    }
+  },
+
+  {
+    "id": "sshd-002",
+    "category": "sshd",
+    "domain": "configuration",
+    "difficulty": 1,
+    "importance": "critical",
+    "points": 1,
+    "resource_group": "none",
+    "text": "Configure sshd to disable password authentication.",
+    "hint": "sshd_config",
+    "answer": {
+      "option": "PasswordAuthentication",
+      "value": "no"
+    }
+  },
+
+  {
+    "id": "sshd-003",
+    "category": "sshd",
+    "domain": "configuration",
+    "difficulty": 2,
+    "importance": "common",
+    "points": 1,
+    "resource_group": "none",
+    "text": "Configure sshd to display the login banner contained in /etc/issue.net.",
+    "hint": "Banner",
+    "answer": {
+      "option": "Banner",
+      "value": "/etc/issue.net"
+    }
+  }
+]

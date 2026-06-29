@@ -2,41 +2,45 @@
   {
     "id": "selinux-001",
     "category": "selinux",
+    "domain": "booleans",
     "difficulty": 1,
-    "importance": "critical",
+    "importance": "common",
     "points": 1,
-    "resource_group": "selinux",
-    "text": "Set SELinux to enforcing mode.",
-    "hint": "getenforce",
+    "resource_group": "web",
+    "text": "Enable the SELinux boolean httpd_use_nfs persistently.",
+    "hint": "setsebool -P",
     "answer": {
-      "mode": "Enforcing"
+      "boolean": "httpd_use_nfs",
+      "state": "on"
     }
   },
 
   {
     "id": "selinux-002",
     "category": "selinux",
+    "domain": "booleans",
     "difficulty": 1,
-    "importance": "critical",
+    "importance": "common",
     "points": 1,
-    "resource_group": "selinux",
-    "text": "Enable the SELinux boolean httpd_enable_homedirs.",
+    "resource_group": "web",
+    "text": "Enable the SELinux boolean httpd_read_user_content persistently.",
     "hint": "getsebool",
     "answer": {
-      "boolean": "httpd_enable_homedirs",
-      "value": "on"
+      "boolean": "httpd_read_user_content",
+      "state": "on"
     }
   },
 
   {
-    "id": "selinux-003",
+    "id": "selinux-010",
     "category": "selinux",
-    "difficulty": 1,
+    "domain": "contexts",
+    "difficulty": 2,
     "importance": "critical",
     "points": 1,
-    "resource_group": "selinux",
+    "resource_group": "web",
     "text": "Configure /webdata with the SELinux context httpd_sys_content_t.",
-    "hint": "ls -Zd /webdata",
+    "hint": "semanage fcontext",
     "answer": {
       "path": "/webdata",
       "context": "httpd_sys_content_t"
@@ -44,17 +48,80 @@
   },
 
   {
-    "id": "selinux-004",
+    "id": "selinux-011",
     "category": "selinux",
-    "difficulty": 1,
+    "domain": "contexts",
+    "difficulty": 2,
     "importance": "critical",
     "points": 1,
-    "resource_group": "selinux",
-    "text": "Restore SELinux contexts on /webdata.",
+    "resource_group": "web",
+    "text": "Configure /uploads with the SELinux context httpd_sys_rw_content_t.",
     "hint": "restorecon",
     "answer": {
-      "path": "/webdata",
+      "path": "/uploads",
+      "context": "httpd_sys_rw_content_t"
+    }
+  },
+
+  {
+    "id": "selinux-012",
+    "category": "selinux",
+    "domain": "contexts",
+    "difficulty": 2,
+    "importance": "common",
+    "points": 1,
+    "resource_group": "web",
+    "text": "Configure /srv/www with the SELinux context httpd_sys_content_t.",
+    "hint": "semanage fcontext",
+    "answer": {
+      "path": "/srv/www",
       "context": "httpd_sys_content_t"
+    }
+  },
+
+  {
+    "id": "selinux-020",
+    "category": "selinux",
+    "domain": "restorecon",
+    "difficulty": 2,
+    "importance": "common",
+    "points": 1,
+    "resource_group": "web",
+    "text": "Restore the default SELinux contexts on /webdata.",
+    "hint": "restorecon",
+    "answer": {
+      "path": "/webdata"
+    }
+  },
+
+  {
+    "id": "selinux-021",
+    "category": "selinux",
+    "domain": "restorecon",
+    "difficulty": 2,
+    "importance": "common",
+    "points": 1,
+    "resource_group": "web",
+    "text": "Restore the default SELinux contexts on /uploads.",
+    "hint": "restorecon",
+    "answer": {
+      "path": "/uploads"
+    }
+  },
+
+  {
+    "id": "selinux-030",
+    "category": "selinux",
+    "domain": "ports",
+    "difficulty": 3,
+    "importance": "optional",
+    "points": 1,
+    "resource_group": "web",
+    "text": "Configure SELinux to allow httpd to listen on TCP port 9001.",
+    "hint": "semanage port",
+    "answer": {
+      "port": "9001",
+      "type": "http_port_t"
     }
   }
 ]

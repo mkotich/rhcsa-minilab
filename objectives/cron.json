@@ -2,6 +2,7 @@
   {
     "id": "cron-001",
     "category": "cron",
+    "domain": "creation",
     "difficulty": 1,
     "importance": "common",
     "points": 1,
@@ -17,6 +18,7 @@
   {
     "id": "cron-002",
     "category": "cron",
+    "domain": "creation",
     "difficulty": 1,
     "importance": "common",
     "points": 1,
@@ -26,6 +28,38 @@
     "answer": {
       "schedule": "30 2 * * *",
       "command": "/usr/bin/uptime"
+    }
+  },
+
+  {
+    "id": "cron-010",
+    "category": "cron",
+    "domain": "creation",
+    "difficulty": 1,
+    "importance": "optional",
+    "points": 1,
+    "resource_group": "none",
+    "text": "Configure a cron job for root to run /usr/bin/hostname every Monday at 08:00.",
+    "hint": "crontab -l",
+    "answer": {
+      "schedule": "0 8 * * 1",
+      "command": "/usr/bin/hostname"
+    }
+  },
+
+  {
+    "id": "cron-020",
+    "category": "cron",
+    "domain": "creation",
+    "difficulty": 2,
+    "importance": "optional",
+    "points": 1,
+    "resource_group": "none",
+    "text": "Configure an @reboot cron job for root to run /usr/bin/date.",
+    "hint": "@reboot",
+    "answer": {
+      "schedule": "@reboot",
+      "command": "/usr/bin/date"
     }
   }
 ]

@@ -2,6 +2,7 @@
   {
     "id": "kernel-001",
     "category": "kernel",
+    "domain": "kernel",
     "difficulty": 1,
     "importance": "optional",
     "points": 1,

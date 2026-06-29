@@ -2,6 +2,7 @@
   {
     "id": "networking-001",
     "category": "networking",
+    "domain": "ipv4",
     "difficulty": 1,
     "importance": "critical",
     "points": 1,
@@ -17,6 +18,7 @@
     "id": "networking-002",
     "category": "networking",
     "difficulty": 1,
+    "domain": "ipv4",
     "importance": "critical",
     "points": 1,
     "resource_group": "network",
@@ -30,6 +32,7 @@
   {
     "id": "networking-003",
     "category": "networking",
+    "domain": "ipv4",
     "difficulty": 1,
     "importance": "critical",
     "points": 1,
@@ -44,6 +47,7 @@
   {
     "id": "networking-004",
     "category": "networking",
+    "domain": "ipv4",
     "difficulty": 1,
     "importance": "critical",
     "points": 1,

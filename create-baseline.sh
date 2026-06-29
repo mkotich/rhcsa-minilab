@@ -1,5 +1,8 @@
 #!/bin/bash
 
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+source "${SCRIPT_DIR}/variables.conf"
+
 verify_root()
 {
     if [ "$EUID" -ne 0 ]
@@ -20,33 +23,116 @@ Options:
     --help
         Display this help message.
 
-    --audit-all-objectives
-    Create a temporary exam containing every objective,
-    run the grading engine against the current baseline,
-    and report objectives that are already satisfied.
+    --validate-all-objectives
+        Validate objective JSON files and schema.
 
-    Intended for developers after adding or modifying
-    objectives prior to release.
+    --audit-all-objectives
+        Create a temporary exam containing every objective,
+        run the grading engine against the current baseline,
+        and report objectives that are already satisfied.
 
 No option:
 
     Create a new baseline from the current system.
-
 HELP
+}
+
+validate_all_objectives()
+{
+    echo
+    echo "================================================="
+    echo "RHCSA MiniLab Objective Validation"
+    echo "================================================="
+    echo
+
+    echo "Checking objective files..."
+    echo
+
+    #
+    # Validate JSON syntax
+    #
+    for FILE in objectives/*.json
+    do
+        jq empty "$FILE" >/dev/null 2>&1 || {
+            echo "[FAIL] Invalid JSON:"
+            echo "    $FILE"
+            echo
+            return 1
+        }
+    done
+
+    echo "[PASS] JSON syntax"
+
+    #
+    # Validate required fields
+    #
+    for FILE in objectives/*.json
+    do
+        jq -e '
+            .[] |
+            has("id") and
+            has("category") and
+            has("domain") and
+            has("difficulty") and
+            has("importance") and
+            has("points") and
+            has("resource_group") and
+            has("text") and
+            has("hint") and
+            has("answer")
+        ' "$FILE" >/dev/null || {
+            echo "[FAIL] Missing required field(s):"
+            echo "    $FILE"
+            echo
+            return 1
+        }
+    done
+
+    echo "[PASS] Required fields"
+
+    #
+    # Validate duplicate IDs
+    #
+    DUPLICATES=$(
+        jq -r '.[].id' objectives/*.json |
+        sort |
+        uniq -d
+    )
+
+    if [ -n "$DUPLICATES" ]
+    then
+        echo "[FAIL] Duplicate objective ID(s):"
+        echo
+        echo "$DUPLICATES"
+        echo
+        return 1
+    fi
+
+    echo "[PASS] Duplicate IDs"
+
+    FILE_COUNT=$(find objectives -name '*.json' | wc -l)
+    OBJECTIVE_COUNT=$(jq -s 'add | length' objectives/*.json)
+
+    echo
+    echo "Validation successful."
+    echo
+    printf "Files Checked      %s\n" "$FILE_COUNT"
+    printf "Objectives         %s\n" "$OBJECTIVE_COUNT"
+    echo
 }
 
 audit_all_objectives()
 {
-    TMPDIR=$(mktemp -d)
-
-    trap 'rm -rf "$TMPDIR"' EXIT
-
-    jq -cs 'add' "${SCRIPT_DIR}"/objectives/*.json
-        > "$TMPDIR/exam-state.json"
+    validate_all_objectives || return 1
 
     echo
     echo "Running baseline audit..."
-    echo
+
+    TMPDIR=$(mktemp -d)
+    trap 'rm -rf "$TMPDIR"' EXIT
+
+    jq -cs 'add' "${SCRIPT_DIR}"/objectives/*.json \
+        > "$TMPDIR/exam-state.json"
 
     OUTPUT=$(
         STATE="$TMPDIR/exam-state.json" \
@@ -62,7 +148,6 @@ audit_all_objectives()
 
     FAIL_COUNT=$((TOTAL - PASS_COUNT))
 
-    echo
     echo "================================================="
     echo "RHCSA MiniLab Baseline Audit"
     echo "================================================="
@@ -132,6 +217,17 @@ then
     echo "Then run create-baseline.sh again."
     echo
 
+    echo "If you were looking for other functionality, try:"
+    echo
+    echo "    ./create-baseline.sh --help"
+    echo
+    echo "or run:"
+    echo
+    echo "    ./create-baseline.sh --validate-all-objectives"
+    echo "    ./create-baseline.sh --audit-all-objectives"
+    echo
+    echo "to validate objectives and audit the current baseline."
+
     exit 1
 fi
 
@@ -174,6 +270,10 @@ verify_root
 case "$1" in
     --help)
         show_help
+        ;;
+
+    --validate-all-objectives)
+        validate_all_objectives
         ;;
 
     --audit-all-objectives)
