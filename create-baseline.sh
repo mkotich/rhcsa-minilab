@@ -111,6 +111,30 @@ create_baseline()
 {
     BASELINE=/baseline
 
+if [ -d "$BASELINE" ]
+then
+    echo
+    echo "ERROR: A baseline already exists."
+    echo
+
+    if [ -f /baseline.version ]
+    then
+        echo "Existing baseline commit:"
+        printf "    %.12s\n\n" "$(cat /baseline.version)"
+        echo
+    fi
+
+    echo "To intentionally replace the baseline, remove:"
+    echo
+    echo "    /baseline"
+    echo "    /baseline.version"
+    echo
+    echo "Then run create-baseline.sh again."
+    echo
+
+    exit 1
+fi
+
     echo
     echo "Creating baseline..."
     echo
