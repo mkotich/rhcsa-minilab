@@ -9,7 +9,7 @@ GRADE_MODE="${GRADE_MODE:-normal}"
 #
 # Load all graders
 #
-for LIB in lib/*.sh
+for LIB in "${SCRIPT_DIR}"/lib/*.sh
 do
     source "$LIB"
 done

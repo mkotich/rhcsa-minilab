@@ -41,7 +41,7 @@ audit_all_objectives()
 
     trap 'rm -rf "$TMPDIR"' EXIT
 
-    jq -cs 'add' objectives/*.json \
+    jq -cs 'add' "${SCRIPT_DIR}"/objectives/*.json
         > "$TMPDIR/exam-state.json"
 
     echo

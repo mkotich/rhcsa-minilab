@@ -77,7 +77,7 @@ esac
 
 SELECTED=$(mktemp)
 
-ALL_OBJECTIVES=$(jq -cs 'add' objectives/*.json)
+ALL_OBJECTIVES=$(jq -cs 'add' "${SCRIPT_DIR}"/objectives/*.json)
 #
 # Filter objectives based on lab mode
 #

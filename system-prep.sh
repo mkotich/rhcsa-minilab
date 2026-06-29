@@ -15,8 +15,6 @@ verify_root()
     fi
 }
 
-source ./variables.conf
-
 ########################################
 # Common Functions
 ########################################

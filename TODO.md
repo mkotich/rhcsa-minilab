@@ -49,6 +49,22 @@
 
 ## v1.1.0 - Multi-Node Support
 
+##Practice Modes
+- [ ] Add category-specific practice exams.
+- [ ] Support commands such as:
+      ./launch-exam storage
+      ./launch-exam networking
+      ./launch-exam selinux
+      ./launch-exam users
+      ./launch-exam systemd
+      ./launch-exam firewall
+      ./launch-exam containers
+
+- [ ] Restrict objective selection to the requested category while
+      preserving existing importance and resource-group rules.
+
+- [ ] Update README with recommended study workflows.
+
 ### Server VM objectives
 - [ ] NFS objectives
 - [ ] Additional NFS variants
