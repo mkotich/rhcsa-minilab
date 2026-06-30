@@ -1,148 +1,140 @@
-# RHCSA MiniLab TODO
-# ==================
+# RHCSA MiniLab Roadmap
 
-Guiding Principles
-------------------
+## Completed
 
-- The MiniLab emphasizes system administration over fault hunting.
-- Objectives teach administrative skills.
-- Scenarios (Intentional Breakages) exist only when required to make an
-  objective meaningful.
-- Random breakage is intentionally avoided.
-- Preparation creates realistic environments; scenarios introduce only the
-  minimum breakage necessary to support an objective.
+### Framework
+- [x] Objective selection engine
+- [x] Resource group framework
+- [x] Scenario framework
+- [x] Preparation framework
+- [x] Objective parameterization
+- [x] DEBUG_OBJECTIVE development mode
+- [x] End-to-end grading framework
 
-======================================================================
+### Storage
+- [x] Reusable storage library
+- [x] LVM creation helpers
+- [x] Cleanup helpers
+- [x] Validation helpers
+- [x] Grading helpers
+- [x] storage-001
+- [x] storage-002
+- [x] storage-003
+- [x] storage-004
 
-HIGH PRIORITY
+---
 
-[ ] Resource Groups
-    [ ] Discover required resource groups from selected objectives.
-    [ ] De-duplicate resource groups.
-    [ ] Display required resource groups during exam generation.
-    [ ] Implement prepare/ framework.
-    [ ] Add preparation modules:
-            web
-            storage
-            flatpak
-            time
-            nfs
+## In Progress
 
-[ ] Category Practice Mode
-    Examples:
-        ./launch-exam category selinux
-        ./launch-exam category storage
-        ./launch-exam category scripts
-        ./launch-exam category firewall
+### Archive
+- [ ] Complete scenarios
+- [ ] Complete grading
+- [ ] End-to-end testing
 
-    Goal:
-        Practice a single category instead of a mixed exam.
+### Networking
+- [ ] Complete scenarios
+- [ ] Complete grading
+- [ ] End-to-end testing
 
-[ ] Archive
-    Grader enhancements:
-        [ ] Grade extraction to alternate directories
-        [ ] Grade archive listings
-        [ ] Grade exclusions
-        [ ] Grade partial extraction
+### NFS
+- [ ] Complete scenarios
+- [ ] Complete grading
+- [ ] End-to-end testing
 
-======================================================================
+### Packages
+- [ ] Complete scenarios
+- [ ] Complete grading
+- [ ] End-to-end testing
 
-MEDIUM PRIORITY
+### Time
+- [ ] Complete scenarios
+- [ ] Complete grading
+- [ ] End-to-end testing
 
-[ ] Scenarios (Intentional Breakages)
+### Web
+- [ ] Complete scenarios
+- [ ] Complete grading
+- [ ] End-to-end testing
 
-    Implement ONLY when they directly support an objective.
+### SELinux
+- [ ] Complete scenarios
+- [ ] Complete grading
+- [ ] End-to-end testing
 
-    Initial scenarios:
+---
 
-        [ ] Restore SELinux contexts
-        [ ] Broken /etc/fstab
-        [ ] Broken local repository
-        [ ] Wrong firewall zone
-        [ ] Wrong Chrony configuration
-        [ ] Flatpak installed in wrong scope
+## Remaining Objective Categories
 
-    Rules:
+### Users & Groups
+- [ ] User administration
+- [ ] Password aging
+- [ ] Group administration
 
-        - A scenario must exist to support an objective.
-        - Avoid random failures.
-        - Keep scenarios few in number.
-        - Reuse scenarios whenever possible.
+### Permissions
+- [ ] Ownership
+- [ ] chmod
+- [ ] SGID
+- [ ] Sticky bit
+- [ ] ACLs
 
-[ ] Storage
-    [ ] Broken UUID in /etc/fstab
-    [ ] Missing filesystem
-    [ ] Incorrect mount options
-    [ ] Persistent UUID mounting
-    [ ] LVM repair exercises
+### Systemd
+- [ ] Services
+- [ ] Targets
+- [ ] Timers
 
-[ ] SELinux
-    [ ] AVC investigation
-    [ ] restorecon practice
-    [ ] Context troubleshooting
-    [ ] Port labeling
-    [ ] Boolean management
+### Boot Recovery
+- [ ] Root password reset
+- [ ] Emergency mode
+- [ ] GRUB recovery
 
-[ ] SSH
-    [ ] Login banner
-    [ ] Idle timeout
-    [ ] User restrictions
-    [ ] Alternate SSH port
+### Containers
+- [ ] Podman
+- [ ] Container services
+- [ ] Quadlets
 
-[ ] Chrony
-    [ ] Verification
-    [ ] Multiple time sources
-    [ ] Server configuration
-    [ ] Synchronization troubleshooting
+### Scripting
+- [ ] Bash scripting objectives
 
-======================================================================
+---
 
-DEVELOPER TOOLS
+## Framework Improvements
 
-[ ] Expand --validate-all-objectives
+- [ ] Scenario validation before launch
+- [ ] Duplicate objective detection
+- [ ] Objective dependency validation
+- [ ] Persistent reboot verification
+- [ ] Better grading diagnostics
+- [ ] Instructor answer key generation
+- [ ] Exam statistics
+- [ ] Objective coverage report
+- [ ] Unit tests for grading libraries
 
-    [ ] Validate resource groups
-    [ ] Validate domains
-    [ ] Validate category names
-    [ ] Detect duplicate objective text (warning)
-    [ ] Verify grader exists for every category
-    [ ] Objective statistics
+---
 
-======================================================================
+## Release Milestones
 
-FUTURE ENHANCEMENTS
+### v0.4
+- [x] Storage framework complete
 
-[ ] Domain Practice Mode
+### v0.5
+- [ ] Archive
+- [ ] Networking
+- [ ] Packages
+- [ ] NFS
+- [ ] Time
 
-    Examples:
+### v0.6
+- [ ] Web
+- [ ] SELinux
+- [ ] Permissions
 
-        ./launch-exam domain selinux contexts
-        ./launch-exam domain firewall services
-        ./launch-exam domain storage lvm
+### v0.7
+- [ ] Services
+- [ ] Users
+- [ ] Boot recovery
 
-[ ] Statistics
-
-    [ ] Objectives by category
-    [ ] Objectives by domain
-    [ ] Objectives by resource group
-    [ ] Difficulty distribution
-
-[ ] Release Workflow
-
-    validate
-        ↓
-    audit
-        ↓
-    create baseline
-
-======================================================================
-
-PARKING LOT
-
-- Podman / container objectives
-- Ansible objectives
-- Complex networking
-- Bootloader recovery
-- Root password recovery
-- Multi-host SSH key management
-- Dynamic scenario chaining
+### v1.0
+- [ ] Complete objective library
+- [ ] Fully randomized exams
+- [ ] Documentation
+- [ ] Stable release

@@ -84,7 +84,7 @@
     "category": "selinux",
     "domain": "restorecon",
     "difficulty": 2,
-    "importance": "core",
+    "importance": "common",
     "points": 1,
     "resource_group": "web",
     "scenario": "bad-contexts",

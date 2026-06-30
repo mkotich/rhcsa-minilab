@@ -2,53 +2,62 @@
   {
     "id": "storage-001",
     "category": "storage",
-    "domain": "lvm",
-    "difficulty": 1,
+    "domain": "filesystem",
+    "difficulty": 2,
     "importance": "core",
     "points": 1,
     "resource_group": "storage",
-    "text": "Create an XFS logical volume named lvdata in volume group vgdata using /dev/sdb and mount it persistently at /data.",
-    "hint": "pvcreate vgcreate lvcreate mkfs.xfs mount /etc/fstab",
+    "text": "Create an XFS filesystem on logical volume lvapps in volume group vgapps and mount it persistently at /apps using the filesystem UUID.",
+    "hint": "blkid",
     "answer": {
-      "volume_group": "vgdata",
-      "logical_volume": "lvdata",
-      "filesystem": "xfs",
-      "mountpoint": "/data"
+      "vg": "vgapps",
+      "lv": "lvapps",
+      "fstype": "xfs",
+      "mountpoint": "/apps",
+      "persistent": true,
+      "use_uuid": true
     }
   },
 
   {
     "id": "storage-002",
     "category": "storage",
-    "domain": "lvm",
-    "difficulty": 1,
+    "domain": "mounts",
+    "difficulty": 2,
     "importance": "core",
     "points": 1,
     "resource_group": "storage",
-    "text": "Create an XFS logical volume named lvarchive in volume group vgarchive and mount it persistently at /archive.",
-    "hint": "lvm xfs fstab",
+    "scenario": "wrong-uuid",
+    "text": "Repair the persistent mount for /apps using the correct filesystem UUID.",
+    "hint": "blkid",
     "answer": {
-      "volume_group": "vgarchive",
-      "logical_volume": "lvarchive",
-      "filesystem": "xfs",
-      "mountpoint": "/archive"
+      "vg": "vgapps",
+      "lv": "lvapps",
+      "fstype": "xfs",
+      "mountpoint": "/apps",
+      "persistent": true,
+      "use_uuid": true
     }
   },
 
   {
     "id": "storage-003",
     "category": "storage",
-    "domain": "lvm",
-    "difficulty": 1,
+    "domain": "mounts",
+    "difficulty": 2,
     "importance": "core",
     "points": 1,
     "resource_group": "storage",
-    "text": "Create a 1G swap logical volume named lvswap in volume group vgswap and activate it persistently.",
-    "hint": "mkswap swapon",
+    "scenario": "missing-fstab",
+    "text": "Configure /apps to mount persistently using the filesystem UUID.",
+    "hint": "/etc/fstab",
     "answer": {
-      "volume_group": "vgswap",
-      "logical_volume": "lvswap",
-      "filesystem": "swap"
+      "vg": "vgapps",
+      "lv": "lvapps",
+      "fstype": "xfs",
+      "mountpoint": "/apps",
+      "persistent": true,
+      "use_uuid": true
     }
   },
 
@@ -56,33 +65,18 @@
     "id": "storage-004",
     "category": "storage",
     "domain": "lvm",
-    "difficulty": 1,
+    "difficulty": 3,
     "importance": "core",
-    "points": 1,
+    "points": 2,
     "resource_group": "storage",
-    "text": "Create an ext4 filesystem on /dev/sdb1 and mount it persistently at /backup.",
-    "hint": "fdisk mkfs.ext4 mount /etc/fstab",
+    "text": "Extend logical volume lvapps by ${SIZE}. Ensure the filesystem is also expanded to use the additional space.",
+    "hint": "lvextend",
     "answer": {
-      "partition": "/dev/sdb1",
-      "filesystem": "ext4",
-      "mountpoint": "/backup"
-    }
-  },
-
-  {
-    "id": "storage-005",
-    "category": "storage",
-    "domain": "lvm",
-    "difficulty": 1,
-    "importance": "core",
-    "points": 1,
-    "resource_group": "storage",
-    "text": "Create a volume group named vgapps and a logical volume named lvapps mounted persistently at /apps.",
-    "hint": "vgcreate lvcreate mkfs mount",
-    "answer": {
-      "volume_group": "vgapps",
-      "logical_volume": "lvapps",
-      "mountpoint": "/apps"
+      "vg": "vgapps",
+      "lv": "lvapps",
+      "mountpoint": "/apps",
+      "grow_by": "${SIZE}",
+      "grow_filesystem": true
     }
   }
 ]

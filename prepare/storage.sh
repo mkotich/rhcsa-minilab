@@ -2,12 +2,15 @@
 
 set -e
 
-#
-# Resource Group:
-#     storage
-#
+source lib/storage.sh
 
 prepare_storage()
 {
-    test -b /dev/sdb
+    create_lvm \
+        /dev/sdb \
+        vgapps \
+        lvapps \
+        512M \
+        xfs \
+        /apps
 }

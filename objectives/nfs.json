@@ -4,7 +4,7 @@
     "category": "nfs",
     "domain": "mounts",
     "difficulty": 1,
-    "importance": "optional",
+    "importance": "core",
     "requires": [
         "server"
     ],

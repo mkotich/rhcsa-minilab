@@ -6,7 +6,7 @@
     "difficulty": 1,
     "importance": "common",
     "points": 1,
-    "resource_group": "none",
+    "resource_group": "archive",
     "text": "Create a gzip-compressed archive named /root/etc.tar.gz containing /etc.",
     "hint": "tar tf",
     "answer": {
@@ -21,7 +21,7 @@
     "difficulty": 1,
     "importance": "common",
     "points": 1,
-    "resource_group": "none",
+    "resource_group": "archive",
     "text": "Create a bzip2-compressed archive named /root/home.tar.bz2 containing /home.",
     "hint": "tar tf",
     "answer": {
@@ -36,7 +36,7 @@
     "difficulty": 1,
     "importance": "common",
     "points": 1,
-    "resource_group": "none",
+    "resource_group": "archive",
     "text": "Create an xz-compressed archive named /root/varlog.tar.xz containing /var/log.",
     "hint": "tar tf",
     "answer": {
@@ -51,7 +51,7 @@
     "difficulty": 2,
     "importance": "common",
     "points": 1,
-    "resource_group": "none",
+    "resource_group": "archive",
     "text": "Extract /root/etc.tar.gz into /restore.",
     "hint": "tar xf",
     "answer": {
@@ -67,7 +67,7 @@
     "difficulty": 2,
     "importance": "optional",
     "points": 1,
-    "resource_group": "none",
+    "resource_group": "archive",
     "text": "Create /root/etc-files.txt containing a list of every file stored in /root/etc.tar.gz.",
     "hint": "tar tf",
     "answer": {
@@ -83,7 +83,7 @@
     "difficulty": 2,
     "importance": "common",
     "points": 1,
-    "resource_group": "none",
+    "resource_group": "archive",
     "text": "Create a gzip-compressed archive named /root/etc-no-ssh.tar.gz containing /etc but excluding the ssh directory.",
     "hint": "--exclude",
     "answer": {
@@ -98,7 +98,7 @@
     "difficulty": 3,
     "importance": "optional",
     "points": 1,
-    "resource_group": "none",
+    "resource_group": "archive",
     "text": "Extract only the passwd file from /root/etc.tar.gz into /restore.",
     "hint": "tar xf",
     "answer": {

@@ -7,6 +7,8 @@ source "${SCRIPT_DIR}/variables.conf"
 
 MODE="$1"
 
+DEBUG_OBJECTIVE="${DEBUG_OBJECTIVE:-}"
+
 case "$MODE" in
     mini)
         OBJECTIVES=5
@@ -195,6 +197,29 @@ fill_remaining()
     done
 }
 
+random_storage_growth_size()
+{
+    local SIZES=(
+        128M
+        256M
+        384M
+
+        128MiB
+        256MiB
+        384MiB
+
+        1G
+        2G
+        3G
+
+        1GiB
+        2GiB
+        3GiB
+    )
+
+    printf '%s\n' "${SIZES[$(( RANDOM % ${#SIZES[@]} ))]}"
+}
+
 display_resource_groups()
 {
     [ -z "$RESOURCE_GROUPS" ] && return
@@ -295,27 +320,76 @@ if ! declare -F "$FUNCTION" >/dev/null
 }
 
 #
-# Mandatory categories
+# Select exam objectives.
 #
-for CATEGORY in "${CRITICAL_CATEGORIES[@]}"
-do
-    select_category "$CATEGORY"
-done
 
-#
-# Remaining objectives
-#
-select_importance core "$CORE_COUNT"
-select_importance common "$COMMON_COUNT"
-select_importance optional "$OPTIONAL_COUNT"
+if [ -n "$DEBUG_OBJECTIVE" ]
+then
+    echo "$ALL_OBJECTIVES" |
+    jq -c --arg id "$DEBUG_OBJECTIVE" '
+        .[]
+        | select(.id == $id)
+    ' |
+    while read OBJECT
+    do
+        add_objective "$OBJECT"
+        break
+    done
 
-#
-# Fill remaining slots
-#
-fill_remaining
+else
 
+    #
+    # Mandatory categories
+    #
+    for CATEGORY in "${CRITICAL_CATEGORIES[@]}"
+    do
+        select_category "$CATEGORY"
+    done
+
+    #
+    # Remaining objectives
+    #
+    select_importance core "$CORE_COUNT"
+    select_importance common "$COMMON_COUNT"
+    select_importance optional "$OPTIONAL_COUNT"
+
+    #
+    # Fill remaining slots
+    #
+    fill_remaining
+
+fi
 
 jq -s '.' "$SELECTED" > /home/student/exam-state.json
+
+#
+# Parameterize objectives.
+#
+
+if jq -e '.[] | select(.id=="storage-004")' \
+    /home/student/exam-state.json >/dev/null
+then
+    SIZE=$(random_storage_growth_size)
+
+    jq \
+        --arg size "$SIZE" '
+        map(
+            if .id=="storage-004"
+            then
+                .text |= (split("${SIZE}") | join($size))
+                | .answer.grow_by = $size
+            else
+                .
+            end
+        )
+        ' \
+        /home/student/exam-state.json \
+        > /tmp/exam-state.$$
+
+    mv \
+        /tmp/exam-state.$$ \
+        /home/student/exam-state.json
+fi
 
 RESOURCE_GROUPS=$(
     jq -r '.[].resource_group' /home/student/exam-state.json |
