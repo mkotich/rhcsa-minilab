@@ -6,7 +6,7 @@
     "difficulty": 1,
     "importance": "common",
     "points": 1,
-    "resource_group": "systemd",
+    "resource_group": "none",
     "text": "Set the default target to multi-user.target.",
     "hint": "systemctl get-default",
     "answer": {
@@ -21,7 +21,7 @@
     "difficulty": 1,
     "importance": "common",
     "points": 1,
-    "resource_group": "systemd",
+    "resource_group": "none",
     "text": "Mask bluetooth.service.",
     "hint": "systemctl is-enabled bluetooth.service",
     "answer": {

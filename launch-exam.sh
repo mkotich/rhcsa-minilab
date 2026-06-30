@@ -1,6 +1,8 @@
 #!/bin/bash
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+export RHCSA_MINILAB_ROOT="$SCRIPT_DIR"
+
 source "${SCRIPT_DIR}/variables.conf"
 
 MODE="$1"
@@ -97,7 +99,6 @@ then
     )
 fi
 
-declare -A USED_RESOURCE_GROUPS
 declare -A CATEGORY_COUNT
 
 add_objective()
@@ -112,7 +113,6 @@ add_objective()
     fi
 
     CATEGORY=$(echo "$OBJECT" | jq -r '.category')
-    RESOURCE_GROUP=$(echo "$OBJECT" | jq -r '.resource_group // "none"')
 
     #
     # Category limit
@@ -122,25 +122,9 @@ add_objective()
         return
     fi
 
-    #
-    # Resource group already used?
-    #
-    if [ "$RESOURCE_GROUP" != "none" ]
-    then
-        if [ -n "${USED_RESOURCE_GROUPS[$RESOURCE_GROUP]}" ]
-        then
-            return
-        fi
-    fi
-
     echo "$OBJECT" >> "$SELECTED"
 
     CATEGORY_COUNT[$CATEGORY]=$(( ${CATEGORY_COUNT[$CATEGORY]:-0} + 1 ))
-
-    if [ "$RESOURCE_GROUP" != "none" ]
-    then
-        USED_RESOURCE_GROUPS[$RESOURCE_GROUP]=1
-    fi
 }
 
 select_category()
@@ -211,6 +195,105 @@ fill_remaining()
     done
 }
 
+display_resource_groups()
+{
+    [ -z "$RESOURCE_GROUPS" ] && return
+
+    echo
+    echo "Required Resource Groups"
+    echo "------------------------"
+
+    while read GROUP
+    do
+        [ -z "$GROUP" ] && continue
+
+        printf "  - %s\n" "$GROUP"
+
+    done <<< "$RESOURCE_GROUPS"
+}
+
+prepare_resources()
+{
+    [ -z "$RESOURCE_GROUPS" ] && return
+
+    echo "Preparing resources..."
+    echo
+
+    while read GROUP
+    do
+        [ -z "$GROUP" ] && continue
+
+        MODULE="${SCRIPT_DIR}/prepare/${GROUP}.sh"
+
+        if [ ! -f "$MODULE" ]
+        then
+            echo "ERROR: Missing preparation module: $GROUP"
+            exit 1
+        fi
+
+	source "${SCRIPT_DIR}/lib/prepare.sh"
+        source "$MODULE"
+
+        FUNCTION="prepare_${GROUP}"
+
+        if ! declare -F "$FUNCTION" >/dev/null
+        then
+            echo "ERROR: Missing function ${FUNCTION}()"
+            exit 1
+        fi
+
+        echo "  Preparing $GROUP..."
+
+        "$FUNCTION"
+
+    done <<< "$RESOURCE_GROUPS"
+}
+
+apply_scenarios()
+{
+    echo
+    echo "Applying scenarios..."
+    echo
+
+    while IFS=: read -r GROUP SCENARIO
+    do
+        echo "  ${GROUP}/${SCENARIO}"
+
+        MODULE="${SCRIPT_DIR}/scenarios/${GROUP}/${SCENARIO}.sh"
+        FUNCTION="scenario_${GROUP}_${SCENARIO//-/_}"
+
+if [ ! -f "$MODULE" ]
+then
+    echo
+    echo "ERROR: Scenario module not found:"
+    echo "    $MODULE"
+    exit 1
+fi
+
+source "$MODULE"
+
+if ! declare -F "$FUNCTION" >/dev/null
+    then
+        echo
+        echo "ERROR: Scenario function not found:"
+        echo "    $FUNCTION"
+        exit 1
+    fi
+
+    "$FUNCTION"
+
+    done < <(
+
+        jq -r '
+            .[]
+            | select(has("scenario"))
+            | "\(.resource_group):\(.scenario)"
+        ' /home/student/exam-state.json |
+        sort -u
+
+    )
+}
+
 #
 # Mandatory categories
 #
@@ -233,6 +316,12 @@ fill_remaining
 
 
 jq -s '.' "$SELECTED" > /home/student/exam-state.json
+
+RESOURCE_GROUPS=$(
+    jq -r '.[].resource_group' /home/student/exam-state.json |
+    grep -v '^none$' |
+    sort -u
+)
 
 {
 echo "================================================="
@@ -280,6 +369,12 @@ echo
 echo "Mode:          $MODE"
 echo "Objectives:    $OBJECTIVES"
 echo "Time Limit:    $TIME_LIMIT"
+echo
+display_resource_groups
+echo
+prepare_resources
+echo
+apply_scenarios
 echo
 echo "Exam file:"
 echo "    /home/student/EXAM.txt"

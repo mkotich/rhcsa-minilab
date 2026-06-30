@@ -6,7 +6,7 @@
     "difficulty": 1,
     "importance": "common",
     "points": 1,
-    "resource_group": "time-timezone",
+    "resource_group": "time",
     "text": "Configure the system timezone to America/New_York.",
     "hint": "timedatectl",
     "answer": {
@@ -21,7 +21,7 @@
     "difficulty": 1,
     "importance": "common",
     "points": 1,
-    "resource_group": "time-timezone",
+    "resource_group": "time",
     "text": "Configure the system timezone to America/Chicago.",
     "hint": "timedatectl",
     "answer": {

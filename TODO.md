@@ -1,132 +1,148 @@
-# RHCSA MiniLab Roadmap
+# RHCSA MiniLab TODO
+# ==================
 
-## v0.9.0 - Quality Improvements
+Guiding Principles
+------------------
 
-### Intelligent objective selection
-- [ ] Eliminate all objectives that pass the baseline audit.
-- [ ] Document baseline audit workflow for developers in README.
-- [ ] Balance categories across exams
-- [ ] Prevent repetitive objective combinations
-- [ ] Split resource families into finer groups
-- [ ] Fill remaining slots intelligently
+- The MiniLab emphasizes system administration over fault hunting.
+- Objectives teach administrative skills.
+- Scenarios (Intentional Breakages) exist only when required to make an
+  objective meaningful.
+- Random breakage is intentionally avoided.
+- Preparation creates realistic environments; scenarios introduce only the
+  minimum breakage necessary to support an objective.
 
-### Objective wording improvements
-- [ ] Eliminate hidden assumptions
-- [ ] Improve permissions objectives
-- [ ] State initial permissions when testing sticky/setgid bits
-- [ ] Clarify archive wording
-- [ ] Clarify service wording
-- [ ] Review all objectives for ambiguity
+======================================================================
 
-### Grading polish
-- [ ] Fix discovered grading bugs
-- [ ] Keep grading strict
-- [ ] Continue real-world exam testing
+HIGH PRIORITY
 
----
+[ ] Resource Groups
+    [ ] Discover required resource groups from selected objectives.
+    [ ] De-duplicate resource groups.
+    [ ] Display required resource groups during exam generation.
+    [ ] Implement prepare/ framework.
+    [ ] Add preparation modules:
+            web
+            storage
+            flatpak
+            time
+            nfs
 
-## v1.0.0 - Single Node Mode (Default)
+[ ] Category Practice Mode
+    Examples:
+        ./launch-exam category selinux
+        ./launch-exam category storage
+        ./launch-exam category scripts
+        ./launch-exam category firewall
 
-### Single node support
-- [ ] Make single-node mode the default
-- [ ] Do not modify redhat.repo
-- [ ] Use CDN repositories normally
-- [ ] No server VM required
+    Goal:
+        Practice a single category instead of a mixed exam.
 
-### Capability-aware objective filtering
-- [ ] Exclude NFS objectives in single-node mode
-- [ ] Add capability flags
-- [ ] Filter objective pool automatically
+[ ] Archive
+    Grader enhancements:
+        [ ] Grade extraction to alternate directories
+        [ ] Grade archive listings
+        [ ] Grade exclusions
+        [ ] Grade partial extraction
 
-### Configuration flags
-- [ ] ENABLE_SERVER
-- [ ] ENABLE_NFS
-- [ ] ENABLE_PODMAN
-- [ ] ENABLE_ANSIBLE
-- [ ] ENABLE_RECOVERY
+======================================================================
 
----
+MEDIUM PRIORITY
 
-## v1.1.0 - Multi-Node Support
+[ ] Scenarios (Intentional Breakages)
 
-##Practice Modes
-- [ ] Add category-specific practice exams.
-- [ ] Support commands such as:
-      ./launch-exam storage
-      ./launch-exam networking
-      ./launch-exam selinux
-      ./launch-exam users
-      ./launch-exam systemd
-      ./launch-exam firewall
-      ./launch-exam containers
+    Implement ONLY when they directly support an objective.
 
-- [ ] Restrict objective selection to the requested category while
-      preserving existing importance and resource-group rules.
+    Initial scenarios:
 
-- [ ] Update README with recommended study workflows.
+        [ ] Restore SELinux contexts
+        [ ] Broken /etc/fstab
+        [ ] Broken local repository
+        [ ] Wrong firewall zone
+        [ ] Wrong Chrony configuration
+        [ ] Flatpak installed in wrong scope
 
-### Server VM objectives
-- [ ] NFS objectives
-- [ ] Additional NFS variants
-- [ ] HTTP objectives
-- [ ] Database objectives
-- [ ] Future rsync objectives
+    Rules:
 
-### Multi-machine capabilities
-- [ ] Internal repositories
-- [ ] Shared services
-- [ ] Capability detection
+        - A scenario must exist to support an objective.
+        - Avoid random failures.
+        - Keep scenarios few in number.
+        - Reuse scenarios whenever possible.
 
----
+[ ] Storage
+    [ ] Broken UUID in /etc/fstab
+    [ ] Missing filesystem
+    [ ] Incorrect mount options
+    [ ] Persistent UUID mounting
+    [ ] LVM repair exercises
 
-## v1.2.0 - Optional Categories
+[ ] SELinux
+    [ ] AVC investigation
+    [ ] restorecon practice
+    [ ] Context troubleshooting
+    [ ] Port labeling
+    [ ] Boolean management
 
-### Podman
-- [ ] Podman objectives
-- [ ] Optional category
-- [ ] Disable by default
+[ ] SSH
+    [ ] Login banner
+    [ ] Idle timeout
+    [ ] User restrictions
+    [ ] Alternate SSH port
 
-### Ansible
-- [ ] Ansible objectives
-- [ ] Optional category
-- [ ] Disable by default
+[ ] Chrony
+    [ ] Verification
+    [ ] Multiple time sources
+    [ ] Server configuration
+    [ ] Synchronization troubleshooting
 
----
+======================================================================
 
-## v2.0.0 - Recovery Mode
+DEVELOPER TOOLS
 
-### Boot recovery
-- [ ] Root password recovery
-- [ ] GRUB recovery
-- [ ] SELinux relabeling
-- [ ] Broken bootloader scenarios
-- [ ] Separate recovery exam mode
+[ ] Expand --validate-all-objectives
 
----
+    [ ] Validate resource groups
+    [ ] Validate domains
+    [ ] Validate category names
+    [ ] Detect duplicate objective text (warning)
+    [ ] Verify grader exists for every category
+    [ ] Objective statistics
 
-## Future Ideas
+======================================================================
 
-### Statistics
-- [ ] Track exams completed
-- [ ] Track scores
-- [ ] Category statistics
-- [ ] Progress reports
+FUTURE ENHANCEMENTS
 
-### Reporting
-- [ ] Historical scores
-- [ ] Objective frequency analysis
-- [ ] Weak area reporting
+[ ] Domain Practice Mode
 
-### CI
-- [ ] Automated tests
-- [ ] Objective validation
-- [ ] Grading validation
+    Examples:
 
-### Objective Expansion
-- [ ] More variants
-- [ ] More SELinux objectives
-- [ ] More storage objectives
-- [ ] More networking objectives
+        ./launch-exam domain selinux contexts
+        ./launch-exam domain firewall services
+        ./launch-exam domain storage lvm
 
-### Continue Practicing
-- [ ] Let real usage drive development
+[ ] Statistics
+
+    [ ] Objectives by category
+    [ ] Objectives by domain
+    [ ] Objectives by resource group
+    [ ] Difficulty distribution
+
+[ ] Release Workflow
+
+    validate
+        ↓
+    audit
+        ↓
+    create baseline
+
+======================================================================
+
+PARKING LOT
+
+- Podman / container objectives
+- Ansible objectives
+- Complex networking
+- Bootloader recovery
+- Root password recovery
+- Multi-host SSH key management
+- Dynamic scenario chaining

@@ -6,7 +6,7 @@
     "difficulty": 1,
     "importance": "core",
     "points": 1,
-    "resource_group": "software-install",
+    "resource_group": "packages",
     "text": "Install the nmap package.",
     "hint": "rpm -q nmap",
     "answer": {
@@ -21,7 +21,7 @@
     "difficulty": 1,
     "importance": "core",
     "points": 1,
-    "resource_group": "software-install",
+    "resource_group": "packages",
     "text": "Install the screen package.",
     "hint": "rpm -q screen",
     "answer": {
@@ -36,7 +36,7 @@
     "difficulty": 1,
     "importance": "core",
     "points": 1,
-    "resource_group": "software-install",
+    "resource_group": "packages",
     "text": "Install the tmux package.",
     "hint": "rpm -q tmux",
     "answer": {

@@ -84,9 +84,10 @@
     "category": "selinux",
     "domain": "restorecon",
     "difficulty": 2,
-    "importance": "common",
+    "importance": "core",
     "points": 1,
     "resource_group": "web",
+    "scenario": "bad-contexts",
     "text": "Restore the default SELinux contexts on /webdata.",
     "hint": "restorecon",
     "answer": {

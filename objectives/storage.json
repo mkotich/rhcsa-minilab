@@ -6,7 +6,7 @@
     "difficulty": 1,
     "importance": "core",
     "points": 1,
-    "resource_group": "disk",
+    "resource_group": "storage",
     "text": "Create an XFS logical volume named lvdata in volume group vgdata using /dev/sdb and mount it persistently at /data.",
     "hint": "pvcreate vgcreate lvcreate mkfs.xfs mount /etc/fstab",
     "answer": {
@@ -24,7 +24,7 @@
     "difficulty": 1,
     "importance": "core",
     "points": 1,
-    "resource_group": "disk",
+    "resource_group": "storage",
     "text": "Create an XFS logical volume named lvarchive in volume group vgarchive and mount it persistently at /archive.",
     "hint": "lvm xfs fstab",
     "answer": {
@@ -42,7 +42,7 @@
     "difficulty": 1,
     "importance": "core",
     "points": 1,
-    "resource_group": "disk",
+    "resource_group": "storage",
     "text": "Create a 1G swap logical volume named lvswap in volume group vgswap and activate it persistently.",
     "hint": "mkswap swapon",
     "answer": {
@@ -59,7 +59,7 @@
     "difficulty": 1,
     "importance": "core",
     "points": 1,
-    "resource_group": "disk",
+    "resource_group": "storage",
     "text": "Create an ext4 filesystem on /dev/sdb1 and mount it persistently at /backup.",
     "hint": "fdisk mkfs.ext4 mount /etc/fstab",
     "answer": {
@@ -76,7 +76,7 @@
     "difficulty": 1,
     "importance": "core",
     "points": 1,
-    "resource_group": "disk",
+    "resource_group": "storage",
     "text": "Create a volume group named vgapps and a logical volume named lvapps mounted persistently at /apps.",
     "hint": "vgcreate lvcreate mkfs mount",
     "answer": {

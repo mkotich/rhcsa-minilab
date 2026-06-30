@@ -6,7 +6,7 @@
     "difficulty": 1,
     "importance": "optional",
     "points": 1,
-    "resource_group": "logging",
+    "resource_group": "none",
     "text": "Configure persistent systemd journals.",
     "hint": "ls /var/log/journal",
     "answer": {
