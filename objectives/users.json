@@ -2,15 +2,16 @@
   {
     "id": "users-001",
     "category": "users",
-    "domain": "users",
+    "domain": "groups",
     "difficulty": 1,
     "importance": "core",
     "points": 1,
-    "resource_group": "none",
-    "text": "Create group developers.",
+    "resource_group": "users",
+    "text": "Create group developers with GID 2000.",
     "hint": "groupadd",
     "answer": {
-      "group_name": "developers"
+      "group_name": "developers",
+      "gid": 2000
     }
   },
 
@@ -21,30 +22,31 @@
     "difficulty": 1,
     "importance": "core",
     "points": 1,
-    "resource_group": "none",
-    "text": "Create user alice with UID 1505 and expiration date 2027-12-31.",
+    "resource_group": "users",
+    "text": "Create user alice with UID 2001 and primary group developers.",
     "hint": "useradd",
     "answer": {
       "username": "alice",
-      "uid": 1505,
-      "expire_date": "2027-12-31"
+      "uid": 2001,
+      "primary_group": "developers"
     }
   },
 
   {
     "id": "users-003",
     "category": "users",
-    "domain": "users",
+    "domain": "groups",
     "difficulty": 1,
     "importance": "core",
     "points": 1,
-    "resource_group": "none",
-    "text": "Create user bob with UID 2001 and supplementary group developers.",
-    "hint": "id bob",
+    "resource_group": "users",
+    "text": "Add user alice to the supplementary group wheel.",
+    "hint": "usermod",
     "answer": {
-      "username": "bob",
-      "uid": 2001,
-      "supplementary_group": "developers"
+      "username": "alice",
+      "supplementary_groups": [
+        "wheel"
+      ]
     }
   },
 
@@ -53,14 +55,14 @@
     "category": "users",
     "domain": "users",
     "difficulty": 1,
-    "importance": "core",
+    "importance": "common",
     "points": 1,
-    "resource_group": "none",
-    "text": "Create group admins with GID 3000.",
-    "hint": "getent group admins",
+    "resource_group": "users",
+    "text": "Configure user alice to use /bin/bash as the login shell.",
+    "hint": "chsh",
     "answer": {
-      "group_name": "admins",
-      "gid": 3000
+      "username": "alice",
+      "shell": "/bin/bash"
     }
   },
 
@@ -68,16 +70,144 @@
     "id": "users-005",
     "category": "users",
     "domain": "users",
-    "difficulty": 1,
-    "importance": "core",
+    "difficulty": 2,
+    "importance": "common",
     "points": 1,
-    "resource_group": "none",
-    "text": "Configure user carol with a login shell of /bin/bash and expiration date 2028-06-30.",
-    "hint": "chage -l carol",
+    "resource_group": "users",
+    "text": "Configure user alice so the account expires on 2028-06-30.",
+    "hint": "chage",
+    "answer": {
+      "username": "alice",
+      "expire_date": "2028-06-30"
+    }
+  },
+
+  {
+    "id": "users-006",
+    "scenario": "locked-account",
+    "category": "users",
+    "domain": "users",
+    "difficulty": 2,
+    "importance": "common",
+    "points": 1,
+    "resource_group": "users",
+    "text": "Unlock the account for user carol.",
+    "hint": "passwd -S",
     "answer": {
       "username": "carol",
-      "shell": "/bin/bash",
+      "locked": false
+    }
+  },
+
+  {
+    "id": "users-007",
+    "scenario": "wrong-shell",
+    "category": "users",
+    "domain": "users",
+    "difficulty": 2,
+    "importance": "common",
+    "points": 1,
+    "resource_group": "users",
+    "text": "Restore the login shell for user carol to /bin/bash.",
+    "hint": "getent passwd",
+    "answer": {
+      "username": "carol",
+      "shell": "/bin/bash"
+    }
+  },
+
+    {
+    "id": "users-008",
+    "scenario": "missing-supplementary-group",
+    "category": "users",
+    "domain": "groups",
+    "difficulty": 2,
+    "importance": "core",
+    "points": 1,
+    "resource_group": "users",
+    "text": "Ensure user carol belongs to the supplementary group admins.",
+    "hint": "id carol",
+    "answer": {
+      "username": "carol",
+      "supplementary_groups": [
+        "admins"
+      ]
+    }
+  },
+
+  {
+    "id": "users-009",
+    "scenario": "expired-account",
+    "category": "users",
+    "domain": "users",
+    "difficulty": 2,
+    "importance": "common",
+    "points": 1,
+    "resource_group": "users",
+    "text": "Restore the expiration date for user carol to 2028-06-30.",
+    "hint": "chage -l",
+    "answer": {
+      "username": "carol",
       "expire_date": "2028-06-30"
+    }
+  },
+
+  {
+    "id": "users-010",
+    "scenario": "wrong-primary-group",
+    "category": "users",
+    "domain": "groups",
+    "difficulty": 2,
+    "importance": "common",
+    "points": 1,
+    "resource_group": "users",
+    "text": "Restore the primary group for user carol to developers.",
+    "hint": "id carol",
+    "answer": {
+      "username": "carol",
+      "primary_group": "developers"
+    }
+  },
+
+  {
+    "id": "users-011",
+    "scenario": "wrong-uid",
+    "category": "users",
+    "domain": "users",
+    "difficulty": 3,
+    "importance": "optional",
+    "points": 2,
+    "resource_group": "users",
+    "text": "Restore the UID for user carol to 2002.",
+    "hint": "id carol",
+    "answer": {
+      "username": "carol",
+      "uid": 2002
+    }
+  },
+
+    {
+    "id": "users-012",
+    "scenario": "restore-account",
+    "category": "users",
+    "domain": "users",
+    "difficulty": 3,
+    "importance": "core",
+    "points": 3,
+    "resource_group": "users",
+    "text": "Restore user carol to the required configuration. When complete, the account must use /bin/bash, have a primary group of developers, belong to the supplementary groups wheel and admins, expire on 2028-06-30, and be unlocked.",
+    "hint": "id carol",
+    "answer": {
+      "username": "carol",
+      "uid": 2002,
+      "primary_group": "developers",
+      "supplementary_groups": [
+        "wheel",
+        "admins"
+      ],
+      "shell": "/bin/bash",
+      "expire_date": "2028-06-30",
+      "locked": false
     }
   }
 ]

@@ -4,6 +4,7 @@ SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 export RHCSA_MINILAB_ROOT="$SCRIPT_DIR"
 
 source "${SCRIPT_DIR}/variables.conf"
+source "${SCRIPT_DIR}/lib/objectives.sh"
 
 MODE="$1"
 
@@ -280,24 +281,35 @@ apply_scenarios()
     echo "Applying scenarios..."
     echo
 
-    while IFS=: read -r GROUP SCENARIO
-    do
-        echo "  ${GROUP}/${SCENARIO}"
+SCENARIOS=$(
+    jq -r '
+        .[]
+        | select(has("scenario"))
+        | "\(.resource_group):\(.scenario)"
+    ' /home/student/exam-state.json |
+    sort -u
+)
 
-        MODULE="${SCRIPT_DIR}/scenarios/${GROUP}/${SCENARIO}.sh"
-        FUNCTION="scenario_${GROUP}_${SCENARIO//-/_}"
+while IFS=: read -r GROUP SCENARIO
+do
+    [ -z "$GROUP" ] && continue
 
-if [ ! -f "$MODULE" ]
-then
-    echo
-    echo "ERROR: Scenario module not found:"
-    echo "    $MODULE"
-    exit 1
-fi
+    echo "  ${GROUP}/${SCENARIO}"
 
-source "$MODULE"
+    MODULE="${SCRIPT_DIR}/scenarios/${GROUP}/${SCENARIO}.sh"
+    FUNCTION="scenario_${GROUP}_${SCENARIO//-/_}"
 
-if ! declare -F "$FUNCTION" >/dev/null
+    if [ ! -f "$MODULE" ]
+    then
+        echo
+        echo "ERROR: Scenario module not found:"
+        echo "    $MODULE"
+        exit 1
+    fi
+
+    source "$MODULE"
+
+    if ! declare -F "$FUNCTION" >/dev/null
     then
         echo
         echo "ERROR: Scenario function not found:"
@@ -307,16 +319,8 @@ if ! declare -F "$FUNCTION" >/dev/null
 
     "$FUNCTION"
 
-    done < <(
+done <<< "$SCENARIOS"
 
-        jq -r '
-            .[]
-            | select(has("scenario"))
-            | "\(.resource_group):\(.scenario)"
-        ' /home/student/exam-state.json |
-        sort -u
-
-    )
 }
 
 #

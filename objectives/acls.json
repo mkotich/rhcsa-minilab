@@ -14,5 +14,72 @@
       "user": "student",
       "perms": "rwx"
     }
+  },
+
+  {
+    "id": "permissions-021",
+    "category": "permissions",
+    "domain": "acls",
+    "difficulty": 2,
+    "importance": "common",
+    "points": 1,
+    "resource_group": "permissions",
+    "text": "Grant user student read and write access to /shared using POSIX ACLs without changing the file owner or group.",
+    "hint": "setfacl",
+    "answer": {
+      "path": "/shared",
+      "user": "student",
+      "permissions": "rwX"
+    }
+  },
+
+  {
+    "id": "permissions-022",
+    "category": "permissions",
+    "domain": "acls",
+    "difficulty": 2,
+    "importance": "common",
+    "points": 1,
+    "resource_group": "permissions",
+    "text": "Grant group developers read and write access to /projects using POSIX ACLs without modifying the directory's primary group.",
+    "hint": "setfacl",
+    "answer": {
+      "path": "/projects",
+      "group": "developers",
+      "permissions": "rwX"
+    }
+  },
+
+  {
+    "id": "permissions-023",
+    "category": "permissions",
+    "domain": "acls",
+    "difficulty": 3,
+    "importance": "core",
+    "points": 2,
+    "resource_group": "permissions",
+    "text": "Configure a default ACL on /shared so that new files inherit read and write permissions for group developers.",
+    "hint": "setfacl -d",
+    "answer": {
+      "path": "/shared",
+      "default_group": "developers",
+      "permissions": "rwX"
+    }
+  },
+
+  {
+    "id": "permissions-024",
+    "category": "permissions",
+    "domain": "acls",
+    "difficulty": 3,
+    "importance": "common",
+    "points": 2,
+    "resource_group": "permissions",
+    "text": "Remove all extended ACL entries from /shared while preserving the existing traditional UNIX permissions.",
+    "hint": "setfacl -b",
+    "answer": {
+      "path": "/shared",
+      "remove": "all"
+    }
   }
 ]

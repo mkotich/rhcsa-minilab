@@ -27,6 +27,53 @@
     "answer": {
       "timezone": "America/Chicago"
     }
+  },
+
+  {
+    "id": "time-003",
+    "category": "time",
+    "domain": "chrony",
+    "difficulty": 2,
+    "importance": "core",
+    "points": 1,
+    "resource_group": "time",
+    "text": "Configure chronyd to synchronize time using server.rhcsa.local.",
+    "hint": "chronyc sources",
+    "scenario": "wrong-server",
+    "answer": {
+      "server": "server.rhcsa.local"
+    }
+  },
+
+  {
+    "id": "time-004",
+    "category": "time",
+    "domain": "service",
+    "difficulty": 1,
+    "importance": "core",
+    "points": 1,
+    "resource_group": "time",
+    "text": "Ensure the chronyd service starts automatically and is currently running.",
+    "hint": "systemctl status chronyd",
+    "answer": {
+      "service": "chronyd"
+    }
+  },
+
+  {
+    "id": "time-005",
+    "category": "time",
+    "domain": "chrony",
+    "difficulty": 2,
+    "importance": "common",
+    "points": 1,
+    "resource_group": "time",
+    "text": "This system should synchronize time using server.rhcsa.local. Restore the required chronyd configuration.",
+    "hint": "chronyc sources",
+    "scenario": "wrong-server",
+    "answer": {
+      "server": "server.rhcsa.local"
+    }
   }
 
 ]

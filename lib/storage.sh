@@ -50,7 +50,7 @@ cleanup_storage()
     #
     if lvs "${VG}/${LV}" >/dev/null 2>&1
     then
-        lvremove -fy "/dev/${VG}/${LV}"
+        lvremove -fy "/dev/${VG}/${LV}" >/dev/null
     fi
 
     #
@@ -58,7 +58,7 @@ cleanup_storage()
     #
     if vgs "$VG" >/dev/null 2>&1
     then
-        vgremove -fy "$VG"
+        vgremove -fy "$VG" >/dev/null
     fi
 
     #
@@ -66,7 +66,7 @@ cleanup_storage()
     #
     if pvs "$DISK" >/dev/null 2>&1
     then
-        pvremove -fy "$DISK"
+        pvremove -fy "$DISK" >/dev/null
     fi
 
     #
@@ -95,7 +95,7 @@ create_lvm()
         "$MOUNT" \
         "$DISK"
 
-    wipefs -af "$DISK" >/dev/null 2>&1 || true
+        wipefs -af "$DISK" >/dev/null 2>&1 || true
 
     pvcreate "$DISK" >/dev/null
     vgcreate "$VG" "$DISK" >/dev/null

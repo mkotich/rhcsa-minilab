@@ -1,7 +1,9 @@
 #!/bin/bash
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+
 source "${SCRIPT_DIR}/variables.conf"
+source "${SCRIPT_DIR}/lib/objectives.sh"
 
 verify_root()
 {
@@ -31,6 +33,11 @@ Options:
         run the grading engine against the current baseline,
         and report objectives that are already satisfied.
 
+        Use --verbose to display every grading result.
+
+    --verbose
+        Display the grading results for every objective
+        while running the baseline audit.
 No option:
 
     Create a new baseline from the current system.
@@ -48,9 +55,6 @@ validate_all_objectives()
     echo "Checking objective files..."
     echo
 
-    #
-    # Validate JSON syntax
-    #
     for FILE in objectives/*.json
     do
         jq empty "$FILE" >/dev/null 2>&1 || {
@@ -63,9 +67,6 @@ validate_all_objectives()
 
     echo "[PASS] JSON syntax"
 
-    #
-    # Validate required fields
-    #
     for FILE in objectives/*.json
     do
         jq -e '
@@ -90,9 +91,6 @@ validate_all_objectives()
 
     echo "[PASS] Required fields"
 
-    #
-    # Validate duplicate IDs
-    #
     DUPLICATES=$(
         jq -r '.[].id' objectives/*.json |
         sort |
@@ -131,22 +129,76 @@ audit_all_objectives()
     TMPDIR=$(mktemp -d)
     trap 'rm -rf "$TMPDIR"' EXIT
 
-    jq -cs 'add' "${SCRIPT_DIR}"/objectives/*.json \
+    expand_objectives "${SCRIPT_DIR}"/objectives/*.json \
         > "$TMPDIR/exam-state.json"
 
-    OUTPUT=$(
-        STATE="$TMPDIR/exam-state.json" \
-        GRADE_MODE=audit \
-        ./grade-exam.sh
+    #
+    # Ensure all template variables have been expanded.
+    #
+    UNEXPANDED=$(
+        jq -r '
+            .. |
+            strings |
+            select(test("\\$\\{"))
+        ' "$TMPDIR/exam-state.json" |
+        sort -u
     )
 
-    TOTAL=$(printf '%s\n' "$OUTPUT" | wc -l)
+    if [ -n "$UNEXPANDED" ]
+    then
+        echo
+        echo "ERROR: Unexpanded template variables found."
+        echo
+
+        echo "$UNEXPANDED" |
+        while read VARIABLE
+        do
+            printf "  %s\n" "$VARIABLE"
+        done
+
+        echo
+        echo "The audit must operate on fully expanded objectives."
+        echo
+        return 1
+    fi
+
+        OUTPUT=$(
+        STATE="$TMPDIR/exam-state.json" \
+            GRADE_MODE=audit \
+            ./grade-exam.sh
+    )
+
+    if [ "$VERBOSE" -eq 1 ]
+then
+    echo
+    printf '%s\n' "$OUTPUT"
+    echo
+fi
 
     PASSING=$(printf '%s\n' "$OUTPUT" | grep '^PASS|')
 
     PASS_COUNT=$(printf '%s\n' "$OUTPUT" | grep -c '^PASS|')
 
-    FAIL_COUNT=$((TOTAL - PASS_COUNT))
+    FAIL_ONLY_COUNT=$(printf '%s\n' "$OUTPUT" | grep -c '^FAIL|')
+
+    NOT_IMPLEMENTED_COUNT=$(printf '%s\n' "$OUTPUT" | grep -c '^NOT IMPLEMENTED|')
+
+    TOTAL=$((PASS_COUNT + FAIL_ONLY_COUNT + NOT_IMPLEMENTED_COUNT))
+
+    FAIL_COUNT=$((FAIL_ONLY_COUNT + NOT_IMPLEMENTED_COUNT))
+
+    EXPECTED=$(jq 'length' "$TMPDIR/exam-state.json")
+
+    if [ "$TOTAL" -ne "$EXPECTED" ]
+    then
+        echo
+        echo "ERROR: Grading terminated before all objectives were evaluated."
+        echo
+        printf "Expected: %s\n" "$EXPECTED"
+        printf "Graded:   %s\n" "$TOTAL"
+        echo
+        return 1
+    fi
 
     echo "================================================="
     echo "RHCSA MiniLab Baseline Audit"
@@ -154,82 +206,80 @@ audit_all_objectives()
     echo
 
     printf "%-24s %s\n" "Objectives Evaluated" "$TOTAL"
-    printf "%-24s %s\n" "Objectives Passing" "$PASS_COUNT"    
+    printf "%-24s %s\n" "Objectives Passing" "$PASS_COUNT"
     printf "%-24s %s\n" "Require Student Work" "$FAIL_COUNT"
 
-echo
-
-if [ "$PASS_COUNT" -gt 0 ]
-then
-    echo "Objectives already satisfied"
-    echo "----------------------------"
     echo
 
-    echo "$PASSING" |
-    cut -d'|' -f2 |
-    while read LINE
-    do
-        printf "  - %s\n" "$LINE"
-    done
-fi
+    if [ "$PASS_COUNT" -gt 0 ]
+    then
+        echo "Objectives already satisfied"
+        echo "----------------------------"
+        echo
 
-echo
-echo "-------------------------------------------------"
-echo
+        echo "$PASSING" |
+        cut -d'|' -f2 |
+        while read LINE
+        do
+            printf "  - %s\n" "$LINE"
+        done
+    fi
 
-if [ "$PASS_COUNT" -eq 0 ]
-then
-    echo "Baseline validation successful."
     echo
-    echo "Every objective requires student intervention."
-else
-    echo "Recommendation"
+    echo "-------------------------------------------------"
     echo
-    echo "Modify or replace the objectives above before"
-    echo "creating the next release baseline."
-fi
 
-echo
+    if [ "$PASS_COUNT" -eq 0 ]
+    then
+        echo "Baseline validation successful."
+        echo
+        echo "Every objective requires student intervention."
+    else
+        echo "Recommendation"
+        echo
+        echo "Modify or replace the objectives above before"
+        echo "creating the next release baseline."
+    fi
+
+    echo
 }
 
 create_baseline()
 {
     BASELINE=/baseline
 
-if [ -d "$BASELINE" ]
-then
-    echo
-    echo "ERROR: A baseline already exists."
-    echo
-
-    if [ -f /baseline.version ]
+    if [ -d "$BASELINE" ]
     then
-        echo "Existing baseline commit:"
-        printf "    %.12s\n\n" "$(cat /baseline.version)"
         echo
+        echo "ERROR: A baseline already exists."
+        echo
+
+        if [ -f /baseline.version ]
+        then
+            echo "Existing baseline commit:"
+            printf "    %.12s\n\n" "$(cat /baseline.version)"
+            echo
+        fi
+
+        echo "To intentionally replace the baseline, remove:"
+        echo
+        echo "    /baseline"
+        echo "    /baseline.version"
+        echo
+        echo "Then run create-baseline.sh again."
+        echo
+
+        echo "If you were looking for other functionality, try:"
+        echo
+        echo "    ./create-baseline.sh --help"
+        echo
+        echo "or run:"
+        echo
+        echo "    ./create-baseline.sh --validate-all-objectives"
+        echo "    ./create-baseline.sh --audit-all-objectives"
+        echo
+        exit 1
     fi
-
-    echo "To intentionally replace the baseline, remove:"
-    echo
-    echo "    /baseline"
-    echo "    /baseline.version"
-    echo
-    echo "Then run create-baseline.sh again."
-    echo
-
-    echo "If you were looking for other functionality, try:"
-    echo
-    echo "    ./create-baseline.sh --help"
-    echo
-    echo "or run:"
-    echo
-    echo "    ./create-baseline.sh --validate-all-objectives"
-    echo "    ./create-baseline.sh --audit-all-objectives"
-    echo
-    echo "to validate objectives and audit the current baseline."
-
-    exit 1
-fi
 
     echo
     echo "Creating baseline..."
@@ -262,21 +312,60 @@ fi
 }
 
 ########################################
+
+# Main
+
+########################################
+
+########################################
 # Main
 ########################################
 
 verify_root
 
-case "$1" in
-    --help)
+while [ $# -gt 0 ]
+do
+    case "$1" in
+        --help)
+            MODE="help"
+            ;;
+
+        --validate-all-objectives)
+            MODE="validate"
+            ;;
+
+        --audit-all-objectives)
+            MODE="audit"
+            ;;
+
+        --verbose)
+            VERBOSE=1
+            ;;
+
+        "")
+            ;;
+
+        *)
+            echo "Unknown option: $1"
+            echo
+            show_help
+            exit 1
+            ;;
+    esac
+
+    shift
+done
+
+case "$MODE" in
+    help)
         show_help
         ;;
 
-    --validate-all-objectives)
+    validate)
         validate_all_objectives
         ;;
 
-    --audit-all-objectives)
+    audit)
         audit_all_objectives
         ;;
 
@@ -285,9 +374,7 @@ case "$1" in
         ;;
 
     *)
-        echo "Unknown option: $1"
-        echo
-        show_help
+        echo "Internal error: unknown mode."
         exit 1
         ;;
 esac

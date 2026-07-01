@@ -7,10 +7,15 @@
     "importance": "common",
     "points": 1,
     "resource_group": "archive",
-    "text": "Create a gzip-compressed archive named /root/etc.tar.gz containing /etc.",
+    "text": "Create a gzip-compressed archive named /root/system-config.tar.gz containing only the following files:\n\n- /etc/passwd\n- /etc/group\n- /etc/hosts",
     "hint": "tar tf",
     "answer": {
-      "archive": "/root/etc.tar.gz"
+      "archive": "/root/system-config.tar.gz",
+      "members": [
+        "etc/passwd",
+        "etc/group",
+        "etc/hosts"
+      ]
     }
   },
 
@@ -22,10 +27,15 @@
     "importance": "common",
     "points": 1,
     "resource_group": "archive",
-    "text": "Create a bzip2-compressed archive named /root/home.tar.bz2 containing /home.",
+    "text": "Create a bzip2-compressed archive named /root/network-config.tar.bz2 containing only the following files:\n\n- /etc/hostname\n- /etc/hosts\n- /etc/resolv.conf",
     "hint": "tar tf",
     "answer": {
-      "archive": "/root/home.tar.bz2"
+      "archive": "/root/network-config.tar.bz2",
+      "members": [
+        "etc/hostname",
+        "etc/hosts",
+        "etc/resolv.conf"
+      ]
     }
   },
 
@@ -33,14 +43,19 @@
     "id": "archive-003",
     "category": "archive",
     "domain": "creation",
-    "difficulty": 1,
+    "difficulty": 2,
     "importance": "common",
     "points": 1,
     "resource_group": "archive",
-    "text": "Create an xz-compressed archive named /root/varlog.tar.xz containing /var/log.",
+    "text": "Create an xz-compressed archive named /root/system-files.tar.xz containing only the following files:\n\n- /etc/fstab\n- /etc/passwd\n- /etc/group",
     "hint": "tar tf",
     "answer": {
-      "archive": "/root/varlog.tar.xz"
+      "archive": "/root/system-files.tar.xz",
+      "members": [
+        "etc/fstab",
+        "etc/passwd",
+        "etc/group"
+      ]
     }
   },
 
@@ -52,11 +67,11 @@
     "importance": "common",
     "points": 1,
     "resource_group": "archive",
-    "text": "Extract /root/etc.tar.gz into /restore.",
+    "text": "Extract /root/system-config.tar.gz into /archive-restore.",
     "hint": "tar xf",
     "answer": {
-      "archive": "/root/etc.tar.gz",
-      "destination": "/restore"
+      "archive": "/root/system-config.tar.gz",
+      "destination": "/archive-restore"
     }
   },
 
@@ -65,14 +80,19 @@
     "category": "archive",
     "domain": "listing",
     "difficulty": 2,
-    "importance": "optional",
+    "importance": "common",
     "points": 1,
     "resource_group": "archive",
-    "text": "Create /root/etc-files.txt containing a list of every file stored in /root/etc.tar.gz.",
+    "text": "Save a list of the contents of /root/system-config.tar.gz to /home/student/tar-output.txt.",
     "hint": "tar tf",
     "answer": {
-      "archive": "/root/etc.tar.gz",
-      "output": "/root/etc-files.txt"
+      "archive": "/root/system-config.tar.gz",
+      "output": "/home/student/tar-output.txt",
+      "members": [
+        "etc/passwd",
+        "etc/group",
+        "etc/hosts"
+      ]
     }
   },
 
@@ -84,10 +104,11 @@
     "importance": "common",
     "points": 1,
     "resource_group": "archive",
-    "text": "Create a gzip-compressed archive named /root/etc-no-ssh.tar.gz containing /etc but excluding the ssh directory.",
+    "text": "Create a gzip-compressed archive named /root/system-no-ssh.tar.gz containing /etc while excluding /etc/ssh.",
     "hint": "--exclude",
     "answer": {
-      "archive": "/root/etc-no-ssh.tar.gz"
+      "archive": "/root/system-no-ssh.tar.gz",
+      "exclude": "etc/ssh"
     }
   },
 
@@ -99,11 +120,11 @@
     "importance": "optional",
     "points": 1,
     "resource_group": "archive",
-    "text": "Extract only the passwd file from /root/etc.tar.gz into /restore.",
+    "text": "Extract only /etc/passwd from /root/system-config.tar.gz into /archive-restore.",
     "hint": "tar xf",
     "answer": {
-      "archive": "/root/etc.tar.gz",
-      "destination": "/restore",
+      "archive": "/root/system-config.tar.gz",
+      "destination": "/archive-restore",
       "member": "etc/passwd"
     }
   }

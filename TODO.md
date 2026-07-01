@@ -1,140 +1,62 @@
-# RHCSA MiniLab Roadmap
+===============================================================================
+RHCSA MiniLab TODO
+===============================================================================
 
-## Completed
+HIGH PRIORITY
+-------------------------------------------------------------------------------
 
-### Framework
-- [x] Objective selection engine
-- [x] Resource group framework
-- [x] Scenario framework
-- [x] Preparation framework
-- [x] Objective parameterization
-- [x] DEBUG_OBJECTIVE development mode
-- [x] End-to-end grading framework
+[ ] Eliminate all baseline-passing objectives
+    Current:
+        Objectives Passing: 11
+    Goal:
+        Objectives Passing: 0
 
-### Storage
-- [x] Reusable storage library
-- [x] LVM creation helpers
-- [x] Cleanup helpers
-- [x] Validation helpers
-- [x] Grading helpers
-- [x] storage-001
-- [x] storage-002
-- [x] storage-003
-- [x] storage-004
+[ ] Complete remaining NOT IMPLEMENTED graders
 
----
+[ ] Verify every parameterized objective
+    - storage (${SIZE})
+    - users
+    - networking
+    - any remaining templated objectives
 
-## In Progress
+[ ] Audit every objective after changes
+    ./create-baseline.sh --validate-all-objectives
+    ./create-baseline.sh --audit-all-objectives
 
-### Archive
-- [ ] Complete scenarios
-- [ ] Complete grading
-- [ ] End-to-end testing
+-------------------------------------------------------------------------------
 
-### Networking
-- [ ] Complete scenarios
-- [ ] Complete grading
-- [ ] End-to-end testing
+MEDIUM PRIORITY
+-------------------------------------------------------------------------------
 
-### NFS
-- [ ] Complete scenarios
-- [ ] Complete grading
-- [ ] End-to-end testing
+[ ] Finish archive grading
+[ ] Finish users grading
+[ ] Finish remaining scenario coverage
+[ ] Review prepare modules for consistency
+[ ] Review scenario modules for consistency
 
-### Packages
-- [ ] Complete scenarios
-- [ ] Complete grading
-- [ ] End-to-end testing
+-------------------------------------------------------------------------------
 
-### Time
-- [ ] Complete scenarios
-- [ ] Complete grading
-- [ ] End-to-end testing
+LOW PRIORITY
+-------------------------------------------------------------------------------
 
-### Web
-- [ ] Complete scenarios
-- [ ] Complete grading
-- [ ] End-to-end testing
+[ ] Improve launch-exam.sh wording
+[ ] Improve grade-exam.sh wording
+[ ] Add regression test suite
+[ ] Add objective expansion unit tests
+[ ] Audit code style across libraries
+[ ] Cleanup shellcheck warnings
 
-### SELinux
-- [ ] Complete scenarios
-- [ ] Complete grading
-- [ ] End-to-end testing
+-------------------------------------------------------------------------------
 
----
+FUTURE
+-------------------------------------------------------------------------------
 
-## Remaining Objective Categories
+[ ] 125+ objective pool
+[ ] Additional scenarios
+[ ] Additional repair objectives
+[ ] Additional randomized objectives
+[ ] Practice exam balancing
+[ ] Release packaging
+[ ] Documentation review
 
-### Users & Groups
-- [ ] User administration
-- [ ] Password aging
-- [ ] Group administration
-
-### Permissions
-- [ ] Ownership
-- [ ] chmod
-- [ ] SGID
-- [ ] Sticky bit
-- [ ] ACLs
-
-### Systemd
-- [ ] Services
-- [ ] Targets
-- [ ] Timers
-
-### Boot Recovery
-- [ ] Root password reset
-- [ ] Emergency mode
-- [ ] GRUB recovery
-
-### Containers
-- [ ] Podman
-- [ ] Container services
-- [ ] Quadlets
-
-### Scripting
-- [ ] Bash scripting objectives
-
----
-
-## Framework Improvements
-
-- [ ] Scenario validation before launch
-- [ ] Duplicate objective detection
-- [ ] Objective dependency validation
-- [ ] Persistent reboot verification
-- [ ] Better grading diagnostics
-- [ ] Instructor answer key generation
-- [ ] Exam statistics
-- [ ] Objective coverage report
-- [ ] Unit tests for grading libraries
-
----
-
-## Release Milestones
-
-### v0.4
-- [x] Storage framework complete
-
-### v0.5
-- [ ] Archive
-- [ ] Networking
-- [ ] Packages
-- [ ] NFS
-- [ ] Time
-
-### v0.6
-- [ ] Web
-- [ ] SELinux
-- [ ] Permissions
-
-### v0.7
-- [ ] Services
-- [ ] Users
-- [ ] Boot recovery
-
-### v1.0
-- [ ] Complete objective library
-- [ ] Fully randomized exams
-- [ ] Documentation
-- [ ] Stable release
+===============================================================================

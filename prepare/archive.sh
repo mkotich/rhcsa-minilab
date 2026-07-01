@@ -2,25 +2,32 @@
 
 set -e
 
-#
-# Resource Group:
-#     archive
-#
-# Responsibilities:
-#     - Create baseline archive files.
-#     - Remove extracted content from previous exams.
-#
-
 prepare_archive()
 {
-    mkdir -p /restore
+    mkdir -p /archive-restore
 
-    rm -rf /restore/*
+    find /archive-restore -mindepth 1 -delete
+
     rm -f \
-        /root/etc-files.txt \
-        /root/etc-no-ssh.tar.gz
+        /root/system-config.tar.gz \
+        /root/network-config.tar.bz2 \
+        /root/system-files.tar.xz \
+        /root/system-no-ssh.tar.gz \
+        /home/student/tar-output.txt
 
-    tar -czf /root/etc.tar.gz /etc >/dev/null 2>&1
-    tar -cjf /root/home.tar.bz2 /home >/dev/null 2>&1
-    tar -cJf /root/varlog.tar.xz /var/log >/dev/null 2>&1
+    #
+    # Only create archives needed by the selected objectives.
+    #
+
+    jq -r '.[].id' /home/student/exam-state.json |
+    while read ID
+    do
+        case "$ID" in
+
+            archive-004|archive-005|archive-007)
+                prepare/archive/create-system-config.sh
+                ;;
+
+        esac
+    done
 }

@@ -1,7 +1,5 @@
 #!/bin/bash
 
-set -e
-
 #
 # Common helper functions for preparation modules.
 #

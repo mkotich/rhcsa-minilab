@@ -1,6 +1,7 @@
 [
   {
     "id": "selinux-001",
+    "scenario": "httpd-use-nfs-disabled",
     "category": "selinux",
     "domain": "booleans",
     "difficulty": 1,
@@ -17,6 +18,7 @@
 
   {
     "id": "selinux-002",
+    "scenario": "httpd-read-user-content-disabled",
     "category": "selinux",
     "domain": "booleans",
     "difficulty": 1,

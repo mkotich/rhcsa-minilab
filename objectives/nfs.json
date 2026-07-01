@@ -1,6 +1,7 @@
 [
   {
     "id": "nfs-001",
+    "scenario": "missing-fstab",
     "category": "nfs",
     "domain": "mounts",
     "difficulty": 1,
