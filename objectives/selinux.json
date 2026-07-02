@@ -33,6 +33,38 @@
     }
   },
 
+{
+  "id": "selinux-003",
+  "category": "selinux",
+  "domain": "contexts",
+  "difficulty": 2,
+  "importance": "common",
+  "points": 1,
+  "resource_group": "web",
+  "text": "Configure /webdata with the SELinux context httpd_sys_content_t.",
+  "hint": "semanage fcontext, restorecon",
+  "answer": {
+    "path": "/webdata",
+    "context": "httpd_sys_content_t"
+  }
+},
+
+{
+  "id": "selinux-004",
+  "category": "selinux",
+  "domain": "contexts",
+  "difficulty": 2,
+  "importance": "common",
+  "points": 1,
+  "resource_group": "web",
+  "text": "Configure /uploads with the SELinux context httpd_sys_rw_content_t.",
+  "hint": "semanage fcontext, restorecon",
+  "answer": {
+    "path": "/uploads",
+    "context": "httpd_sys_rw_content_t"
+  }
+},
+
   {
     "id": "selinux-010",
     "category": "selinux",
@@ -78,37 +110,6 @@
     "answer": {
       "path": "/srv/www",
       "context": "httpd_sys_content_t"
-    }
-  },
-
-  {
-    "id": "selinux-020",
-    "category": "selinux",
-    "domain": "restorecon",
-    "difficulty": 2,
-    "importance": "common",
-    "points": 1,
-    "resource_group": "web",
-    "scenario": "bad-contexts",
-    "text": "Restore the default SELinux contexts on /webdata.",
-    "hint": "restorecon",
-    "answer": {
-      "path": "/webdata"
-    }
-  },
-
-  {
-    "id": "selinux-021",
-    "category": "selinux",
-    "domain": "restorecon",
-    "difficulty": 2,
-    "importance": "common",
-    "points": 1,
-    "resource_group": "web",
-    "text": "Restore the default SELinux contexts on /uploads.",
-    "hint": "restorecon",
-    "answer": {
-      "path": "/uploads"
     }
   },
 

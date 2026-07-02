@@ -55,6 +55,7 @@
     "resource_group": "time",
     "text": "Ensure the chronyd service starts automatically and is currently running.",
     "hint": "systemctl status chronyd",
+    "scenario": "chronyd-stopped-disabled",
     "answer": {
       "service": "chronyd"
     }

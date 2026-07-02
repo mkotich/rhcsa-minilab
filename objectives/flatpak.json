@@ -112,17 +112,18 @@
   },
 
   {
-    "id": "flatpak-030",
+    "id": "flatpak-021",
     "category": "flatpak",
-    "domain": "update",
+    "domain": "remove",
     "difficulty": 2,
     "importance": "optional",
     "points": 1,
     "resource_group": "none",
-    "text": "Update all installed Flatpak applications.",
-    "hint": "flatpak update",
+    "text": "Remove the Flatpak application org.gnome.Calculator.",
+    "hint": "flatpak uninstall",
     "answer": {
-      "action": "update-all"
+      "action": "remove",
+      "application": "org.gnome.Calculator"
     }
   }
 ]

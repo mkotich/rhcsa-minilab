@@ -155,12 +155,18 @@ storage_uuid_correct()
 
 storage_current_size_bytes()
 {
+    if ! lvs vgapps/lvapps >/dev/null 2>&1
+    then
+        return 1
+    fi
+
     lvs \
         --noheadings \
         --units b \
         --nosuffix \
         -o lv_size \
-        vgapps/lvapps |
+        vgapps/lvapps \
+        2>/dev/null |
         xargs
 }
 

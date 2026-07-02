@@ -216,13 +216,19 @@ fi
         echo "Objectives already satisfied"
         echo "----------------------------"
         echo
+    echo "$PASSING" |
+while IFS='|' read -r STATUS TEXT
+do
+    if jq -e --arg text "$TEXT" \
+            '.[] | select(.text == $text and has("scenario"))' \
+            "$TMPDIR/exam-state.json" >/dev/null
+        then
+            printf "  - [SCENARIO] %s\n" "$TEXT"
+        else
+            printf "  - [BASELINE] %s\n" "$TEXT"
+        fi
+    done
 
-        echo "$PASSING" |
-        cut -d'|' -f2 |
-        while read LINE
-        do
-            printf "  - %s\n" "$LINE"
-        done
     fi
 
     echo
@@ -235,10 +241,18 @@ fi
         echo
         echo "Every objective requires student intervention."
     else
-        echo "Recommendation"
-        echo
-        echo "Modify or replace the objectives above before"
-        echo "creating the next release baseline."
+    echo "Recommendation"
+    echo
+    echo "Review objectives marked [BASELINE]. These are"
+    echo "already satisfied on a clean system and should"
+    echo "be modified, replaced, or prepared differently"
+    echo "before the next release."
+    echo
+    echo "Objectives marked [SCENARIO] may appear as"
+    echo "passing during the baseline audit because"
+    echo "their associated scenario is not applied."
+    echo "These are expected to require student"
+    echo "intervention during a generated exam."
     fi
 
     echo
