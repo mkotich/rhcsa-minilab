@@ -7,7 +7,7 @@
     "importance": "core",
     "points": 1,
     "resource_group": "storage",
-    "text": "Create an XFS filesystem on logical volume lvapps in volume group vgapps and mount it persistently at /apps using the filesystem UUID.",
+    "text": "Initialize /dev/sdb with a GPT partition table. Create a single LVM partition using the entire disk. Create an XFS filesystem on logical volume lvapps in volume group vgapps and mount it persistently at /apps using the filesystem UUID.",
     "hint": "blkid",
     "answer": {
       "vg": "vgapps",

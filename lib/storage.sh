@@ -153,6 +153,18 @@ storage_uuid_correct()
     grep -q "^UUID=${FS_UUID}[[:space:]]" /etc/fstab
 }
 
+storage_is_gpt()
+{
+    parted -sm /dev/sdb print | grep -q ':gpt:'
+}
+
+storage_pv_is_partition()
+{
+    pvs --noheadings -o pv_name |
+        xargs |
+        grep -qx '/dev/sdb1'
+}
+
 storage_current_size_bytes()
 {
     if ! lvs vgapps/lvapps >/dev/null 2>&1

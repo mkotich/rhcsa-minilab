@@ -1,0 +1,69 @@
+[
+  {
+    "id": "links-001",
+    "category": "links",
+    "domain": "symbolic",
+    "difficulty": 1,
+    "importance": "common",
+    "points": 1,
+    "resource_group": "none",
+    "text": "Create a symbolic link named /root/passwd.link pointing to /etc/passwd.",
+    "hint": "ln -s",
+    "answer": {
+      "type": "symbolic",
+      "link": "/root/passwd.link",
+      "target": "/etc/passwd"
+    }
+  },
+
+  {
+    "id": "links-002",
+    "category": "links",
+    "domain": "hard",
+    "difficulty": 1,
+    "importance": "common",
+    "points": 1,
+    "resource_group": "none",
+    "text": "Create a hard link named /root/hosts.link pointing to /etc/hosts.",
+    "hint": "ln",
+    "answer": {
+      "type": "hard",
+      "link": "/root/hosts.link",
+      "target": "/etc/hosts"
+    }
+  },
+
+  {
+    "id": "links-003",
+    "category": "links",
+    "domain": "symbolic",
+    "difficulty": 1,
+    "importance": "optional",
+    "points": 1,
+    "resource_group": "none",
+    "text": "Create a symbolic link named /root/group.link pointing to /etc/group.",
+    "hint": "ln -s",
+    "answer": {
+      "type": "symbolic",
+      "link": "/root/group.link",
+      "target": "/etc/group"
+    }
+  },
+
+  {
+    "id": "links-004",
+    "category": "links",
+    "domain": "hard",
+    "difficulty": 1,
+    "importance": "optional",
+    "points": 1,
+    "resource_group": "none",
+    "text": "Create a hard link named /root/passwd.hard pointing to /etc/passwd.",
+    "hint": "ln",
+    "answer": {
+      "type": "hard",
+      "link": "/root/passwd.hard",
+      "target": "/etc/passwd"
+    }
+  }
+]

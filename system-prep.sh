@@ -67,6 +67,14 @@ prep_client()
     configure_client_repos
     install_client_packages
 
+    #
+    # Intentional baseline state used by MiniLab objectives.
+    # These settings provide deterministic starting conditions
+    # for specific repair/configuration tasks.
+    #
+
+    systemctl mask cups.service >/dev/null 2>&1 || true
+
     echo
     echo "Client preparation complete."
     echo

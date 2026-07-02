@@ -1,0 +1,97 @@
+[
+  {
+    "id": "journal-001",
+    "category": "journal",
+    "domain": "journalctl",
+    "difficulty": 1,
+    "importance": "common",
+    "points": 1,
+    "resource_group": "none",
+    "text": "Save the complete system journal from the current boot to /root/journal.txt.",
+    "hint": "journalctl -b",
+    "answer": {
+      "outfile": "/root/journal.txt",
+      "command": "journalctl -b"
+    }
+  },
+
+  {
+    "id": "journal-002",
+    "category": "journal",
+    "domain": "journalctl",
+    "difficulty": 1,
+    "importance": "common",
+    "points": 1,
+    "resource_group": "none",
+    "text": "Save the journal entries for the sshd service to /root/sshd.log.",
+    "hint": "journalctl -u",
+    "answer": {
+      "outfile": "/root/sshd.log",
+      "command": "journalctl -u sshd"
+    }
+  },
+
+  {
+    "id": "journal-003",
+    "category": "journal",
+    "domain": "journalctl",
+    "difficulty": 1,
+    "importance": "common",
+    "points": 1,
+    "resource_group": "none",
+    "text": "Save the last 20 journal entries to /root/last20.log.",
+    "hint": "journalctl -n",
+    "answer": {
+      "outfile": "/root/last20.log",
+      "command": "journalctl -n 20"
+    }
+  },
+
+  {
+    "id": "journal-004",
+    "category": "journal",
+    "domain": "journalctl",
+    "difficulty": 2,
+    "importance": "common",
+    "points": 1,
+    "resource_group": "none",
+    "text": "Save the current boot journal entries with priority err and higher to /root/errors.log.",
+    "hint": "journalctl -p",
+    "answer": {
+      "outfile": "/root/errors.log",
+      "command": "journalctl -b -p err"
+    }
+  },
+
+  {
+    "id": "journal-005",
+    "category": "journal",
+    "domain": "journalctl",
+    "difficulty": 2,
+    "importance": "optional",
+    "points": 1,
+    "resource_group": "none",
+    "text": "Save the NetworkManager journal entries from the current boot to /root/network.log.",
+    "hint": "journalctl -u NetworkManager -b",
+    "answer": {
+      "outfile": "/root/network.log",
+      "command": "journalctl -u NetworkManager -b"
+    }
+  },
+
+  {
+    "id": "journal-006",
+    "category": "journal",
+    "domain": "journalctl",
+    "difficulty": 2,
+    "importance": "optional",
+    "points": 1,
+    "resource_group": "none",
+    "text": "Save the kernel journal from the current boot to /root/kernel.log.",
+    "hint": "journalctl -k",
+    "answer": {
+      "outfile": "/root/kernel.log",
+      "command": "journalctl -k -b"
+    }
+  }
+]

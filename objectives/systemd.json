@@ -25,7 +25,25 @@
     "text": "Mask bluetooth.service.",
     "hint": "systemctl is-enabled bluetooth.service",
     "answer": {
-      "masked": "bluetooth.service"
-    }
+      "service": "bluetooth.service",
+      "state": "masked"
+}},
+
+{
+  "id": "systemd-012",
+  "category": "systemd",
+  "domain": "service",
+  "difficulty": 1,
+  "importance": "common",
+  "points": 1,
+  "resource_group": "none",
+  "text": "Unmask cups.service.",
+  "hint": "systemctl unmask",
+  "answer": {
+    "service": "cups.service",
+    "state": "unmasked"
   }
+}
+
+
 ]

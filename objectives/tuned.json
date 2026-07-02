@@ -1,0 +1,46 @@
+[
+  {
+    "id": "tuned-001",
+    "category": "tuned",
+    "domain": "service",
+    "difficulty": 1,
+    "importance": "common",
+    "points": 1,
+    "resource_group": "none",
+    "text": "Install the tuned package, enable the tuned service, and ensure it is currently running.",
+    "hint": "dnf, systemctl",
+    "answer": {
+      "service": "tuned"
+    }
+  },
+
+  {
+    "id": "tuned-002",
+    "category": "tuned",
+    "domain": "profile",
+    "difficulty": 1,
+    "importance": "common",
+    "points": 1,
+    "resource_group": "none",
+    "text": "Set the active tuned profile to balanced.",
+    "hint": "tuned-adm profile",
+    "answer": {
+      "profile": "balanced"
+    }
+  },
+
+  {
+    "id": "tuned-003",
+    "category": "tuned",
+    "domain": "profile",
+    "difficulty": 2,
+    "importance": "optional",
+    "points": 1,
+    "resource_group": "none",
+    "text": "Set the active tuned profile to throughput-performance.",
+    "hint": "tuned-adm profile",
+    "answer": {
+      "profile": "throughput-performance"
+    }
+  }
+]

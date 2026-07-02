@@ -1,0 +1,46 @@
+[
+  {
+    "id": "process-001",
+    "category": "process",
+    "domain": "nice",
+    "difficulty": 1,
+    "importance": "common",
+    "points": 1,
+    "resource_group": "process",
+    "text": "Change the nice value of the running process named rhcsa-sleep to 10.",
+    "hint": "renice",
+    "answer": {
+      "nice": 10
+    }
+  },
+
+  {
+    "id": "process-002",
+    "category": "process",
+    "domain": "nice",
+    "difficulty": 1,
+    "importance": "common",
+    "points": 1,
+    "resource_group": "process",
+    "text": "Change the nice value of the running process named rhcsa-sleep to 15.",
+    "hint": "renice",
+    "answer": {
+      "nice": 15
+    }
+  },
+
+  {
+    "id": "process-003",
+    "category": "process",
+    "domain": "nice",
+    "difficulty": 2,
+    "importance": "optional",
+    "points": 1,
+    "resource_group": "process",
+    "text": "Change the nice value of the running process named rhcsa-sleep to -5.",
+    "hint": "renice",
+    "answer": {
+      "nice": -5
+    }
+  }
+]

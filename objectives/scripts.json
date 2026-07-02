@@ -1,80 +1,90 @@
 [
   {
-    "id": "script-001",
+    "id": "scripts-001",
     "category": "scripts",
-    "domain": "simple",
-    "difficulty": 1,
-    "importance": "common",
-    "points": 1,
-    "resource_group": "none",
-    "text": "Create an executable script named /usr/local/bin/showdate.sh that displays the current date.",
-    "hint": "chmod +x",
-    "answer": {
-      "script": "/usr/local/bin/showdate.sh",
-      "command": "date"
-    }
-  },
-
-  {
-    "id": "script-002",
-    "category": "scripts",
-    "domain": "simple",
-    "difficulty": 1,
-    "importance": "common",
-    "points": 1,
-    "resource_group": "none",
-    "text": "Create an executable script named /usr/local/bin/showuptime.sh that displays the system uptime.",
-    "hint": "uptime",
-    "answer": {
-      "script": "/usr/local/bin/showuptime.sh",
-      "command": "uptime"
-    }
-  },
-
-  {
-    "id": "script-003",
-    "category": "scripts",
-    "domain": "simple",
-    "difficulty": 1,
-    "importance": "common",
-    "points": 1,
-    "resource_group": "none",
-    "text": "Create an executable script named /usr/local/bin/showusers.sh that displays the contents of /etc/passwd.",
-    "hint": "cat",
-    "answer": {
-      "script": "/usr/local/bin/showusers.sh",
-      "command": "cat /etc/passwd"
-    }
-  },
-
-  {
-    "id": "script-010",
-    "category": "scripts",
-    "domain": "file-processing",
+    "domain": "user",
     "difficulty": 2,
     "importance": "common",
     "points": 1,
     "resource_group": "none",
-    "text": "Create an executable script named /usr/local/bin/findrecent.sh that finds all files in /home created between 7 and 30 days ago and stores the results in /home/student/scriptout.txt.",
-    "hint": "find",
+    "text": "Create /usr/local/bin/checkuser.sh. The script must accept a username as its first argument. If the user exists, print FOUND. Otherwise, print NOT FOUND to stderr and exit with status 1.",
+    "hint": "id, if, exit, >&2",
     "answer": {
-      "script": "/usr/local/bin/findrecent.sh",
-      "output": "/home/student/scriptout.txt"
+      "script": "/usr/local/bin/checkuser.sh",
+      "tests": [
+        {
+          "args": ["root"],
+          "stdout": "FOUND",
+          "stderr": "",
+          "exit": 0
+        },
+        {
+          "args": ["nosuchuser"],
+          "stdout": "",
+          "stderr": "NOT FOUND",
+          "exit": 1
+        }
+      ]
     }
   },
 
   {
-    "id": "script-020",
+    "id": "scripts-002",
     "category": "scripts",
-    "domain": "reporting",
+    "domain": "users",
     "difficulty": 2,
+    "importance": "common",
+    "points": 1,
+    "resource_group": "none",
+    "text": "Create /usr/local/bin/listusers.sh. Print the usernames from /etc/passwd, one username per line.",
+    "hint": "for, cut",
+    "answer": {
+      "script": "/usr/local/bin/listusers.sh"
+    }
+  },
+
+  {
+    "id": "scripts-003",
+    "category": "scripts",
+    "domain": "report",
+    "difficulty": 2,
+    "importance": "common",
+    "points": 1,
+    "resource_group": "none",
+    "text": "Create /usr/local/bin/loginreport.sh. Display the usernames currently logged in and save the same output to /root/login-report.txt.",
+    "hint": "who, awk, tee",
+    "answer": {
+      "script": "/usr/local/bin/loginreport.sh"
+    }
+  },
+
+  {
+    "id": "scripts-004",
+    "category": "scripts",
+    "domain": "service",
+    "difficulty": 2,
+    "importance": "common",
+    "points": 1,
+    "resource_group": "none",
+    "text": "Create /usr/local/bin/checkservice.sh. Accept a service name as the first argument. Print ACTIVE if the service is active. Otherwise print INACTIVE and exit with status 1.",
+    "hint": "systemctl is-active",
+    "answer": {
+      "script": "/usr/local/bin/checkservice.sh"
+    }
+  },
+
+  {
+    "id": "scripts-005",
+    "category": "scripts",
+    "domain": "functions",
+    "difficulty": 3,
     "importance": "optional",
     "points": 1,
     "resource_group": "none",
-    "text": "Create an executable script named /usr/local/bin/diskreport.sh that displays mounted filesystems and available disk space.",
-    "hint": "df",
+    "text": "Create /usr/local/bin/checkdir.sh. Implement a function named check_directory() that returns success if a supplied directory exists and failure otherwise. Use the function to determine whether /tmp exists and print YES or NO.",
+    "hint": "functions, return",
     "answer": {
-      "script": "/usr/local/bin/diskreport.sh"
+      "script": "/usr/local/bin/checkdir.sh"
     }
   }
 ]
