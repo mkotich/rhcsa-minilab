@@ -29,62 +29,94 @@
   },
 
   {
-    "id": "scripts-002",
-    "category": "scripts",
-    "domain": "users",
-    "difficulty": 2,
-    "importance": "common",
-    "points": 1,
-    "resource_group": "none",
-    "text": "Create /usr/local/bin/listusers.sh. Print the usernames from /etc/passwd, one username per line.",
-    "hint": "for, cut",
-    "answer": {
-      "script": "/usr/local/bin/listusers.sh"
-    }
-  },
-
-  {
-    "id": "scripts-003",
-    "category": "scripts",
-    "domain": "report",
-    "difficulty": 2,
-    "importance": "common",
-    "points": 1,
-    "resource_group": "none",
-    "text": "Create /usr/local/bin/loginreport.sh. Display the usernames currently logged in and save the same output to /root/login-report.txt.",
-    "hint": "who, awk, tee",
-    "answer": {
-      "script": "/usr/local/bin/loginreport.sh"
-    }
-  },
-
-  {
-    "id": "scripts-004",
-    "category": "scripts",
-    "domain": "service",
-    "difficulty": 2,
-    "importance": "common",
-    "points": 1,
-    "resource_group": "none",
-    "text": "Create /usr/local/bin/checkservice.sh. Accept a service name as the first argument. Print ACTIVE if the service is active. Otherwise print INACTIVE and exit with status 1.",
-    "hint": "systemctl is-active",
-    "answer": {
-      "script": "/usr/local/bin/checkservice.sh"
-    }
-  },
-
-  {
-    "id": "scripts-005",
-    "category": "scripts",
-    "domain": "functions",
-    "difficulty": 3,
-    "importance": "optional",
-    "points": 1,
-    "resource_group": "none",
-    "text": "Create /usr/local/bin/checkdir.sh. Implement a function named check_directory() that returns success if a supplied directory exists and failure otherwise. Use the function to determine whether /tmp exists and print YES or NO.",
-    "hint": "functions, return",
-    "answer": {
-      "script": "/usr/local/bin/checkdir.sh"
-    }
+  "id": "scripts-002",
+  "category": "scripts",
+  "domain": "users",
+  "difficulty": 2,
+  "importance": "common",
+  "points": 1,
+  "resource_group": "none",
+  "text": "Create /usr/local/bin/listusers.sh. When executed, print the usernames from /etc/passwd, one username per line, in the same order they appear in the file.",
+  "hint": "cut",
+  "answer": {
+    "script": "/usr/local/bin/listusers.sh",
+    "tests": [
+      {
+        "args": [],
+        "stdout_command": "cut -d: -f1 /etc/passwd",
+        "stderr": "",
+        "exit": 0
+      }
+    ]
   }
+},
+
+{
+  "id": "scripts-003",
+  "category": "scripts",
+  "domain": "reports",
+  "difficulty": 2,
+  "importance": "common",
+  "points": 1,
+  "resource_group": "none",
+  "text": "Create /usr/local/bin/loginreport.sh. Display the users currently logged in and save the same output to /root/login-report.txt.",
+  "hint": "who, tee",
+  "answer": {
+    "script": "/usr/local/bin/loginreport.sh",
+    "tests": [
+      {
+        "args": [],
+        "stdout_command": "who",
+        "stderr": "",
+        "exit": 0
+      }
+    ]
+  }
+},
+
+{
+  "id": "scripts-004",
+  "category": "scripts",
+  "domain": "files",
+  "difficulty": 2,
+  "importance": "common",
+  "points": 1,
+  "resource_group": "none",
+  "text": "Create /usr/local/bin/listdirs.sh. Print every directory under /etc, one path per line.",
+  "hint": "find",
+  "answer": {
+    "script": "/usr/local/bin/listdirs.sh",
+    "tests": [
+      {
+        "args": [],
+        "stdout_command": "find /etc -type d",
+        "stderr": "",
+        "exit": 0
+      }
+    ]
+  }
+},
+
+{
+  "id": "scripts-005",
+  "category": "scripts",
+  "domain": "files",
+  "difficulty": 2,
+  "importance": "common",
+  "points": 1,
+  "resource_group": "none",
+  "text": "Create /usr/local/bin/filecount.sh. The script must accept a directory as its first argument and print the number of regular files contained directly within that directory.",
+  "hint": "find, wc",
+  "answer": {
+    "script": "/usr/local/bin/filecount.sh",
+    "tests": [
+      {
+        "args": ["/etc"],
+        "stdout_command": "find /etc -maxdepth 1 -type f | wc -l",
+        "stderr": "",
+        "exit": 0
+      }
+    ]
+  }
+}
 ]
