@@ -160,9 +160,7 @@ storage_is_gpt()
 
 storage_pv_is_partition()
 {
-    pvs --noheadings -o pv_name |
-        xargs |
-        grep -qx '/dev/sdb1'
+    pvs /dev/sdb1 >/dev/null 2>&1
 }
 
 storage_current_size_bytes()
@@ -240,35 +238,48 @@ grade_storage()
 
 grade_storage_filesystem()
 {
-    if ! storage_lv_exists
+    #
+    # storage-001 requires GPT and an LVM PV on /dev/sdb1.
+    #
+    if [ "$(jq -r '.id' <<<"$OBJECT")" = "storage-001" ]
     then
-        RESULT="FAIL"
-        return
+        storage_is_gpt || {
+            RESULT="FAIL"
+            return
+        }
+
+        storage_pv_is_partition || {
+            RESULT="FAIL"
+            return
+        }
     fi
 
-    if ! storage_filesystem_exists
-    then
+    storage_lv_exists || {
         RESULT="FAIL"
         return
-    fi
+    }
 
-    if ! storage_fstab_exists
-    then
+    storage_filesystem_exists || {
         RESULT="FAIL"
         return
-    fi
+    }
 
-    if ! storage_uuid_correct
-    then
+    storage_fstab_exists || {
         RESULT="FAIL"
         return
-    fi
+    }
 
-    if ! storage_is_mounted
-    then
+    storage_uuid_correct || {
         RESULT="FAIL"
         return
-    fi
+    }
+
+    storage_is_mounted || {
+        RESULT="FAIL"
+        return
+    }
+
+    RESULT="PASS"
 }
 
 grade_storage_uuid()
