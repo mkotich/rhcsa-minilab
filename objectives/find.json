@@ -1,0 +1,116 @@
+[
+  {
+    "id": "find-001",
+    "category": "find",
+    "domain": "name",
+    "difficulty": 1,
+    "importance": "common",
+    "points": 1,
+    "resource_group": "none",
+    "text": "Create /usr/local/bin/findpasswd.sh. When executed, print the full path of every file named passwd on the local system.",
+    "hint": "find -name",
+    "answer": {
+      "script": "/usr/local/bin/findpasswd.sh",
+      "tests": [
+        {
+          "args": [],
+          "stdout_command": "find / -name passwd 2>/dev/null",
+          "stderr": "",
+          "exit": 0
+        }
+      ]
+    }
+  },
+
+  {
+    "id": "find-002",
+    "category": "find",
+    "domain": "type",
+    "difficulty": 1,
+    "importance": "common",
+    "points": 1,
+    "resource_group": "none",
+    "text": "Create /usr/local/bin/finddirs.sh. When executed, print every directory beneath /etc.",
+    "hint": "find -type d",
+    "answer": {
+      "script": "/usr/local/bin/finddirs.sh",
+      "tests": [
+        {
+          "args": [],
+          "stdout_command": "find /etc -type d",
+          "stderr": "",
+          "exit": 0
+        }
+      ]
+    }
+  },
+
+  {
+    "id": "find-003",
+    "category": "find",
+    "domain": "size",
+    "difficulty": 2,
+    "importance": "common",
+    "points": 1,
+    "resource_group": "none",
+    "text": "Create /usr/local/bin/findlarge.sh. When executed, print every file larger than 1 MiB beneath /usr/share.",
+    "hint": "find -size",
+    "answer": {
+      "script": "/usr/local/bin/findlarge.sh",
+      "tests": [
+        {
+          "args": [],
+          "stdout_command": "find /usr/share -type f -size +1M",
+          "stderr": "",
+          "exit": 0
+        }
+      ]
+    }
+  },
+
+  {
+    "id": "find-004",
+    "category": "find",
+    "domain": "empty",
+    "difficulty": 2,
+    "importance": "common",
+    "points": 1,
+    "resource_group": "none",
+    "text": "Create /usr/local/bin/findempty.sh. When executed, print every empty regular file beneath /var/tmp.",
+    "hint": "find -empty",
+    "answer": {
+      "script": "/usr/local/bin/findempty.sh",
+      "tests": [
+        {
+          "args": [],
+          "stdout_command": "find /var/tmp -type f -empty",
+          "stderr": "",
+          "exit": 0
+        }
+      ]
+    }
+  },
+
+  {
+    "id": "find-005",
+    "category": "find",
+    "domain": "permissions",
+    "difficulty": 2,
+    "importance": "optional",
+    "points": 1,
+    "resource_group": "none",
+    "text": "Create /usr/local/bin/findexec.sh. When executed, print every executable regular file beneath /usr/local/bin.",
+    "hint": "find -executable",
+    "answer": {
+      "script": "/usr/local/bin/findexec.sh",
+      "tests": [
+        {
+          "args": [],
+          "stdout_command": "find /usr/local/bin -type f -executable",
+          "stderr": "",
+          "exit": 0
+        }
+      ]
+    }
+  }
+]

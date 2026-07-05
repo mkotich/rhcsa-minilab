@@ -1,0 +1,86 @@
+[
+  {
+    "id": "acl-001",
+    "category": "acl",
+    "domain": "user",
+    "difficulty": 1,
+    "importance": "common",
+    "points": 1,
+    "resource_group": "acl",
+    "text": "Grant the user student read and write access to /shared using an ACL.",
+    "hint": "setfacl -m",
+    "answer": {
+      "path": "/shared",
+      "user": "student",
+      "permissions": "rw-"
+    }
+  },
+
+  {
+    "id": "acl-002",
+    "category": "acl",
+    "domain": "group",
+    "difficulty": 1,
+    "importance": "common",
+    "points": 1,
+    "resource_group": "acl",
+    "text": "Grant the group wheel read and execute access to /shared using an ACL.",
+    "hint": "setfacl -m",
+    "answer": {
+      "path": "/shared",
+      "group": "wheel",
+      "permissions": "r-x"
+    }
+  },
+
+  {
+    "id": "acl-003",
+    "category": "acl",
+    "domain": "default",
+    "difficulty": 2,
+    "importance": "common",
+    "points": 1,
+    "resource_group": "acl",
+    "text": "Configure a default ACL so that newly created files beneath /shared grant the user student read and write access.",
+    "hint": "setfacl -d",
+    "answer": {
+      "path": "/shared",
+      "default_user": "student",
+      "permissions": "rw-"
+    }
+  },
+
+  {
+    "id": "acl-004",
+    "category": "acl",
+    "domain": "modify",
+    "difficulty": 2,
+    "importance": "common",
+    "points": 1,
+    "resource_group": "acl",
+    "text": "Modify the ACL for user student on /shared so that it grants read, write, and execute permissions.",
+    "hint": "setfacl -m",
+    "answer": {
+      "path": "/shared",
+      "user": "student",
+      "permissions": "rwx"
+    }
+  },
+
+  {
+    "id": "acl-005",
+    "category": "acl",
+    "domain": "remove",
+    "difficulty": 2,
+    "importance": "optional",
+    "points": 1,
+    "resource_group": "acl",
+    "text": "Remove the ACL entry for user student from /shared.",
+    "hint": "setfacl -x",
+    "answer": {
+      "path": "/shared",
+      "user": "student",
+      "present": false
+    }
+  }
+]

@@ -17,8 +17,8 @@
   {
     "id": "networking-002",
     "category": "networking",
-    "difficulty": 1,
     "domain": "ipv4",
+    "difficulty": 1,
     "importance": "critical",
     "points": 1,
     "resource_group": "network",
@@ -56,6 +56,36 @@
     "hint": "ip addr",
     "answer": {
       "address": "192.168.13.100/24"
+    }
+  },
+
+  {
+    "id": "networking-005",
+    "category": "networking",
+    "domain": "dns",
+    "difficulty": 2,
+    "importance": "common",
+    "points": 1,
+    "resource_group": "network",
+    "text": "Configure a secondary DNS server of 1.1.1.1.",
+    "hint": "nmcli, nmtui",
+    "answer": {
+      "secondary_dns": "1.1.1.1"
+    }
+  },
+
+  {
+    "id": "networking-006",
+    "category": "networking",
+    "domain": "dns",
+    "difficulty": 2,
+    "importance": "common",
+    "points": 1,
+    "resource_group": "network",
+    "text": "Configure an additional DNS search domain of training.local.",
+    "hint": "nmcli, nmtui",
+    "answer": {
+      "search_domain": "training.local"
     }
   }
 ]

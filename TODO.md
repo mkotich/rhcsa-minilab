@@ -3,13 +3,9 @@ TODO
 
 HIGH PRIORITY
 -------------
+[ ] Implement objective dependencies ("requires")
 [ ] Exercise every objective end-to-end
 [ ] Finish GPT grading for storage-001
-[ ] Add remaining RHCSA coverage
-    [ ] find
-    [ ] ACL variants
-    [ ] nmcli
-    [ ] systemd timers
 [ ] Fresh-install validation on clean VMs
 
 MEDIUM PRIORITY
@@ -22,9 +18,10 @@ MEDIUM PRIORITY
 LOW PRIORITY
 ------------
 [ ] grade-exam finalization
-    [ ] Lock exam after grading
-    [ ] Prevent multiple submissions
-    [ ] Write CSV results (passes, failures, %s, how long the exam took)
-        [ ] Report Strong and Weak Categories
+    - lock exam
+    - prevent resubmission
+    - CSV results
+    - timing
+    - strengths/weaknesses
 [ ] Documentation
-[ ] Release v1.0.0
+[ ] v1.0.0
