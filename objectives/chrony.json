@@ -12,35 +12,5 @@
     "answer": {
       "server": "server.rhcsa.local"
     }
-  },
-
-  {
-    "id": "chrony-002",
-    "category": "chrony",
-    "domain": "timezone",
-    "difficulty": 1,
-    "importance": "common",
-    "points": 1,
-    "resource_group": "none",
-    "text": "Configure the system timezone to America/Chicago.",
-    "hint": "timedatectl",
-    "answer": {
-      "timezone": "America/Chicago"
-    }
-  },
-
-  {
-    "id": "chrony-003",
-    "category": "chrony",
-    "domain": "timezone",
-    "difficulty": 1,
-    "importance": "common",
-    "points": 1,
-    "resource_group": "none",
-    "text": "Configure the system timezone to America/New_York.",
-    "hint": "timedatectl",
-    "answer": {
-      "timezone": "America/New_York"
-    }
   }
 ]

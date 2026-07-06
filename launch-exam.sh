@@ -274,17 +274,24 @@ apply_scenarios() {
     while IFS=: read -r GROUP SCENARIO; do
         [ -z "$GROUP" ] && continue
 
-        echo "  ${GROUP}/${SCENARIO}"
+                MODULE=$(find "${SCRIPT_DIR}/scenarios" \
+            -type f \
+            -name "${SCENARIO}.sh" \
+            -print \
+            -quit)
 
-        MODULE="${SCRIPT_DIR}/scenarios/${GROUP}/${SCENARIO}.sh"
-        FUNCTION="scenario_${GROUP}_${SCENARIO//-/_}"
-
-        if [ ! -f "$MODULE" ]; then
+        if [ -z "$MODULE" ]; then
             echo
             echo "ERROR: Scenario module not found:"
-            echo "    $MODULE"
+            echo "    ${SCENARIO}.sh"
             exit 1
         fi
+
+        SCENARIO_GROUP=$(basename "$(dirname "$MODULE")")
+
+        echo "  ${SCENARIO_GROUP}/${SCENARIO}"
+
+        FUNCTION="scenario_${SCENARIO_GROUP}_${SCENARIO//-/_}"
 
         source "$MODULE"
 

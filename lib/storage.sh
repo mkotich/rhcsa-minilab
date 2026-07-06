@@ -303,9 +303,13 @@ grade_storage_growth() {
         return
     }
 
-    EXPECTED_BYTES=$((\
-        STORAGE_INITIAL_SIZE_BYTES + \
-        $(storage_size_to_bytes "$GROW_BY")))
+    if [ -n "$GROW_BY" ]
+    then
+        GROW_BYTES=$(storage_size_to_bytes "$GROW_BY")
+        EXPECTED_BYTES=$((STORAGE_INITIAL_SIZE_BYTES + GROW_BYTES))
+    else
+        EXPECTED_BYTES=$STORAGE_INITIAL_SIZE_BYTES
+    fi
 
     if [ "$CURRENT_BYTES" -lt "$EXPECTED_BYTES" ]; then
         RESULT="FAIL"
