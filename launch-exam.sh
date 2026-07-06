@@ -106,22 +106,33 @@ declare -A CATEGORY_COUNT
 add_objective() {
     OBJECT="$1"
 
+    #
+    # Validate the JSON object immediately.
+    #
+    if ! printf '%s\n' "$OBJECT" | jq empty >/dev/null 2>&1
+    then
+        echo
+        echo "================================================="
+        echo "INVALID OBJECT PASSED TO add_objective()"
+        echo "================================================="
+        printf '%s\n' "$OBJECT"
+        echo
+        exit 1
+    fi
+
     CURRENT=$(wc -l < "$SELECTED")
 
     if [ "$CURRENT" -ge "$OBJECTIVES" ]; then
         return
     fi
 
-    CATEGORY=$(echo "$OBJECT" | jq -r '.category')
+    CATEGORY=$(printf '%s\n' "$OBJECT" | jq -r '.category')
 
-    #
-    # Category limit
-    #
     if [ "${CATEGORY_COUNT[$CATEGORY]:-0}" -ge "$CATEGORY_LIMIT" ]; then
         return
     fi
 
-    echo "$OBJECT" >> "$SELECTED"
+    printf '%s\n' "$OBJECT" >> "$SELECTED"
 
     CATEGORY_COUNT[$CATEGORY]=$((${CATEGORY_COUNT[$CATEGORY]:-0} + 1))
 }
@@ -135,7 +146,7 @@ select_category() {
         | select(.category == $category)
     ' |
         shuf |
-        while read OBJECT; do
+        while IFS= read -r OBJECT; do
             BEFORE=$(wc -l < "$SELECTED")
 
             add_objective "$OBJECT"
@@ -151,7 +162,7 @@ select_importance() {
     TARGET="$2"
     ADDED=0
 
-    while read OBJECT; do
+    while IFS= read -r OBJECT; do
         BEFORE=$(wc -l < "$SELECTED")
 
         add_objective "$OBJECT"
@@ -178,7 +189,7 @@ fill_remaining() {
     echo "$ALL_OBJECTIVES" |
         jq -c '.[]' |
         shuf |
-        while read OBJECT; do
+        while IFS= read -r OBJECT; do
             add_objective "$OBJECT"
 
             CURRENT=$(wc -l < "$SELECTED")
@@ -250,9 +261,14 @@ prepare_resources() {
             exit 1
         fi
 
-        echo "  Preparing $GROUP..."
+                echo "  Preparing $GROUP..."
+        echo "    BEGIN ${FUNCTION}"
 
         "$FUNCTION"
+
+        RC=$?
+
+        echo "    END ${FUNCTION} (rc=$RC)"
 
     done <<< "$RESOURCE_GROUPS"
 }
