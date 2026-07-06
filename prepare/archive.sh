@@ -2,8 +2,7 @@
 
 set -e
 
-prepare_archive()
-{
+prepare_archive() {
     mkdir -p /archive-restore
 
     find /archive-restore -mindepth 1 -delete
@@ -20,14 +19,13 @@ prepare_archive()
     #
 
     jq -r '.[].id' /home/student/exam-state.json |
-    while read ID
-    do
-        case "$ID" in
+        while read ID; do
+            case "$ID" in
 
-            archive-004|archive-005|archive-007)
-                prepare/archive/create-system-config.sh
-                ;;
+                archive-004 | archive-005 | archive-007)
+                    prepare/archive/create-system-config.sh
+                    ;;
 
-        esac
-    done
+            esac
+        done
 }

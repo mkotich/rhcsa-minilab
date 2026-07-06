@@ -14,19 +14,18 @@ set -e
 #     - Configure /etc/hosts for standalone mode.
 #
 
-prepare_nfs()
-{
+prepare_nfs() {
     #
     # Install required packages.
     #
-    dnf -y install nfs-utils >/dev/null 2>&1
+    dnf -y install nfs-utils > /dev/null 2>&1
 
     #
     # Create export.
     #
     mkdir -p /exports/share
 
-    cat > /exports/share/README.txt <<'EOT'
+    cat > /exports/share/README.txt << 'EOT'
 RHCSA MiniLab NFS Share
 EOT
 
@@ -35,11 +34,11 @@ EOT
     #
     # Configure exports.
     #
-    cat > /etc/exports <<'EOT'
+    cat > /etc/exports << 'EOT'
 /exports/share *(rw,sync,no_root_squash)
 EOT
 
-    exportfs -rav >/dev/null 2>&1
+    exportfs -rav > /dev/null 2>&1
 
     #
     # Standalone lab convenience.
@@ -59,6 +58,6 @@ EOT
     #
     # Enable services.
     #
-    systemctl enable --now rpcbind >/dev/null 2>&1
-    systemctl enable --now nfs-server >/dev/null 2>&1
+    systemctl enable --now rpcbind > /dev/null 2>&1
+    systemctl enable --now nfs-server > /dev/null 2>&1
 }

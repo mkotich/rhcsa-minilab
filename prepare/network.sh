@@ -7,8 +7,7 @@ set -e
 #     network
 #
 
-prepare_network()
-{
+prepare_network() {
     ensure_service NetworkManager
 
     verify_service NetworkManager

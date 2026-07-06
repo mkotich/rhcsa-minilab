@@ -7,10 +7,8 @@ source "${SCRIPT_DIR}/variables.conf"
 # rhcsa-minilab system-prep.sh
 #
 
-verify_root()
-{
-    if [ "$EUID" -ne 0 ]
-    then
+verify_root() {
+    if [ "$EUID" -ne 0 ]; then
         fail "Must be run as root."
     fi
 }
@@ -19,8 +17,7 @@ verify_root()
 # Common Functions
 ########################################
 
-fail()
-{
+fail() {
     echo
     echo "ERROR: $1"
     echo
@@ -31,8 +28,7 @@ fail()
 # Server Functions
 ########################################
 
-prep_server()
-{
+prep_server() {
     echo
     echo "Preparing server..."
     echo
@@ -40,8 +36,7 @@ prep_server()
     configure_server_network
     configure_hosts_file
     install_server_packages
-    if [ "$LAB_MODE" = "full" ]
-    then
+    if [ "$LAB_MODE" = "full" ]; then
         configure_http_repo
         configure_nfs
     fi
@@ -56,8 +51,7 @@ prep_server()
 # Client Functions
 ########################################
 
-prep_client()
-{
+prep_client() {
     echo
     echo "Preparing client..."
     echo
@@ -73,7 +67,7 @@ prep_client()
     # for specific repair/configuration tasks.
     #
 
-    systemctl mask cups.service >/dev/null 2>&1 || true
+    systemctl mask cups.service > /dev/null 2>&1 || true
 
     echo
     echo "Client preparation complete."
@@ -84,8 +78,7 @@ prep_client()
 # Placeholder Functions
 ########################################
 
-configure_server_network()
-{
+configure_server_network() {
     echo "Configuring server network..."
 
     nmcli con modify "$SERVER_IFACE" \
@@ -97,8 +90,7 @@ configure_server_network()
     nmcli con up "$SERVER_IFACE"
 }
 
-configure_client_network()
-{
+configure_client_network() {
     echo "Configuring client network..."
 
     nmcli con modify "$CLIENT_IFACE" \
@@ -110,8 +102,7 @@ configure_client_network()
     nmcli con up "$CLIENT_IFACE"
 }
 
-configure_hosts_file()
-{
+configure_hosts_file() {
     echo "Configuring /etc/hosts..."
 
     cat > /etc/hosts << EOF
@@ -123,8 +114,7 @@ ${CLIENT_IP} ${CLIENT_FQDN} ${CLIENT_HOSTNAME}
 EOF
 }
 
-install_server_packages()
-{
+install_server_packages() {
     echo "Installing server packages..."
 
     dnf install -y \
@@ -135,8 +125,7 @@ install_server_packages()
     systemctl enable --now nfs-server
 }
 
-install_client_packages()
-{
+install_client_packages() {
     echo "Installing client packages..."
 
     dnf install -y \
@@ -144,30 +133,25 @@ install_client_packages()
         vim-enhanced
 }
 
-configure_http_repo()
-{
+configure_http_repo() {
     echo "Configuring HTTP repository..."
 
     mkdir -p /mnt/iso
 
-    if ! mountpoint -q /mnt/iso
-    then
+    if ! mountpoint -q /mnt/iso; then
         mount "$ISO_DEVICE" /mnt/iso
     fi
 
-    if [ ! -d "${REPO_ROOT}/BaseOS" ]
-    then
+    if [ ! -d "${REPO_ROOT}/BaseOS" ]; then
         cp -a /mnt/iso/BaseOS "$REPO_ROOT"
     fi
 
-    if [ ! -d "${REPO_ROOT}/AppStream" ]
-    then
+    if [ ! -d "${REPO_ROOT}/AppStream" ]; then
         cp -a /mnt/iso/AppStream "$REPO_ROOT"
     fi
 }
 
-configure_nfs()
-{
+configure_nfs() {
     echo "Configuring NFS..."
 
     mkdir -p "$NFS_EXPORT"
@@ -179,8 +163,7 @@ EOF
     exportfs -rav
 }
 
-configure_firewall()
-{
+configure_firewall() {
     echo "Configuring firewall..."
 
     firewall-cmd --permanent --add-service=http
@@ -191,12 +174,10 @@ configure_firewall()
     firewall-cmd --reload
 }
 
-configure_client_repos()
-{
+configure_client_repos() {
     echo "Configuring client repositories..."
 
-    if [ "$LAB_MODE" = "full" ]
-    then
+    if [ "$LAB_MODE" = "full" ]; then
         rm -f /etc/yum.repos.d/*.repo
 
         cat > /etc/yum.repos.d/rhcsa-minilab.repo << EOF
@@ -224,99 +205,85 @@ EOF
 # Status Functions
 ########################################
 
-server_status()
-{
+server_status() {
     echo
     echo "SERVER"
     echo "------"
 
     echo "Hostname ............. PASS"
 
-    if systemctl is-active --quiet httpd
-    then
+    if systemctl is-active --quiet httpd; then
         echo "HTTPD ................ PASS"
     else
         echo "HTTPD ................ FAIL"
     fi
 
-    if systemctl is-active --quiet nfs-server
-    then
+    if systemctl is-active --quiet nfs-server; then
         echo "NFS Server ........... PASS"
     else
         echo "NFS Server ........... FAIL"
     fi
 
-    if [ -f "${REPO_ROOT}/BaseOS/repodata/repomd.xml" ]
-    then
+    if [ -f "${REPO_ROOT}/BaseOS/repodata/repomd.xml" ]; then
         echo "BaseOS Repo .......... PASS"
     else
         echo "BaseOS Repo .......... FAIL"
     fi
 
-    if [ -f "${REPO_ROOT}/AppStream/repodata/repomd.xml" ]
-    then
+    if [ -f "${REPO_ROOT}/AppStream/repodata/repomd.xml" ]; then
         echo "AppStream Repo ....... PASS"
     else
         echo "AppStream Repo ....... FAIL"
     fi
 
-    if exportfs -v | grep -q "${NFS_EXPORT}"
-    then
+    if exportfs -v | grep -q "${NFS_EXPORT}"; then
         echo "NFS Export ........... PASS"
     else
         echo "NFS Export ........... FAIL"
     fi
 }
 
-client_status()
-{
+client_status() {
     echo
     echo "CLIENT"
     echo "------"
 
     echo "Hostname ............. PASS"
 
-    if [ -b "$CLIENT_EXTRA_DISK" ]
-    then
+    if [ -b "$CLIENT_EXTRA_DISK" ]; then
         echo "Extra Disk ........... PASS"
     else
         echo "Extra Disk ........... FAIL"
     fi
 
-    if curl -s "${SERVER_HTTP_REPO}/BaseOS/repodata/repomd.xml" >/dev/null
-    then
+    if curl -s "${SERVER_HTTP_REPO}/BaseOS/repodata/repomd.xml" > /dev/null; then
         echo "BaseOS Repo .......... PASS"
     else
         echo "BaseOS Repo .......... FAIL"
     fi
 
-    if curl -s "${SERVER_HTTP_REPO}/AppStream/repodata/repomd.xml" >/dev/null
-    then
+    if curl -s "${SERVER_HTTP_REPO}/AppStream/repodata/repomd.xml" > /dev/null; then
         echo "AppStream Repo ....... PASS"
     else
         echo "AppStream Repo ....... FAIL"
     fi
 
-    if ping -c1 -W1 server >/dev/null 2>&1
-    then
+    if ping -c1 -W1 server > /dev/null 2>&1; then
         echo "Server Reachable ..... PASS"
     else
         echo "Server Reachable ..... FAIL"
     fi
 }
 
-show_status()
-{
+show_status() {
     echo
     echo "rhcsa-minilab status"
     echo "===================="
 
-    if [ "$SHORT_HOSTNAME" = "$SERVER_HOSTNAME" ]
-    then
+    if [ "$SHORT_HOSTNAME" = "$SERVER_HOSTNAME" ]; then
         server_status
 
-    elif [ "$SHORT_HOSTNAME" = "$CLIENT_HOSTNAME" ]
-    then
+    elif [ "$SHORT_HOSTNAME" = "$CLIENT_HOSTNAME" ]; then
         client_status
 
     else
@@ -345,21 +312,11 @@ case "$1" in
         ;;
 
     "")
-    if [ "$LAB_MODE" = "full" ] &&
-       [ "$SHORT_HOSTNAME" = "$SERVER_HOSTNAME" ]
-    then
-        prep_server
+        if [ "$LAB_MODE" = "full" ] &&
+            [ "$SHORT_HOSTNAME" = "$SERVER_HOSTNAME" ]; then
+            prep_server
 
-    elif [ "$SHORT_HOSTNAME" = "$CLIENT_HOSTNAME" ]
-    then
-        prep_client
-
-    else
-        fail "Unknown hostname: $HOSTNAME"
-    fi
-
-        elif [ "$SHORT_HOSTNAME" = "$CLIENT_HOSTNAME" ]
-        then
+        elif [ "$SHORT_HOSTNAME" = "$CLIENT_HOSTNAME" ]; then
             prep_client
 
         else
@@ -371,4 +328,3 @@ case "$1" in
         fail "Usage: $0 [--status]"
         ;;
 esac
-

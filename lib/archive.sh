@@ -1,9 +1,8 @@
-grade_archive()
-{
+grade_archive() {
     RESULT="FAIL"
 
     local ARCHIVE
-    ARCHIVE=$(jq -r '.answer.archive' <<<"$OBJECT")
+    ARCHIVE=$(jq -r '.answer.archive' <<< "$OBJECT")
 
     #
     # Archive must exist for every archive objective.
@@ -13,16 +12,15 @@ grade_archive()
     #
     # Creation objective (exact members)
     #
-    if jq -e '.answer.members?' <<<"$OBJECT" >/dev/null
-    then
+    if jq -e '.answer.members?' <<< "$OBJECT" > /dev/null; then
         EXPECTED=$(
-            jq -r '.answer.members[]' <<<"$OBJECT" | sort
+            jq -r '.answer.members[]' <<< "$OBJECT" | sort
         )
 
         ACTUAL=$(
-            tar tf "$ARCHIVE" 2>/dev/null |
-            grep -v '/$' |
-            sort
+            tar tf "$ARCHIVE" 2> /dev/null |
+                grep -v '/$' |
+                sort
         )
 
         [ "$EXPECTED" = "$ACTUAL" ] && RESULT="PASS"
@@ -32,18 +30,17 @@ grade_archive()
     #
     # Listing objective
     #
-    if jq -e '.answer.output?' <<<"$OBJECT" >/dev/null
-    then
-        OUTPUT=$(jq -r '.answer.output' <<<"$OBJECT")
+    if jq -e '.answer.output?' <<< "$OBJECT" > /dev/null; then
+        OUTPUT=$(jq -r '.answer.output' <<< "$OBJECT")
 
         [ -f "$OUTPUT" ] || return
 
         EXPECTED=$(
-            jq -r '.answer.members[]' <<<"$OBJECT" | sort
+            jq -r '.answer.members[]' <<< "$OBJECT" | sort
         )
 
         ACTUAL=$(
-            sort "$OUTPUT" 2>/dev/null
+            sort "$OUTPUT" 2> /dev/null
         )
 
         [ "$EXPECTED" = "$ACTUAL" ] && RESULT="PASS"
@@ -53,12 +50,10 @@ grade_archive()
     #
     # Exclude objective
     #
-    if jq -e '.answer.exclude?' <<<"$OBJECT" >/dev/null
-    then
-        EXCLUDE=$(jq -r '.answer.exclude' <<<"$OBJECT")
+    if jq -e '.answer.exclude?' <<< "$OBJECT" > /dev/null; then
+        EXCLUDE=$(jq -r '.answer.exclude' <<< "$OBJECT")
 
-        if ! tar tf "$ARCHIVE" 2>/dev/null | grep -qx "$EXCLUDE"
-        then
+        if ! tar tf "$ARCHIVE" 2> /dev/null | grep -qx "$EXCLUDE"; then
             RESULT="PASS"
         fi
 
@@ -68,10 +63,9 @@ grade_archive()
     #
     # Single-member extraction
     #
-    if jq -e '.answer.member?' <<<"$OBJECT" >/dev/null
-    then
-        DEST=$(jq -r '.answer.destination' <<<"$OBJECT")
-        MEMBER=$(jq -r '.answer.member' <<<"$OBJECT")
+    if jq -e '.answer.member?' <<< "$OBJECT" > /dev/null; then
+        DEST=$(jq -r '.answer.destination' <<< "$OBJECT")
+        MEMBER=$(jq -r '.answer.member' <<< "$OBJECT")
 
         [ -f "$DEST/$MEMBER" ] && RESULT="PASS"
         return
@@ -80,17 +74,14 @@ grade_archive()
     #
     # Extraction objective
     #
-    if jq -e '.answer.destination?' <<<"$OBJECT" >/dev/null
-    then
-        DEST=$(jq -r '.answer.destination' <<<"$OBJECT")
+    if jq -e '.answer.destination?' <<< "$OBJECT" > /dev/null; then
+        DEST=$(jq -r '.answer.destination' <<< "$OBJECT")
 
-        if tar tf "$ARCHIVE" 2>/dev/null |
+        if tar tf "$ARCHIVE" 2> /dev/null |
             grep -v '/$' |
-            while read -r FILE
-            do
+            while read -r FILE; do
                 [ -f "$DEST/$FILE" ] || exit 1
-            done
-        then
+            done; then
             RESULT="PASS"
         fi
 

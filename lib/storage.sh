@@ -27,8 +27,7 @@
 
 STORAGE_INITIAL_SIZE_BYTES=$((512 * 1024 * 1024))
 
-cleanup_storage()
-{
+cleanup_storage() {
     local VG="$1"
     local LV="$2"
     local MOUNT="$3"
@@ -48,40 +47,36 @@ cleanup_storage()
     #
     # Remove LV if it exists.
     #
-    if lvs "${VG}/${LV}" >/dev/null 2>&1
-    then
-        lvremove -fy "/dev/${VG}/${LV}" >/dev/null
+    if lvs "${VG}/${LV}" > /dev/null 2>&1; then
+        lvremove -fy "/dev/${VG}/${LV}" > /dev/null
     fi
 
     #
     # Remove VG if it exists.
     #
-    if vgs "$VG" >/dev/null 2>&1
-    then
-        vgremove -fy "$VG" >/dev/null
+    if vgs "$VG" > /dev/null 2>&1; then
+        vgremove -fy "$VG" > /dev/null
     fi
 
     #
     # Remove PV if it exists.
     #
-    if pvs "$DISK" >/dev/null 2>&1
-    then
-        pvremove -fy "$DISK" >/dev/null
+    if pvs "$DISK" > /dev/null 2>&1; then
+        pvremove -fy "$DISK" > /dev/null
     fi
 
     #
     # Remove any signatures.
     #
-    wipefs -af "$DISK" >/dev/null 2>&1 || true
+    wipefs -af "$DISK" > /dev/null 2>&1 || true
 
     #
     # Remove mount point.
     #
-    rmdir "$MOUNT" >/dev/null 2>&1 || true
+    rmdir "$MOUNT" > /dev/null 2>&1 || true
 }
 
-create_lvm()
-{
+create_lvm() {
     local DISK="$1"
     local VG="$2"
     local LV="$3"
@@ -95,18 +90,18 @@ create_lvm()
         "$MOUNT" \
         "$DISK"
 
-        wipefs -af "$DISK" >/dev/null 2>&1 || true
+    wipefs -af "$DISK" > /dev/null 2>&1 || true
 
-    pvcreate "$DISK" >/dev/null
-    vgcreate "$VG" "$DISK" >/dev/null
+    pvcreate "$DISK" > /dev/null
+    vgcreate "$VG" "$DISK" > /dev/null
     lvcreate \
         -W y \
         -y \
         -L "$SIZE" \
         -n "$LV" \
-        "$VG" >/dev/null
+        "$VG" > /dev/null
 
-    mkfs -t "$FSTYPE" "/dev/${VG}/${LV}" >/dev/null 2>&1
+    mkfs -t "$FSTYPE" "/dev/${VG}/${LV}" > /dev/null 2>&1
 
     mkdir -p "$MOUNT"
 
@@ -115,7 +110,7 @@ create_lvm()
 
     echo "UUID=${UUID} ${MOUNT} ${FSTYPE} defaults 0 0" >> /etc/fstab
 
-    systemctl daemon-reload >/dev/null 2>&1 || true
+    systemctl daemon-reload > /dev/null 2>&1 || true
 
     mount "$MOUNT"
 }
@@ -124,28 +119,23 @@ create_lvm()
 # Storage Validation
 ########################################
 
-storage_lv_exists()
-{
-    lvs vgapps/lvapps >/dev/null 2>&1
+storage_lv_exists() {
+    lvs vgapps/lvapps > /dev/null 2>&1
 }
 
-storage_filesystem_exists()
-{
-    blkid /dev/vgapps/lvapps >/dev/null 2>&1
+storage_filesystem_exists() {
+    blkid /dev/vgapps/lvapps > /dev/null 2>&1
 }
 
-storage_is_mounted()
-{
-    findmnt /apps >/dev/null 2>&1
+storage_is_mounted() {
+    findmnt /apps > /dev/null 2>&1
 }
 
-storage_fstab_exists()
-{
+storage_fstab_exists() {
     grep -q '[[:space:]]/apps[[:space:]]' /etc/fstab
 }
 
-storage_uuid_correct()
-{
+storage_uuid_correct() {
     local FS_UUID
 
     FS_UUID=$(blkid -s UUID -o value /dev/vgapps/lvapps)
@@ -153,20 +143,16 @@ storage_uuid_correct()
     grep -q "^UUID=${FS_UUID}[[:space:]]" /etc/fstab
 }
 
-storage_is_gpt()
-{
-    parted -sm /dev/sdb print | grep -q ':gpt:'
+storage_is_gpt() {
+    parted -sm /dev/sdb print 2>/dev/null | grep -q ':gpt:'
 }
 
-storage_pv_is_partition()
-{
-    pvs /dev/sdb1 >/dev/null 2>&1
+storage_pv_is_partition() {
+    pvs /dev/sdb1 > /dev/null 2>&1
 }
 
-storage_current_size_bytes()
-{
-    if ! lvs vgapps/lvapps >/dev/null 2>&1
-    then
+storage_current_size_bytes() {
+    if ! lvs vgapps/lvapps > /dev/null 2>&1; then
         return 1
     fi
 
@@ -176,26 +162,25 @@ storage_current_size_bytes()
         --nosuffix \
         -o lv_size \
         vgapps/lvapps \
-        2>/dev/null |
+        2> /dev/null |
         xargs
 }
 
-storage_size_to_bytes()
-{
+storage_size_to_bytes() {
     local VALUE="$1"
 
     case "$VALUE" in
         *MiB)
-            echo $(( ${VALUE%MiB} * 1024 * 1024 ))
+            echo $((${VALUE%MiB} * 1024 * 1024))
             ;;
         *GiB)
-            echo $(( ${VALUE%GiB} * 1024 * 1024 * 1024 ))
+            echo $((${VALUE%GiB} * 1024 * 1024 * 1024))
             ;;
         *MB)
-            echo $(( ${VALUE%MB} * 1000 * 1000 ))
+            echo $((${VALUE%MB} * 1000 * 1000))
             ;;
         *GB)
-            echo $(( ${VALUE%GB} * 1000 * 1000 * 1000 ))
+            echo $((${VALUE%GB} * 1000 * 1000 * 1000))
             ;;
         *)
             return 1
@@ -207,8 +192,7 @@ storage_size_to_bytes()
 # Storage Grading
 ########################################
 
-grade_storage()
-{
+grade_storage() {
     local OBJECT_ID
 
     OBJECT_ID=$(echo "$OBJECT" | jq -r '.id')
@@ -236,13 +220,11 @@ grade_storage()
     esac
 }
 
-grade_storage_filesystem()
-{
+grade_storage_filesystem() {
     #
     # storage-001 requires GPT and an LVM PV on /dev/sdb1.
     #
-    if [ "$(jq -r '.id' <<<"$OBJECT")" = "storage-001" ]
-    then
+    if [ "$(jq -r '.id' <<< "$OBJECT")" = "storage-001" ]; then
         storage_is_gpt || {
             RESULT="FAIL"
             return
@@ -282,8 +264,7 @@ grade_storage_filesystem()
     RESULT="PASS"
 }
 
-grade_storage_uuid()
-{
+grade_storage_uuid() {
     #
     # For v1.0 this objective is satisfied by the same
     # validation as a correct filesystem.
@@ -291,8 +272,7 @@ grade_storage_uuid()
     grade_storage_filesystem
 }
 
-grade_storage_fstab()
-{
+grade_storage_fstab() {
     #
     # For v1.0 this objective is satisfied by the same
     # validation as a correct persistent mount.
@@ -300,14 +280,13 @@ grade_storage_fstab()
     grade_storage_filesystem
 }
 
-grade_storage_growth()
-{
+grade_storage_growth() {
     local GROW_BY
     local EXPECTED_BYTES
     local CURRENT_BYTES
 
     GROW_BY=$(
-        jq -r '.answer.grow_by' <<<"$OBJECT"
+        jq -r '.answer.grow_by' <<< "$OBJECT"
     )
 
     CURRENT_BYTES=$(
@@ -324,13 +303,11 @@ grade_storage_growth()
         return
     }
 
-    EXPECTED_BYTES=$(( \
+    EXPECTED_BYTES=$((\
         STORAGE_INITIAL_SIZE_BYTES + \
-        $(storage_size_to_bytes "$GROW_BY") \
-    ))
+        $(storage_size_to_bytes "$GROW_BY")))
 
-    if [ "$CURRENT_BYTES" -lt "$EXPECTED_BYTES" ]
-    then
+    if [ "$CURRENT_BYTES" -lt "$EXPECTED_BYTES" ]; then
         RESULT="FAIL"
         return
     fi

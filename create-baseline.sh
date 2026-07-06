@@ -5,17 +5,14 @@ SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 source "${SCRIPT_DIR}/variables.conf"
 source "${SCRIPT_DIR}/lib/objectives.sh"
 
-verify_root()
-{
-    if [ "$EUID" -ne 0 ]
-    then
+verify_root() {
+    if [ "$EUID" -ne 0 ]; then
         echo "ERROR: Must be run as root."
         exit 1
     fi
 }
 
-show_help()
-{
+show_help() {
     cat << HELP
 Usage:
     $0 [OPTION]
@@ -44,8 +41,7 @@ No option:
 HELP
 }
 
-validate_all_objectives()
-{
+validate_all_objectives() {
     echo
     echo "================================================="
     echo "RHCSA MiniLab Objective Validation"
@@ -55,9 +51,8 @@ validate_all_objectives()
     echo "Checking objective files..."
     echo
 
-    for FILE in objectives/*.json
-    do
-        jq empty "$FILE" >/dev/null 2>&1 || {
+    for FILE in objectives/*.json; do
+        jq empty "$FILE" > /dev/null 2>&1 || {
             echo "[FAIL] Invalid JSON:"
             echo "    $FILE"
             echo
@@ -67,8 +62,7 @@ validate_all_objectives()
 
     echo "[PASS] JSON syntax"
 
-    for FILE in objectives/*.json
-    do
+    for FILE in objectives/*.json; do
         jq -e '
             .[] |
             has("id") and
@@ -81,7 +75,7 @@ validate_all_objectives()
             has("text") and
             has("hint") and
             has("answer")
-        ' "$FILE" >/dev/null || {
+        ' "$FILE" > /dev/null || {
             echo "[FAIL] Missing required field(s):"
             echo "    $FILE"
             echo
@@ -93,12 +87,11 @@ validate_all_objectives()
 
     DUPLICATES=$(
         jq -r '.[].id' objectives/*.json |
-        sort |
-        uniq -d
+            sort |
+            uniq -d
     )
 
-    if [ -n "$DUPLICATES" ]
-    then
+    if [ -n "$DUPLICATES" ]; then
         echo "[FAIL] Duplicate objective ID(s):"
         echo
         echo "$DUPLICATES"
@@ -119,8 +112,7 @@ validate_all_objectives()
     echo
 }
 
-audit_all_objectives()
-{
+audit_all_objectives() {
     validate_all_objectives || return 1
 
     echo
@@ -141,20 +133,18 @@ audit_all_objectives()
             strings |
             select(test("\\$\\{"))
         ' "$TMPDIR/exam-state.json" |
-        sort -u
+            sort -u
     )
 
-    if [ -n "$UNEXPANDED" ]
-    then
+    if [ -n "$UNEXPANDED" ]; then
         echo
         echo "ERROR: Unexpanded template variables found."
         echo
 
         echo "$UNEXPANDED" |
-        while read VARIABLE
-        do
-            printf "  %s\n" "$VARIABLE"
-        done
+            while read VARIABLE; do
+                printf "  %s\n" "$VARIABLE"
+            done
 
         echo
         echo "The audit must operate on fully expanded objectives."
@@ -162,18 +152,17 @@ audit_all_objectives()
         return 1
     fi
 
-        OUTPUT=$(
+    OUTPUT=$(
         STATE="$TMPDIR/exam-state.json" \
             GRADE_MODE=audit \
             ./grade-exam.sh
     )
 
-    if [ "$VERBOSE" -eq 1 ]
-then
-    echo
-    printf '%s\n' "$OUTPUT"
-    echo
-fi
+    if [ "$VERBOSE" -eq 1 ]; then
+        echo
+        printf '%s\n' "$OUTPUT"
+        echo
+    fi
 
     PASSING=$(printf '%s\n' "$OUTPUT" | grep '^PASS|')
 
@@ -189,8 +178,7 @@ fi
 
     EXPECTED=$(jq 'length' "$TMPDIR/exam-state.json")
 
-    if [ "$TOTAL" -ne "$EXPECTED" ]
-    then
+    if [ "$TOTAL" -ne "$EXPECTED" ]; then
         echo
         echo "ERROR: Grading terminated before all objectives were evaluated."
         echo
@@ -211,23 +199,20 @@ fi
 
     echo
 
-    if [ "$PASS_COUNT" -gt 0 ]
-    then
+    if [ "$PASS_COUNT" -gt 0 ]; then
         echo "Objectives already satisfied"
         echo "----------------------------"
         echo
-    echo "$PASSING" |
-while IFS='|' read -r STATUS TEXT
-do
-    if jq -e --arg text "$TEXT" \
-            '.[] | select(.text == $text and has("scenario"))' \
-            "$TMPDIR/exam-state.json" >/dev/null
-        then
-            printf "  - [SCENARIO] %s\n" "$TEXT"
-        else
-            printf "  - [BASELINE] %s\n" "$TEXT"
-        fi
-    done
+        echo "$PASSING" |
+            while IFS='|' read -r STATUS TEXT; do
+                if jq -e --arg text "$TEXT" \
+                    '.[] | select(.text == $text and has("scenario"))' \
+                    "$TMPDIR/exam-state.json" > /dev/null; then
+                    printf "  - [SCENARIO] %s\n" "$TEXT"
+                else
+                    printf "  - [BASELINE] %s\n" "$TEXT"
+                fi
+            done
 
     fi
 
@@ -235,41 +220,37 @@ do
     echo "-------------------------------------------------"
     echo
 
-    if [ "$PASS_COUNT" -eq 0 ]
-    then
+    if [ "$PASS_COUNT" -eq 0 ]; then
         echo "Baseline validation successful."
         echo
         echo "Every objective requires student intervention."
     else
-    echo "Recommendation"
-    echo
-    echo "Review objectives marked [BASELINE]. These are"
-    echo "already satisfied on a clean system and should"
-    echo "be modified, replaced, or prepared differently"
-    echo "before the next release."
-    echo
-    echo "Objectives marked [SCENARIO] may appear as"
-    echo "passing during the baseline audit because"
-    echo "their associated scenario is not applied."
-    echo "These are expected to require student"
-    echo "intervention during a generated exam."
+        echo "Recommendation"
+        echo
+        echo "Review objectives marked [BASELINE]. These are"
+        echo "already satisfied on a clean system and should"
+        echo "be modified, replaced, or prepared differently"
+        echo "before the next release."
+        echo
+        echo "Objectives marked [SCENARIO] may appear as"
+        echo "passing during the baseline audit because"
+        echo "their associated scenario is not applied."
+        echo "These are expected to require student"
+        echo "intervention during a generated exam."
     fi
 
     echo
 }
 
-create_baseline()
-{
+create_baseline() {
     BASELINE=/baseline
 
-    if [ -d "$BASELINE" ]
-    then
+    if [ -d "$BASELINE" ]; then
         echo
         echo "ERROR: A baseline already exists."
         echo
 
-        if [ -f /baseline.version ]
-        then
+        if [ -f /baseline.version ]; then
             echo "Existing baseline commit:"
             printf "    %.12s\n\n" "$(cat /baseline.version)"
             echo
@@ -337,8 +318,7 @@ create_baseline()
 
 verify_root
 
-while [ $# -gt 0 ]
-do
+while [ $# -gt 0 ]; do
     case "$1" in
         --help)
             MODE="help"

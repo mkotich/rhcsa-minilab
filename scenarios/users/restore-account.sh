@@ -2,18 +2,17 @@
 
 set -e
 
-scenario_users_restore_account()
-{
+scenario_users_restore_account() {
     #
     # Ensure an alternate primary group exists.
     #
-    getent group users >/dev/null ||
+    getent group users > /dev/null ||
         groupadd users
 
     #
     # Lock the account.
     #
-    passwd -l carol >/dev/null
+    passwd -l carol > /dev/null
 
     #
     # Break multiple account attributes.

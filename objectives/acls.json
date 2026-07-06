@@ -12,7 +12,7 @@
     "answer": {
       "path": "/shared",
       "user": "student",
-      "perms": "rwx"
+      "permissions": "rwx"
     }
   },
 

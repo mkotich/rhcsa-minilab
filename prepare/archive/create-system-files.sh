@@ -7,4 +7,4 @@ tar -cJf \
     /etc/fstab \
     /etc/passwd \
     /etc/group \
-    >/dev/null 2>&1
+    > /dev/null 2>&1

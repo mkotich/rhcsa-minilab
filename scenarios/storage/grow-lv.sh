@@ -13,8 +13,7 @@ set -e
 
 source lib/storage.sh
 
-scenario_storage_grow_lv()
-{
+scenario_storage_grow_lv() {
     create_lvm \
         /dev/sdb \
         vgapps \

@@ -37,13 +37,12 @@
   "importance": "common",
   "points": 1,
   "resource_group": "none",
-  "text": "Unmask cups.service.",
-  "hint": "systemctl unmask",
+  "text": "Mask cups.service.",
+  "hint": "systemctl mask",
   "answer": {
     "service": "cups.service",
-    "state": "unmasked"
+    "state": "masked"
   }
 }
-
 
 ]

@@ -48,18 +48,34 @@
   },
 
   {
-    "id": "firewall-004",
-    "category": "firewall",
-    "domain": "services",
-    "difficulty": 1,
-    "importance": "critical",
-    "points": 1,
-    "resource_group": "none",
-    "text": "Configure firewalld to permanently allow the nfs service in the public zone.",
-    "hint": "firewall-cmd",
-    "answer": {
-      "zone": "public",
-      "service": "nfs"
-    }
+  "id": "firewall-004",
+  "category": "firewall",
+  "domain": "ports",
+  "difficulty": 2,
+  "importance": "common",
+  "points": 1,
+  "resource_group": "none",
+  "text": "Configure firewalld to permanently allow TCP port 8443 in the public zone.",
+  "hint": "firewall-cmd",
+  "answer": {
+    "zone": "public",
+    "port": "8443/tcp"
   }
+},
+{
+  "id": "firewall-005",
+  "category": "firewall",
+  "domain": "rich-rules",
+  "difficulty": 3,
+  "importance": "common",
+  "points": 1,
+  "resource_group": "none",
+  "text": "Configure firewalld with a permanent rich rule allowing TCP port 8080 from source 192.168.13.0/24 in the public zone.",
+  "hint": "firewall-cmd --add-rich-rule",
+  "answer": {
+    "zone": "public",
+    "rich_rule": "rule family=\"ipv4\" source address=\"192.168.13.0/24\" port protocol=\"tcp\" port=\"8080\" accept"
+  }
+
+}
 ]

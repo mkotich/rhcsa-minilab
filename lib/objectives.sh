@@ -11,8 +11,7 @@
 #
 #     expand_objectives objectives/*.json
 #
-expand_objectives()
-{
+expand_objectives() {
     jq -cs '
         add
         | map(

@@ -1,7 +1,6 @@
 #!/bin/bash
 
-grade_process()
-{
+grade_process() {
     RESULT="PASS"
 
     PIDFILE=/var/lib/rhcsa-minilab/rhcsa-sleep.pid
@@ -16,12 +15,12 @@ grade_process()
     #
     # Process must still exist.
     #
-    ps -p "$PID" >/dev/null 2>&1 || {
+    ps -p "$PID" > /dev/null 2>&1 || {
         RESULT="FAIL"
         return
     }
 
-    EXPECTED=$(jq -r '.answer.nice' <<<"$OBJECT")
+    EXPECTED=$(jq -r '.answer.nice' <<< "$OBJECT")
     CURRENT=$(ps -o ni= -p "$PID" | xargs)
 
     [ "$CURRENT" = "$EXPECTED" ] || RESULT="FAIL"

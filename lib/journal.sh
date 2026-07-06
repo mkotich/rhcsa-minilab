@@ -1,7 +1,6 @@
 #!/bin/bash
 
-grade_journal()
-{
+grade_journal() {
     RESULT="PASS"
 
     COMMAND=$(echo "$OBJECT" | jq -r '.answer.command')
@@ -17,10 +16,10 @@ grade_journal()
 
     EXPECTED=$(mktemp)
 
-    eval "$COMMAND" >"$EXPECTED"
+    eval "$COMMAND" > "$EXPECTED"
 
-    diff -q "$EXPECTED" "$OUTFILE" >/dev/null 2>&1 \
-        || RESULT="FAIL"
+    diff -q "$EXPECTED" "$OUTFILE" > /dev/null 2>&1 ||
+        RESULT="FAIL"
 
     rm -f "$EXPECTED"
 }

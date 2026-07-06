@@ -71,7 +71,7 @@ case "$MODE" in
         COMMON_COUNT=20
         OPTIONAL_COUNT=9
         ;;
-   *)
+    *)
         echo
         echo "Usage:"
         echo "    $0 mini|small|full|nightmare"
@@ -86,11 +86,10 @@ ALL_OBJECTIVES=$(jq -cs 'add' "${SCRIPT_DIR}"/objectives/*.json)
 #
 # Filter objectives based on lab mode
 #
-if [ "$LAB_MODE" = "standalone" ]
-then
+if [ "$LAB_MODE" = "standalone" ]; then
     ALL_OBJECTIVES=$(
         echo "$ALL_OBJECTIVES" |
-        jq '
+            jq '
             map(
                 select(
                     (.requires // [])
@@ -104,14 +103,12 @@ fi
 
 declare -A CATEGORY_COUNT
 
-add_objective()
-{
+add_objective() {
     OBJECT="$1"
 
     CURRENT=$(wc -l < "$SELECTED")
 
-    if [ "$CURRENT" -ge "$OBJECTIVES" ]
-    then
+    if [ "$CURRENT" -ge "$OBJECTIVES" ]; then
         return
     fi
 
@@ -120,86 +117,77 @@ add_objective()
     #
     # Category limit
     #
-    if [ "${CATEGORY_COUNT[$CATEGORY]:-0}" -ge "$CATEGORY_LIMIT" ]
-    then
+    if [ "${CATEGORY_COUNT[$CATEGORY]:-0}" -ge "$CATEGORY_LIMIT" ]; then
         return
     fi
 
     echo "$OBJECT" >> "$SELECTED"
 
-    CATEGORY_COUNT[$CATEGORY]=$(( ${CATEGORY_COUNT[$CATEGORY]:-0} + 1 ))
+    CATEGORY_COUNT[$CATEGORY]=$((${CATEGORY_COUNT[$CATEGORY]:-0} + 1))
 }
 
-select_category()
-{
+select_category() {
     CATEGORY="$1"
 
     echo "$ALL_OBJECTIVES" |
-    jq -c --arg category "$CATEGORY" '
+        jq -c --arg category "$CATEGORY" '
         .[]
         | select(.category == $category)
     ' |
-    shuf |
-    while read OBJECT
-    do
-        BEFORE=$(wc -l < "$SELECTED")
+        shuf |
+        while read OBJECT; do
+            BEFORE=$(wc -l < "$SELECTED")
 
-        add_objective "$OBJECT"
+            add_objective "$OBJECT"
 
-        AFTER=$(wc -l < "$SELECTED")
+            AFTER=$(wc -l < "$SELECTED")
 
-        [ "$AFTER" -gt "$BEFORE" ] && break
-    done
+            [ "$AFTER" -gt "$BEFORE" ] && break
+        done
 }
 
-select_importance()
-{
+select_importance() {
     IMPORTANCE="$1"
     TARGET="$2"
     ADDED=0
 
-    while read OBJECT
-    do
+    while read OBJECT; do
         BEFORE=$(wc -l < "$SELECTED")
 
         add_objective "$OBJECT"
 
         AFTER=$(wc -l < "$SELECTED")
 
-        if [ "$AFTER" -gt "$BEFORE" ]
-        then
-            ADDED=$((ADDED+1))
+        if [ "$AFTER" -gt "$BEFORE" ]; then
+            ADDED=$((ADDED + 1))
         fi
 
         [ "$ADDED" -ge "$TARGET" ] && break
 
     done < <(
         echo "$ALL_OBJECTIVES" |
-        jq -c --arg importance "$IMPORTANCE" '
+            jq -c --arg importance "$IMPORTANCE" '
             .[]
             | select(.importance == $importance)
         ' |
-        shuf
+            shuf
     )
 }
 
-fill_remaining()
-{
+fill_remaining() {
     echo "$ALL_OBJECTIVES" |
-    jq -c '.[]' |
-    shuf |
-    while read OBJECT
-    do
-        add_objective "$OBJECT"
+        jq -c '.[]' |
+        shuf |
+        while read OBJECT; do
+            add_objective "$OBJECT"
 
-        CURRENT=$(wc -l < "$SELECTED")
+            CURRENT=$(wc -l < "$SELECTED")
 
-        [ "$CURRENT" -ge "$OBJECTIVES" ] && break
-    done
+            [ "$CURRENT" -ge "$OBJECTIVES" ] && break
+        done
 }
 
-random_storage_growth_size()
-{
+random_storage_growth_size() {
     local SIZES=(
         128M
         256M
@@ -218,19 +206,17 @@ random_storage_growth_size()
         3GiB
     )
 
-    printf '%s\n' "${SIZES[$(( RANDOM % ${#SIZES[@]} ))]}"
+    printf '%s\n' "${SIZES[$((RANDOM % ${#SIZES[@]}))]}"
 }
 
-display_resource_groups()
-{
+display_resource_groups() {
     [ -z "$RESOURCE_GROUPS" ] && return
 
     echo
     echo "Required Resource Groups"
     echo "------------------------"
 
-    while read GROUP
-    do
+    while read GROUP; do
         [ -z "$GROUP" ] && continue
 
         printf "  - %s\n" "$GROUP"
@@ -238,32 +224,28 @@ display_resource_groups()
     done <<< "$RESOURCE_GROUPS"
 }
 
-prepare_resources()
-{
+prepare_resources() {
     [ -z "$RESOURCE_GROUPS" ] && return
 
     echo "Preparing resources..."
     echo
 
-    while read GROUP
-    do
+    while read GROUP; do
         [ -z "$GROUP" ] && continue
 
         MODULE="${SCRIPT_DIR}/prepare/${GROUP}.sh"
 
-        if [ ! -f "$MODULE" ]
-        then
+        if [ ! -f "$MODULE" ]; then
             echo "ERROR: Missing preparation module: $GROUP"
             exit 1
         fi
 
-	source "${SCRIPT_DIR}/lib/prepare.sh"
+        source "${SCRIPT_DIR}/lib/prepare.sh"
         source "$MODULE"
 
         FUNCTION="prepare_${GROUP}"
 
-        if ! declare -F "$FUNCTION" >/dev/null
-        then
+        if ! declare -F "$FUNCTION" > /dev/null; then
             echo "ERROR: Missing function ${FUNCTION}()"
             exit 1
         fi
@@ -275,51 +257,47 @@ prepare_resources()
     done <<< "$RESOURCE_GROUPS"
 }
 
-apply_scenarios()
-{
+apply_scenarios() {
     echo
     echo "Applying scenarios..."
     echo
 
-SCENARIOS=$(
-    jq -r '
+    SCENARIOS=$(
+        jq -r '
         .[]
         | select(has("scenario"))
         | "\(.resource_group):\(.scenario)"
     ' /home/student/exam-state.json |
-    sort -u
-)
+            sort -u
+    )
 
-while IFS=: read -r GROUP SCENARIO
-do
-    [ -z "$GROUP" ] && continue
+    while IFS=: read -r GROUP SCENARIO; do
+        [ -z "$GROUP" ] && continue
 
-    echo "  ${GROUP}/${SCENARIO}"
+        echo "  ${GROUP}/${SCENARIO}"
 
-    MODULE="${SCRIPT_DIR}/scenarios/${GROUP}/${SCENARIO}.sh"
-    FUNCTION="scenario_${GROUP}_${SCENARIO//-/_}"
+        MODULE="${SCRIPT_DIR}/scenarios/${GROUP}/${SCENARIO}.sh"
+        FUNCTION="scenario_${GROUP}_${SCENARIO//-/_}"
 
-    if [ ! -f "$MODULE" ]
-    then
-        echo
-        echo "ERROR: Scenario module not found:"
-        echo "    $MODULE"
-        exit 1
-    fi
+        if [ ! -f "$MODULE" ]; then
+            echo
+            echo "ERROR: Scenario module not found:"
+            echo "    $MODULE"
+            exit 1
+        fi
 
-    source "$MODULE"
+        source "$MODULE"
 
-    if ! declare -F "$FUNCTION" >/dev/null
-    then
-        echo
-        echo "ERROR: Scenario function not found:"
-        echo "    $FUNCTION"
-        exit 1
-    fi
+        if ! declare -F "$FUNCTION" > /dev/null; then
+            echo
+            echo "ERROR: Scenario function not found:"
+            echo "    $FUNCTION"
+            exit 1
+        fi
 
-    "$FUNCTION"
+        "$FUNCTION"
 
-done <<< "$SCENARIOS"
+    done <<< "$SCENARIOS"
 
 }
 
@@ -327,26 +305,23 @@ done <<< "$SCENARIOS"
 # Select exam objectives.
 #
 
-if [ -n "$DEBUG_OBJECTIVE" ]
-then
+if [ -n "$DEBUG_OBJECTIVE" ]; then
     echo "$ALL_OBJECTIVES" |
-    jq -c --arg id "$DEBUG_OBJECTIVE" '
+        jq -c --arg id "$DEBUG_OBJECTIVE" '
         .[]
         | select(.id == $id)
     ' |
-    while read OBJECT
-    do
-        add_objective "$OBJECT"
-        break
-    done
+        while read OBJECT; do
+            add_objective "$OBJECT"
+            break
+        done
 
 else
 
     #
     # Mandatory categories
     #
-    for CATEGORY in "${CRITICAL_CATEGORIES[@]}"
-    do
+    for CATEGORY in "${CRITICAL_CATEGORIES[@]}"; do
         select_category "$CATEGORY"
     done
 
@@ -371,8 +346,7 @@ jq -s '.' "$SELECTED" > /home/student/exam-state.json
 #
 
 if jq -e '.[] | select(.id=="storage-004")' \
-    /home/student/exam-state.json >/dev/null
-then
+    /home/student/exam-state.json > /dev/null; then
     SIZE=$(random_storage_growth_size)
 
     jq \
@@ -397,32 +371,31 @@ fi
 
 RESOURCE_GROUPS=$(
     jq -r '.[].resource_group' /home/student/exam-state.json |
-    grep -v '^none$' |
-    sort -u
+        grep -v '^none$' |
+        sort -u
 )
 
 {
-echo "================================================="
-echo "RHCSA MiniLab"
-echo "================================================="
-echo
-echo "Mode:          $MODE"
-echo "Objectives:    $OBJECTIVES"
-echo "Time Limit:    $TIME_LIMIT"
-echo
+    echo "================================================="
+    echo "RHCSA MiniLab"
+    echo "================================================="
+    echo
+    echo "Mode:          $MODE"
+    echo "Objectives:    $OBJECTIVES"
+    echo "Time Limit:    $TIME_LIMIT"
+    echo
 
-COUNT=1
+    COUNT=1
 
-while IFS= read -r TEXT
-do
-    echo "$COUNT. $TEXT"
-    COUNT=$((COUNT+1))
-done < <(
-    jq -r '.[].text' /home/student/exam-state.json
-)
+    while IFS= read -r TEXT; do
+        echo "$COUNT. $TEXT"
+        COUNT=$((COUNT + 1))
+    done < <(
+        jq -r '.[].text' /home/student/exam-state.json
+    )
 
-echo
-echo "================================================="
+    echo
+    echo "================================================="
 } > /home/student/EXAM.txt
 
 date +%s > /home/student/exam-start.time
@@ -462,4 +435,3 @@ echo
 echo "Good luck."
 echo "================================================="
 echo
-

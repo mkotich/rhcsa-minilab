@@ -12,8 +12,7 @@ set -e
 
 source lib/storage.sh
 
-scenario_storage_wrong_uuid()
-{
+scenario_storage_wrong_uuid() {
     create_lvm \
         /dev/sdb \
         vgapps \
@@ -31,7 +30,7 @@ scenario_storage_wrong_uuid()
     FS_UUID=$(blkid -s UUID -o value /dev/vgapps/lvapps)
     LV_UUID=$(lvs --noheadings -o lv_uuid vgapps/lvapps | xargs)
 
-sed -i \
-    "\|[[:space:]]/apps[[:space:]]|s/${FS_UUID}/${LV_UUID}/" \
-    /etc/fstab
+    sed -i \
+        "\|[[:space:]]/apps[[:space:]]|s/${FS_UUID}/${LV_UUID}/" \
+        /etc/fstab
 }

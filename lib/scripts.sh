@@ -1,14 +1,13 @@
 #!/bin/bash
 
-grade_scripts()
-{
+grade_scripts() {
     RESULT="PASS"
 
     local SCRIPT
     local TEST_COUNT
     local i
 
-    SCRIPT=$(jq -r '.answer.script' <<<"$OBJECT")
+    SCRIPT=$(jq -r '.answer.script' <<< "$OBJECT")
 
     #
     # Script must exist.
@@ -26,18 +25,16 @@ grade_scripts()
         return
     }
 
-    TEST_COUNT=$(jq '.answer.tests | length' <<<"$OBJECT")
+    TEST_COUNT=$(jq '.answer.tests | length' <<< "$OBJECT")
 
-    for ((i=0; i<TEST_COUNT; i++))
-    do
+    for ((i = 0; i < TEST_COUNT; i++)); do
         grade_script_test "$SCRIPT" "$i"
 
         [ "$RESULT" = "PASS" ] || return
     done
 }
 
-grade_script_test()
-{
+grade_script_test() {
     local SCRIPT="$1"
     local INDEX="$2"
 
@@ -56,47 +53,46 @@ grade_script_test()
     STDERR_FILE=$(mktemp)
 
     mapfile -t ARGS < <(
-        jq -r ".answer.tests[$INDEX].args[]" <<<"$OBJECT"
+        jq -r ".answer.tests[$INDEX].args[]" <<< "$OBJECT"
     )
 
     "$SCRIPT" "${ARGS[@]}" \
-        >"$STDOUT_FILE" \
-        2>"$STDERR_FILE"
+        > "$STDOUT_FILE" \
+        2> "$STDERR_FILE"
 
     RC=$?
 
-    ACTUAL_STDOUT=$(<"$STDOUT_FILE")
-    ACTUAL_STDERR=$(<"$STDERR_FILE")
+    ACTUAL_STDOUT=$(< "$STDOUT_FILE")
+    ACTUAL_STDERR=$(< "$STDERR_FILE")
 
-        STDOUT_COMMAND=$(
-        jq -r ".answer.tests[$INDEX].stdout_command // empty" <<<"$OBJECT"
+    STDOUT_COMMAND=$(
+        jq -r ".answer.tests[$INDEX].stdout_command // empty" <<< "$OBJECT"
     )
 
-    if [ -n "$STDOUT_COMMAND" ]
-    then
+    if [ -n "$STDOUT_COMMAND" ]; then
         EXPECTED_STDOUT=$(eval "$STDOUT_COMMAND")
     else
         EXPECTED_STDOUT=$(
-            jq -r ".answer.tests[$INDEX].stdout" <<<"$OBJECT"
+            jq -r ".answer.tests[$INDEX].stdout" <<< "$OBJECT"
         )
     fi
 
     EXPECTED_STDERR=$(
-        jq -r ".answer.tests[$INDEX].stderr" <<<"$OBJECT"
+        jq -r ".answer.tests[$INDEX].stderr" <<< "$OBJECT"
     )
 
     EXPECTED_EXIT=$(
-        jq -r ".answer.tests[$INDEX].exit" <<<"$OBJECT"
+        jq -r ".answer.tests[$INDEX].exit" <<< "$OBJECT"
     )
 
-    [ "$ACTUAL_STDOUT" = "$EXPECTED_STDOUT" ] \
-        || RESULT="FAIL"
+    [ "$ACTUAL_STDOUT" = "$EXPECTED_STDOUT" ] ||
+        RESULT="FAIL"
 
-    [ "$ACTUAL_STDERR" = "$EXPECTED_STDERR" ] \
-        || RESULT="FAIL"
+    [ "$ACTUAL_STDERR" = "$EXPECTED_STDERR" ] ||
+        RESULT="FAIL"
 
-    [ "$RC" = "$EXPECTED_EXIT" ] \
-        || RESULT="FAIL"
+    [ "$RC" = "$EXPECTED_EXIT" ] ||
+        RESULT="FAIL"
 
     rm -f \
         "$STDOUT_FILE" \

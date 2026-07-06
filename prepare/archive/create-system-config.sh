@@ -7,4 +7,4 @@ tar -czf \
     /etc/passwd \
     /etc/group \
     /etc/hosts \
-    >/dev/null 2>&1
+    > /dev/null 2>&1

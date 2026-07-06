@@ -1,16 +1,14 @@
-cleanup_nfs()
-{
+cleanup_nfs() {
     echo "Cleaning up NFS..."
 
     #
     # Unmount any NFS mounts
     #
-    while read MOUNTPOINT
-    do
-        umount -f "$MOUNTPOINT" 2>/dev/null
+    while read MOUNTPOINT; do
+        umount -f "$MOUNTPOINT" 2> /dev/null
     done < <(
         mount -t nfs,nfs4 |
-        awk '{print $3}'
+            awk '{print $3}'
     )
 
     #
@@ -22,7 +20,7 @@ cleanup_nfs()
     # Stop NFS client services
     #
     systemctl disable --now nfs-client.target rpc-statd.service \
-        >/dev/null 2>&1
+        > /dev/null 2>&1
 
     #
     # Remove stale NFS state

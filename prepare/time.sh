@@ -7,8 +7,7 @@ set -e
 #     time
 #
 
-prepare_time()
-{
+prepare_time() {
     ensure_package chrony
 
     ensure_service chronyd

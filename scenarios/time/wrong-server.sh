@@ -13,11 +13,10 @@ set -e
 #     Configure chrony to use an invalid time source.
 #
 
-scenario_time_wrong_server()
-{
+scenario_time_wrong_server() {
     sed -i \
         's/^server .*/server 192.0.2.1 iburst/' \
         /etc/chrony.conf
 
-    systemctl restart chronyd >/dev/null 2>&1
+    systemctl restart chronyd > /dev/null 2>&1
 }

@@ -7,4 +7,4 @@ tar -cjf \
     /etc/hostname \
     /etc/hosts \
     /etc/resolv.conf \
-    >/dev/null 2>&1
+    > /dev/null 2>&1

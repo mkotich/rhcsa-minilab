@@ -12,8 +12,7 @@ set -e
 
 source lib/storage.sh
 
-scenario_storage_missing_fstab()
-{
+scenario_storage_missing_fstab() {
     create_lvm \
         /dev/sdb \
         vgapps \

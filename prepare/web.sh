@@ -15,8 +15,7 @@ set -e
 #     - Introduce intentional breakages
 #
 
-prepare_web()
-{
+prepare_web() {
     web_install
     web_prepare_content
     web_configure
@@ -24,15 +23,13 @@ prepare_web()
     web_verify
 }
 
-web_install()
-{
+web_install() {
     ensure_package httpd policycoreutils-python-utils
 
     ensure_service httpd
 }
 
-web_prepare_content()
-{
+web_prepare_content() {
     ensure_directory /webdata
     ensure_directory /uploads
 
@@ -40,39 +37,36 @@ web_prepare_content()
         /webdata/index.html
 }
 
-web_configure()
-{
+web_configure() {
     deploy_asset httpd/rhcsa-minilab.conf \
         /etc/httpd/conf.d/rhcsa-minilab.conf
 
     restart_service httpd
 }
 
-web_prepare_selinux()
-{
+web_prepare_selinux() {
     semanage fcontext \
         -a \
         -t httpd_sys_content_t \
-        "/webdata(/.*)?" >/dev/null 2>&1 || \
-    semanage fcontext \
-        -m \
-        -t httpd_sys_content_t \
-        "/webdata(/.*)?" >/dev/null
+        "/webdata(/.*)?" > /dev/null 2>&1 ||
+        semanage fcontext \
+            -m \
+            -t httpd_sys_content_t \
+            "/webdata(/.*)?" > /dev/null
 
     semanage fcontext \
         -a \
         -t httpd_sys_rw_content_t \
-        "/uploads(/.*)?" >/dev/null 2>&1 || \
-    semanage fcontext \
-        -m \
-        -t httpd_sys_rw_content_t \
-        "/uploads(/.*)?" >/dev/null
+        "/uploads(/.*)?" > /dev/null 2>&1 ||
+        semanage fcontext \
+            -m \
+            -t httpd_sys_rw_content_t \
+            "/uploads(/.*)?" > /dev/null
 
-    restorecon -RF /webdata /uploads >/dev/null 2>&1
+    restorecon -RF /webdata /uploads > /dev/null 2>&1
 }
 
-web_verify()
-{
+web_verify() {
     verify_service httpd
 
     verify_directory /webdata

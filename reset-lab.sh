@@ -19,7 +19,7 @@ rm -f /home/student/exam-start.time
 #
 
 # Disable any student-created swap
-swapoff -a >/dev/null 2>&1
+swapoff -a > /dev/null 2>&1
 
 # Unmount common mountpoints
 for MOUNT in \
@@ -28,17 +28,15 @@ for MOUNT in \
     /backup \
     /data \
     /mnt/share \
-    /mnt/nfs
-do
-    umount -lf "$MOUNT" >/dev/null 2>&1
+    /mnt/nfs; do
+    umount -lf "$MOUNT" > /dev/null 2>&1
 done
 
 #
 # Unmount any NFS filesystems
 #
-while read MOUNTPOINT
-do
-    umount -lf "$MOUNTPOINT" >/dev/null 2>&1
+while read MOUNTPOINT; do
+    umount -lf "$MOUNTPOINT" > /dev/null 2>&1
 done < <(
     mount -t nfs,nfs4 | awk '{print $3}'
 )
@@ -49,33 +47,33 @@ done < <(
 sed -i '\|server.rhcsa.local:/exports/share|d' /etc/fstab
 
 # Deactivate student logical volumes
-lvchange -an vgarchive/lvarchive >/dev/null 2>&1
-lvchange -an vgapps/lvapps >/dev/null 2>&1
-lvchange -an vgdata/lvdata >/dev/null 2>&1
-lvchange -an vgswap/lvswap >/dev/null 2>&1
+lvchange -an vgarchive/lvarchive > /dev/null 2>&1
+lvchange -an vgapps/lvapps > /dev/null 2>&1
+lvchange -an vgdata/lvdata > /dev/null 2>&1
+lvchange -an vgswap/lvswap > /dev/null 2>&1
 
 # Remove student logical volumes
-lvremove -fy vgarchive/lvarchive >/dev/null 2>&1
-lvremove -fy vgapps/lvapps >/dev/null 2>&1
-lvremove -fy vgdata/lvdata >/dev/null 2>&1
-lvremove -fy vgswap/lvswap >/dev/null 2>&1
+lvremove -fy vgarchive/lvarchive > /dev/null 2>&1
+lvremove -fy vgapps/lvapps > /dev/null 2>&1
+lvremove -fy vgdata/lvdata > /dev/null 2>&1
+lvremove -fy vgswap/lvswap > /dev/null 2>&1
 
 # Remove student volume groups
-vgremove -fy vgarchive >/dev/null 2>&1
-vgremove -fy vgapps >/dev/null 2>&1
-vgremove -fy vgdata >/dev/null 2>&1
-vgremove -fy vgswap >/dev/null 2>&1
+vgremove -fy vgarchive > /dev/null 2>&1
+vgremove -fy vgapps > /dev/null 2>&1
+vgremove -fy vgdata > /dev/null 2>&1
+vgremove -fy vgswap > /dev/null 2>&1
 
 # Remove student PV metadata
-pvremove -ffy /dev/sdb1 >/dev/null 2>&1
-pvremove -ffy /dev/sdb >/dev/null 2>&1
+pvremove -ffy /dev/sdb1 > /dev/null 2>&1
+pvremove -ffy /dev/sdb > /dev/null 2>&1
 
 # Remove partition table and signatures
-wipefs -af /dev/sdb >/dev/null 2>&1
+wipefs -af /dev/sdb > /dev/null 2>&1
 
 # Re-read partition table
-partprobe /dev/sdb >/dev/null 2>&1
-udevadm settle >/dev/null 2>&1
+partprobe /dev/sdb > /dev/null 2>&1
+udevadm settle > /dev/null 2>&1
 
 #
 # Restore baseline

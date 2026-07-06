@@ -7,7 +7,6 @@ set -e
 #     packages
 #
 
-prepare_packages()
-{
-    dnf makecache >/dev/null
+prepare_packages() {
+    dnf makecache > /dev/null
 }

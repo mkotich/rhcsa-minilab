@@ -1,5 +1,4 @@
-grade_nfs()
-{
+grade_nfs() {
     RESULT="PASS"
 
     SERVER=$(echo "$OBJECT" | jq -r '.answer.server')
@@ -8,12 +7,11 @@ grade_nfs()
 
     EXPECTED="${SERVER}:${EXPORT}"
 
-    mount | grep -q "^${EXPECTED} on ${MOUNTPOINT} " \
-        || RESULT="FAIL"
+    mount | grep -q "^${EXPECTED} on ${MOUNTPOINT} " ||
+        RESULT="FAIL"
 
-    if [ "$RESULT" = "PASS" ]
-    then
-        grep -Eq "[[:space:]]${MOUNTPOINT}[[:space:]]+nfs" /etc/fstab \
-            || RESULT="FAIL"
+    if [ "$RESULT" = "PASS" ]; then
+        grep -Eq "[[:space:]]${MOUNTPOINT}[[:space:]]+nfs" /etc/fstab ||
+            RESULT="FAIL"
     fi
 }

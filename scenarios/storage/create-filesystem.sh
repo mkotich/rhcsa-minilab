@@ -12,8 +12,7 @@ set -e
 
 source lib/storage.sh
 
-scenario_storage_create_filesystem()
-{
+scenario_storage_create_filesystem() {
     create_lvm \
         /dev/sdb \
         vgapps \
@@ -27,7 +26,7 @@ scenario_storage_create_filesystem()
     #
     umount /apps
 
-    wipefs -af /dev/vgapps/lvapps >/dev/null 2>&1
+    wipefs -af /dev/vgapps/lvapps > /dev/null 2>&1
 
     #
     # Remove the fstab entry.
