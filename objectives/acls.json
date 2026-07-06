@@ -2,28 +2,11 @@
   {
     "id": "acls-001",
     "category": "acls",
-    "domain": "permissions",
+    "domain": "user",
     "difficulty": 1,
     "importance": "common",
     "points": 1,
-    "resource_group": "none",
-    "text": "Configure user student to have rwx access to /shared using ACLs.",
-    "hint": "getfacl",
-    "answer": {
-      "path": "/shared",
-      "user": "student",
-      "permissions": "rwx"
-    }
-  },
-
-  {
-    "id": "permissions-021",
-    "category": "permissions",
-    "domain": "acls",
-    "difficulty": 2,
-    "importance": "common",
-    "points": 1,
-    "resource_group": "permissions",
+    "resource_group": "acls",
     "text": "Grant user student read and write access to /shared using POSIX ACLs without changing the file owner or group.",
     "hint": "setfacl",
     "answer": {
@@ -34,13 +17,13 @@
   },
 
   {
-    "id": "permissions-022",
-    "category": "permissions",
-    "domain": "acls",
+    "id": "acls-002",
+    "category": "acls",
+    "domain": "group",
     "difficulty": 2,
     "importance": "common",
     "points": 1,
-    "resource_group": "permissions",
+    "resource_group": "acls",
     "text": "Grant group developers read and write access to /projects using POSIX ACLs without modifying the directory's primary group.",
     "hint": "setfacl",
     "answer": {
@@ -51,13 +34,13 @@
   },
 
   {
-    "id": "permissions-023",
-    "category": "permissions",
-    "domain": "acls",
+    "id": "acls-003",
+    "category": "acls",
+    "domain": "default",
     "difficulty": 3,
     "importance": "core",
     "points": 2,
-    "resource_group": "permissions",
+    "resource_group": "acls",
     "text": "Configure a default ACL on /shared so that new files inherit read and write permissions for group developers.",
     "hint": "setfacl -d",
     "answer": {
@@ -68,18 +51,69 @@
   },
 
   {
-    "id": "permissions-024",
-    "category": "permissions",
-    "domain": "acls",
+    "id": "acls-004",
+    "category": "acls",
+    "domain": "remove",
     "difficulty": 3,
     "importance": "common",
     "points": 2,
-    "resource_group": "permissions",
+    "resource_group": "acls",
     "text": "Remove all extended ACL entries from /shared while preserving the existing traditional UNIX permissions.",
     "hint": "setfacl -b",
     "answer": {
       "path": "/shared",
       "remove": "all"
+    }
+  },
+
+  {
+    "id": "acls-005",
+    "category": "acls",
+    "domain": "modify",
+    "difficulty": 2,
+    "importance": "common",
+    "points": 1,
+    "resource_group": "acls",
+    "text": "Modify the ACL for user student on /shared so that it grants read, write, and execute permissions.",
+    "hint": "setfacl -m",
+    "answer": {
+      "path": "/shared",
+      "user": "student",
+      "permissions": "rwx"
+    }
+  },
+
+  {
+    "id": "acls-006",
+    "category": "acls",
+    "domain": "group",
+    "difficulty": 1,
+    "importance": "common",
+    "points": 1,
+    "resource_group": "acls",
+    "text": "Grant the group wheel read and execute access to /shared using an ACL.",
+    "hint": "setfacl -m",
+    "answer": {
+      "path": "/shared",
+      "group": "wheel",
+      "permissions": "r-x"
+    }
+  },
+
+  {
+    "id": "acls-007",
+    "category": "acls",
+    "domain": "remove",
+    "difficulty": 2,
+    "importance": "optional",
+    "points": 1,
+    "resource_group": "acls",
+    "text": "Remove the ACL entry for user student from /shared.",
+    "hint": "setfacl -x",
+    "answer": {
+      "path": "/shared",
+      "user": "student",
+      "present": false
     }
   }
 ]

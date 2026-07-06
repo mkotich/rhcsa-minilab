@@ -6,7 +6,7 @@
     "difficulty": 1,
     "importance": "common",
     "points": 1,
-    "resource_group": "none",
+    "resource_group": "permissions",
     "text": "Set the sticky bit on /public.",
     "hint": "stat -c %a /public",
     "answer": {
@@ -22,7 +22,7 @@
     "difficulty": 1,
     "importance": "common",
     "points": 1,
-    "resource_group": "none",
+    "resource_group": "permissions",
     "text": "Set the setgid bit on /shared.",
     "hint": "stat -c %a /shared",
     "answer": {
@@ -38,7 +38,7 @@
     "difficulty": 1,
     "importance": "common",
     "points": 1,
-    "resource_group": "none",
+    "resource_group": "permissions",
     "text": "Configure /shared with permissions 2770.",
     "hint": "stat -c %a /shared",
     "answer": {
