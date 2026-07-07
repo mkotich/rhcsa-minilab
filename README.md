@@ -109,3 +109,16 @@ intervention before release.
 ## Current Release
 
 v0.9.0
+
+## License
+
+This project is licensed under the GNU General Public License v3.0.
+See the LICENSE file for details.
+
+## Disclaimer
+
+RHCSA and Red Hat are trademarks of Red Hat, Inc.
+
+This project is an independent practice environment created for
+educational purposes. It is not affiliated with, endorsed by,
+authorized by, or sponsored by Red Hat, Inc.
