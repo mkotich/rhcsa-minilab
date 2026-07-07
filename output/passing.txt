@@ -1,0 +1,664 @@
+
+=================================================
+Run 1
+=================================================
+[PASS] Configure /apps to mount persistently using the filesystem UUID.
+[PASS] Extend logical volume lvapps by 128M. Ensure the filesystem is also expanded to use the additional space.
+[PASS] Configure user alice to use /bin/bash as the login shell.
+
+=================================================
+Run 2
+=================================================
+
+=================================================
+Run 3
+=================================================
+[PASS] Create group developers with GID 2000.
+[PASS] Install the tuned package, enable the tuned service, and ensure it is currently running.
+[PASS] Save a list of the contents of /root/system-config.tar.gz to /home/student/tar-output.txt.
+
+=================================================
+Run 4
+=================================================
+[PASS] Create group developers with GID 2000.
+[PASS] Save a list of the contents of /root/system-config.tar.gz to /home/student/tar-output.txt.
+[PASS] Install the tuned package, enable the tuned service, and ensure it is currently running.
+
+=================================================
+Run 5
+=================================================
+[PASS] Create a gzip-compressed archive named /root/system-config.tar.gz containing only the following files:
+
+=================================================
+Run 6
+=================================================
+[PASS] Create group developers with GID 2000.
+[PASS] Create user alice with UID 2001 and primary group developers.
+[PASS] Install the tuned package, enable the tuned service, and ensure it is currently running.
+[PASS] Configure user alice to use /bin/bash as the login shell.
+
+=================================================
+Run 7
+=================================================
+[PASS] Create a gzip-compressed archive named /root/system-config.tar.gz containing only the following files:
+[PASS] Set the active tuned profile to balanced.
+
+=================================================
+Run 8
+=================================================
+[PASS] Create a gzip-compressed archive named /root/system-config.tar.gz containing only the following files:
+[PASS] Set the active tuned profile to balanced.
+
+=================================================
+Run 9
+=================================================
+[PASS] Extend logical volume lvapps by 384M. Ensure the filesystem is also expanded to use the additional space.
+[PASS] Set the active tuned profile to balanced.
+[PASS] Create a gzip-compressed archive named /root/system-config.tar.gz containing only the following files:
+
+=================================================
+Run 10
+=================================================
+[PASS] Create group developers with GID 2000.
+[PASS] Configure /apps to mount persistently using the filesystem UUID.
+[PASS] Install the tuned package, enable the tuned service, and ensure it is currently running.
+[PASS] Create a gzip-compressed archive named /root/system-config.tar.gz containing only the following files:
+
+=================================================
+Run 11
+=================================================
+[PASS] Install the tuned package, enable the tuned service, and ensure it is currently running.
+[PASS] Configure user alice to use /bin/bash as the login shell.
+
+=================================================
+Run 12
+=================================================
+[PASS] Configure /apps to mount persistently using the filesystem UUID.
+[PASS] Create group developers with GID 2000.
+[PASS] Save a list of the contents of /root/system-config.tar.gz to /home/student/tar-output.txt.
+[PASS] Install the tuned package, enable the tuned service, and ensure it is currently running.
+[PASS] Configure user alice to use /bin/bash as the login shell.
+[PASS] Set the active tuned profile to balanced.
+
+=================================================
+Run 13
+=================================================
+[PASS] Extend logical volume lvapps by 3G. Ensure the filesystem is also expanded to use the additional space.
+[PASS] Configure /apps to mount persistently using the filesystem UUID.
+
+=================================================
+Run 14
+=================================================
+[PASS] Create user alice with UID 2001 and primary group developers.
+[PASS] Create group developers with GID 2000.
+[PASS] Configure /apps to mount persistently using the filesystem UUID.
+[PASS] Create a gzip-compressed archive named /root/system-config.tar.gz containing only the following files:
+[PASS] Configure user alice to use /bin/bash as the login shell.
+
+=================================================
+Run 15
+=================================================
+[PASS] Create group developers with GID 2000.
+[PASS] Install the tuned package, enable the tuned service, and ensure it is currently running.
+[PASS] Save a list of the contents of /root/system-config.tar.gz to /home/student/tar-output.txt.
+
+=================================================
+Run 16
+=================================================
+[PASS] Create group developers with GID 2000.
+
+=================================================
+Run 17
+=================================================
+[PASS] Create group developers with GID 2000.
+[PASS] Create user alice with UID 2001 and primary group developers.
+[PASS] Configure /apps to mount persistently using the filesystem UUID.
+[PASS] Configure user alice to use /bin/bash as the login shell.
+
+=================================================
+Run 18
+=================================================
+[PASS] Create group developers with GID 2000.
+[PASS] Create a gzip-compressed archive named /root/system-config.tar.gz containing only the following files:
+[PASS] Configure user alice to use /bin/bash as the login shell.
+
+=================================================
+Run 19
+=================================================
+[PASS] Create group developers with GID 2000.
+[PASS] Save a list of the contents of /root/system-config.tar.gz to /home/student/tar-output.txt.
+[PASS] Configure user alice to use /bin/bash as the login shell.
+
+=================================================
+Run 20
+=================================================
+
+=================================================
+Run 21
+=================================================
+[PASS] Configure /apps to mount persistently using the filesystem UUID.
+[PASS] Create group developers with GID 2000.
+[PASS] Create user alice with UID 2001 and primary group developers.
+[PASS] Configure user alice to use /bin/bash as the login shell.
+[PASS] Set the active tuned profile to balanced.
+
+=================================================
+Run 22
+=================================================
+[PASS] Create group developers with GID 2000.
+[PASS] Extend logical volume lvapps by 2G. Ensure the filesystem is also expanded to use the additional space.
+
+=================================================
+Run 23
+=================================================
+[PASS] Create group developers with GID 2000.
+[PASS] Extend logical volume lvapps by 128M. Ensure the filesystem is also expanded to use the additional space.
+[PASS] Create a gzip-compressed archive named /root/system-config.tar.gz containing only the following files:
+[PASS] Save a list of the contents of /root/system-config.tar.gz to /home/student/tar-output.txt.
+
+=================================================
+Run 24
+=================================================
+[PASS] Extend logical volume lvapps by 128M. Ensure the filesystem is also expanded to use the additional space.
+[PASS] Configure /apps to mount persistently using the filesystem UUID.
+[PASS] Configure user alice to use /bin/bash as the login shell.
+
+=================================================
+Run 25
+=================================================
+[PASS] Create group developers with GID 2000.
+
+=================================================
+Run 26
+=================================================
+[PASS] Extend logical volume lvapps by 2G. Ensure the filesystem is also expanded to use the additional space.
+
+=================================================
+Run 27
+=================================================
+[PASS] Create group developers with GID 2000.
+[PASS] Install the tuned package, enable the tuned service, and ensure it is currently running.
+[PASS] Create a gzip-compressed archive named /root/system-config.tar.gz containing only the following files:
+
+=================================================
+Run 28
+=================================================
+[PASS] Create user alice with UID 2001 and primary group developers.
+[PASS] Configure user alice to use /bin/bash as the login shell.
+[PASS] Create a gzip-compressed archive named /root/system-config.tar.gz containing only the following files:
+
+=================================================
+Run 29
+=================================================
+[PASS] Create group developers with GID 2000.
+[PASS] Create a gzip-compressed archive named /root/system-config.tar.gz containing only the following files:
+[PASS] Set the active tuned profile to balanced.
+
+=================================================
+Run 30
+=================================================
+[PASS] Install the tuned package, enable the tuned service, and ensure it is currently running.
+[PASS] Configure user alice to use /bin/bash as the login shell.
+[PASS] Set the active tuned profile to balanced.
+
+=================================================
+Run 31
+=================================================
+[PASS] Create a gzip-compressed archive named /root/system-config.tar.gz containing only the following files:
+[PASS] Install the tuned package, enable the tuned service, and ensure it is currently running.
+
+=================================================
+Run 32
+=================================================
+[PASS] Configure /apps to mount persistently using the filesystem UUID.
+[PASS] Create user alice with UID 2001 and primary group developers.
+[PASS] Set the active tuned profile to balanced.
+[PASS] Install the tuned package, enable the tuned service, and ensure it is currently running.
+
+=================================================
+Run 33
+=================================================
+[PASS] Extend logical volume lvapps by 256M. Ensure the filesystem is also expanded to use the additional space.
+[PASS] Install the tuned package, enable the tuned service, and ensure it is currently running.
+[PASS] Save a list of the contents of /root/system-config.tar.gz to /home/student/tar-output.txt.
+
+=================================================
+Run 34
+=================================================
+[PASS] Configure /apps to mount persistently using the filesystem UUID.
+
+=================================================
+Run 35
+=================================================
+[PASS] Install the tuned package, enable the tuned service, and ensure it is currently running.
+
+=================================================
+Run 36
+=================================================
+[PASS] Create a gzip-compressed archive named /root/system-config.tar.gz containing only the following files:
+
+=================================================
+Run 37
+=================================================
+[PASS] Create user alice with UID 2001 and primary group developers.
+[PASS] Set the active tuned profile to balanced.
+
+=================================================
+Run 38
+=================================================
+[PASS] Create group developers with GID 2000.
+[PASS] Save a list of the contents of /root/system-config.tar.gz to /home/student/tar-output.txt.
+
+=================================================
+Run 39
+=================================================
+
+=================================================
+Run 40
+=================================================
+[PASS] Extend logical volume lvapps by 3G. Ensure the filesystem is also expanded to use the additional space.
+
+=================================================
+Run 41
+=================================================
+[PASS] Create a gzip-compressed archive named /root/system-config.tar.gz containing only the following files:
+
+=================================================
+Run 42
+=================================================
+
+=================================================
+Run 43
+=================================================
+[PASS] Create group developers with GID 2000.
+[PASS] Create user alice with UID 2001 and primary group developers.
+[PASS] Configure user alice to use /bin/bash as the login shell.
+
+=================================================
+Run 44
+=================================================
+[PASS] Create user alice with UID 2001 and primary group developers.
+[PASS] Create group developers with GID 2000.
+[PASS] Create a gzip-compressed archive named /root/system-config.tar.gz containing only the following files:
+[PASS] Install the tuned package, enable the tuned service, and ensure it is currently running.
+
+=================================================
+Run 45
+=================================================
+[PASS] Configure /apps to mount persistently using the filesystem UUID.
+[PASS] Create user alice with UID 2001 and primary group developers.
+[PASS] Save a list of the contents of /root/system-config.tar.gz to /home/student/tar-output.txt.
+[PASS] Configure user alice to use /bin/bash as the login shell.
+[PASS] Install the tuned package, enable the tuned service, and ensure it is currently running.
+[PASS] Create a gzip-compressed archive named /root/system-config.tar.gz containing only the following files:
+
+=================================================
+Run 46
+=================================================
+[PASS] Create group developers with GID 2000.
+[PASS] Install the tuned package, enable the tuned service, and ensure it is currently running.
+
+=================================================
+Run 47
+=================================================
+[PASS] Create user alice with UID 2001 and primary group developers.
+[PASS] Configure user alice to use /bin/bash as the login shell.
+
+=================================================
+Run 48
+=================================================
+[PASS] Install the tuned package, enable the tuned service, and ensure it is currently running.
+
+=================================================
+Run 49
+=================================================
+[PASS] Create group developers with GID 2000.
+[PASS] Create a gzip-compressed archive named /root/system-config.tar.gz containing only the following files:
+[PASS] Install the tuned package, enable the tuned service, and ensure it is currently running.
+
+=================================================
+Run 50
+=================================================
+[PASS] Create user alice with UID 2001 and primary group developers.
+[PASS] Set the active tuned profile to balanced.
+[PASS] Configure user alice to use /bin/bash as the login shell.
+
+=================================================
+Run 51
+=================================================
+[PASS] Create user alice with UID 2001 and primary group developers.
+[PASS] Configure user alice to use /bin/bash as the login shell.
+[PASS] Save a list of the contents of /root/system-config.tar.gz to /home/student/tar-output.txt.
+
+=================================================
+Run 52
+=================================================
+[PASS] Create user alice with UID 2001 and primary group developers.
+[PASS] Extend logical volume lvapps by 3G. Ensure the filesystem is also expanded to use the additional space.
+[PASS] Configure /apps to mount persistently using the filesystem UUID.
+[PASS] Create a gzip-compressed archive named /root/system-config.tar.gz containing only the following files:
+[PASS] Configure user alice to use /bin/bash as the login shell.
+[PASS] Save a list of the contents of /root/system-config.tar.gz to /home/student/tar-output.txt.
+
+=================================================
+Run 53
+=================================================
+[PASS] Extend logical volume lvapps by 3G. Ensure the filesystem is also expanded to use the additional space.
+[PASS] Set the active tuned profile to balanced.
+
+=================================================
+Run 54
+=================================================
+[PASS] Extend logical volume lvapps by 128M. Ensure the filesystem is also expanded to use the additional space.
+[PASS] Set the active tuned profile to balanced.
+[PASS] Save a list of the contents of /root/system-config.tar.gz to /home/student/tar-output.txt.
+
+=================================================
+Run 55
+=================================================
+[PASS] Create user alice with UID 2001 and primary group developers.
+[PASS] Create a gzip-compressed archive named /root/system-config.tar.gz containing only the following files:
+[PASS] Set the active tuned profile to balanced.
+
+=================================================
+Run 56
+=================================================
+[PASS] Extend logical volume lvapps by 1G. Ensure the filesystem is also expanded to use the additional space.
+[PASS] Save a list of the contents of /root/system-config.tar.gz to /home/student/tar-output.txt.
+[PASS] Set the active tuned profile to balanced.
+
+=================================================
+Run 57
+=================================================
+[PASS] Create group developers with GID 2000.
+[PASS] Set the active tuned profile to balanced.
+
+=================================================
+Run 58
+=================================================
+[PASS] Extend logical volume lvapps by 256M. Ensure the filesystem is also expanded to use the additional space.
+[PASS] Create a gzip-compressed archive named /root/system-config.tar.gz containing only the following files:
+[PASS] Set the active tuned profile to balanced.
+
+=================================================
+Run 59
+=================================================
+[PASS] Configure /apps to mount persistently using the filesystem UUID.
+[PASS] Extend logical volume lvapps by 384M. Ensure the filesystem is also expanded to use the additional space.
+[PASS] Create group developers with GID 2000.
+[PASS] Create a gzip-compressed archive named /root/system-config.tar.gz containing only the following files:
+[PASS] Set the active tuned profile to balanced.
+
+=================================================
+Run 60
+=================================================
+[PASS] Configure /apps to mount persistently using the filesystem UUID.
+[PASS] Save a list of the contents of /root/system-config.tar.gz to /home/student/tar-output.txt.
+[PASS] Set the active tuned profile to balanced.
+
+=================================================
+Run 61
+=================================================
+[PASS] Create user alice with UID 2001 and primary group developers.
+[PASS] Configure /apps to mount persistently using the filesystem UUID.
+
+=================================================
+Run 62
+=================================================
+[PASS] Configure /apps to mount persistently using the filesystem UUID.
+[PASS] Create group developers with GID 2000.
+[PASS] Install the tuned package, enable the tuned service, and ensure it is currently running.
+
+=================================================
+Run 63
+=================================================
+[PASS] Configure /apps to mount persistently using the filesystem UUID.
+[PASS] Configure user alice to use /bin/bash as the login shell.
+
+=================================================
+Run 64
+=================================================
+[PASS] Extend logical volume lvapps by 384M. Ensure the filesystem is also expanded to use the additional space.
+[PASS] Configure /apps to mount persistently using the filesystem UUID.
+[PASS] Create user alice with UID 2001 and primary group developers.
+
+=================================================
+Run 65
+=================================================
+[PASS] Extend logical volume lvapps by 256M. Ensure the filesystem is also expanded to use the additional space.
+[PASS] Create group developers with GID 2000.
+[PASS] Create user alice with UID 2001 and primary group developers.
+[PASS] Install the tuned package, enable the tuned service, and ensure it is currently running.
+[PASS] Configure user alice to use /bin/bash as the login shell.
+
+=================================================
+Run 66
+=================================================
+[PASS] Configure /apps to mount persistently using the filesystem UUID.
+[PASS] Create user alice with UID 2001 and primary group developers.
+[PASS] Extend logical volume lvapps by 384M. Ensure the filesystem is also expanded to use the additional space.
+[PASS] Set the active tuned profile to balanced.
+
+=================================================
+Run 67
+=================================================
+[PASS] Create user alice with UID 2001 and primary group developers.
+[PASS] Create group developers with GID 2000.
+[PASS] Install the tuned package, enable the tuned service, and ensure it is currently running.
+
+=================================================
+Run 68
+=================================================
+[PASS] Extend logical volume lvapps by 128M. Ensure the filesystem is also expanded to use the additional space.
+[PASS] Set the active tuned profile to balanced.
+
+=================================================
+Run 69
+=================================================
+
+=================================================
+Run 70
+=================================================
+[PASS] Configure /apps to mount persistently using the filesystem UUID.
+[PASS] Create group developers with GID 2000.
+[PASS] Install the tuned package, enable the tuned service, and ensure it is currently running.
+[PASS] Set the active tuned profile to balanced.
+
+=================================================
+Run 71
+=================================================
+[PASS] Configure /apps to mount persistently using the filesystem UUID.
+[PASS] Set the active tuned profile to balanced.
+[PASS] Configure user alice to use /bin/bash as the login shell.
+
+=================================================
+Run 72
+=================================================
+[PASS] Create group developers with GID 2000.
+[PASS] Create user alice with UID 2001 and primary group developers.
+[PASS] Configure user alice to use /bin/bash as the login shell.
+
+=================================================
+Run 73
+=================================================
+[PASS] Extend logical volume lvapps by 384M. Ensure the filesystem is also expanded to use the additional space.
+[PASS] Save a list of the contents of /root/system-config.tar.gz to /home/student/tar-output.txt.
+
+=================================================
+Run 74
+=================================================
+[PASS] Save a list of the contents of /root/system-config.tar.gz to /home/student/tar-output.txt.
+[PASS] Install the tuned package, enable the tuned service, and ensure it is currently running.
+[PASS] Create a gzip-compressed archive named /root/system-config.tar.gz containing only the following files:
+
+=================================================
+Run 75
+=================================================
+[PASS] Create a gzip-compressed archive named /root/system-config.tar.gz containing only the following files:
+[PASS] Set the active tuned profile to balanced.
+
+=================================================
+Run 76
+=================================================
+[PASS] Configure /apps to mount persistently using the filesystem UUID.
+[PASS] Create group developers with GID 2000.
+
+=================================================
+Run 77
+=================================================
+[PASS] Create user alice with UID 2001 and primary group developers.
+[PASS] Set the active tuned profile to balanced.
+
+=================================================
+Run 78
+=================================================
+[PASS] Create group developers with GID 2000.
+[PASS] Install the tuned package, enable the tuned service, and ensure it is currently running.
+
+=================================================
+Run 79
+=================================================
+[PASS] Extend logical volume lvapps by 3G. Ensure the filesystem is also expanded to use the additional space.
+[PASS] Install the tuned package, enable the tuned service, and ensure it is currently running.
+[PASS] Save a list of the contents of /root/system-config.tar.gz to /home/student/tar-output.txt.
+
+=================================================
+Run 80
+=================================================
+
+=================================================
+Run 81
+=================================================
+[PASS] Create group developers with GID 2000.
+[PASS] Set the active tuned profile to balanced.
+[PASS] Install the tuned package, enable the tuned service, and ensure it is currently running.
+
+=================================================
+Run 82
+=================================================
+[PASS] Create group developers with GID 2000.
+[PASS] Set the active tuned profile to balanced.
+[PASS] Create a gzip-compressed archive named /root/system-config.tar.gz containing only the following files:
+[PASS] Save a list of the contents of /root/system-config.tar.gz to /home/student/tar-output.txt.
+
+=================================================
+Run 83
+=================================================
+[PASS] Create user alice with UID 2001 and primary group developers.
+[PASS] Save a list of the contents of /root/system-config.tar.gz to /home/student/tar-output.txt.
+
+=================================================
+Run 84
+=================================================
+[PASS] Create user alice with UID 2001 and primary group developers.
+[PASS] Configure /apps to mount persistently using the filesystem UUID.
+[PASS] Save a list of the contents of /root/system-config.tar.gz to /home/student/tar-output.txt.
+[PASS] Configure user alice to use /bin/bash as the login shell.
+[PASS] Set the active tuned profile to balanced.
+
+=================================================
+Run 85
+=================================================
+[PASS] Configure /apps to mount persistently using the filesystem UUID.
+
+=================================================
+Run 86
+=================================================
+[PASS] Create user alice with UID 2001 and primary group developers.
+[PASS] Install the tuned package, enable the tuned service, and ensure it is currently running.
+[PASS] Create a gzip-compressed archive named /root/system-config.tar.gz containing only the following files:
+[PASS] Configure user alice to use /bin/bash as the login shell.
+[PASS] Save a list of the contents of /root/system-config.tar.gz to /home/student/tar-output.txt.
+[PASS] Set the active tuned profile to balanced.
+
+=================================================
+Run 87
+=================================================
+[PASS] Save a list of the contents of /root/system-config.tar.gz to /home/student/tar-output.txt.
+[PASS] Install the tuned package, enable the tuned service, and ensure it is currently running.
+
+=================================================
+Run 88
+=================================================
+[PASS] Create group developers with GID 2000.
+[PASS] Install the tuned package, enable the tuned service, and ensure it is currently running.
+
+=================================================
+Run 89
+=================================================
+[PASS] Extend logical volume lvapps by 128M. Ensure the filesystem is also expanded to use the additional space.
+[PASS] Configure user alice to use /bin/bash as the login shell.
+
+=================================================
+Run 90
+=================================================
+[PASS] Create group developers with GID 2000.
+[PASS] Create a gzip-compressed archive named /root/system-config.tar.gz containing only the following files:
+
+=================================================
+Run 91
+=================================================
+[PASS] Set the active tuned profile to balanced.
+
+=================================================
+Run 92
+=================================================
+[PASS] Create group developers with GID 2000.
+[PASS] Set the active tuned profile to balanced.
+
+=================================================
+Run 93
+=================================================
+[PASS] Configure /apps to mount persistently using the filesystem UUID.
+[PASS] Create user alice with UID 2001 and primary group developers.
+[PASS] Create a gzip-compressed archive named /root/system-config.tar.gz containing only the following files:
+
+=================================================
+Run 94
+=================================================
+[PASS] Configure /apps to mount persistently using the filesystem UUID.
+[PASS] Install the tuned package, enable the tuned service, and ensure it is currently running.
+[PASS] Save a list of the contents of /root/system-config.tar.gz to /home/student/tar-output.txt.
+
+=================================================
+Run 95
+=================================================
+[PASS] Configure /apps to mount persistently using the filesystem UUID.
+[PASS] Set the active tuned profile to balanced.
+
+=================================================
+Run 96
+=================================================
+[PASS] Configure user alice to use /bin/bash as the login shell.
+[PASS] Set the active tuned profile to balanced.
+
+=================================================
+Run 97
+=================================================
+[PASS] Configure /apps to mount persistently using the filesystem UUID.
+[PASS] Create group developers with GID 2000.
+[PASS] Create user alice with UID 2001 and primary group developers.
+[PASS] Create a gzip-compressed archive named /root/system-config.tar.gz containing only the following files:
+[PASS] Configure user alice to use /bin/bash as the login shell.
+
+=================================================
+Run 98
+=================================================
+[PASS] Create user alice with UID 2001 and primary group developers.
+[PASS] Extend logical volume lvapps by 1G. Ensure the filesystem is also expanded to use the additional space.
+[PASS] Create a gzip-compressed archive named /root/system-config.tar.gz containing only the following files:
+
+=================================================
+Run 99
+=================================================
+[PASS] Extend logical volume lvapps by 384M. Ensure the filesystem is also expanded to use the additional space.
+[PASS] Create user alice with UID 2001 and primary group developers.
+[PASS] Save a list of the contents of /root/system-config.tar.gz to /home/student/tar-output.txt.
+[PASS] Configure user alice to use /bin/bash as the login shell.
+[PASS] Set the active tuned profile to balanced.
+
+=================================================
+Run 100
+=================================================
+[PASS] Set the active tuned profile to balanced.
+[PASS] Configure user alice to use /bin/bash as the login shell.

@@ -261,14 +261,9 @@ prepare_resources() {
             exit 1
         fi
 
-                echo "  Preparing $GROUP..."
-        echo "    BEGIN ${FUNCTION}"
+        echo "  Preparing $GROUP..."
 
         "$FUNCTION"
-
-        RC=$?
-
-        echo "    END ${FUNCTION} (rc=$RC)"
 
     done <<< "$RESOURCE_GROUPS"
 }
