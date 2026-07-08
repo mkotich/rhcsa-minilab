@@ -1,6 +1,7 @@
 #!/bin/bash
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+NETWORK_RESTART_REQUIRED=0
 source "${SCRIPT_DIR}/variables.conf"
 
 #
@@ -93,13 +94,35 @@ configure_server_network() {
 configure_client_network() {
     echo "Configuring client network..."
 
+    CURRENT_IP=$(
+        nmcli -g IP4.ADDRESS device show "$CLIENT_IFACE" |
+        head -1 |
+        cut -d/ -f1
+    )
+
     nmcli con modify "$CLIENT_IFACE" \
         ipv4.addresses "${CLIENT_IP}/${PREFIX}" \
         ipv4.gateway "${GATEWAY}" \
         ipv4.dns "${DNS}" \
         ipv4.method manual
 
-    nmcli con up "$CLIENT_IFACE"
+    if [ "$CURRENT_IP" != "$CLIENT_IP" ]; then
+        NETWORK_RESTART_REQUIRED=1
+
+        echo
+        echo "NOTICE"
+        echo "------"
+        echo "Network configuration has been updated."
+        echo
+        echo "To avoid disconnecting the current SSH session,"
+        echo "the new configuration has NOT been activated."
+        echo
+        echo "Please reboot the system to activate the new IP"
+        echo "address before continuing."
+        echo
+    else
+        nmcli con up "$CLIENT_IFACE" > /dev/null
+    fi
 }
 
 configure_hosts_file() {

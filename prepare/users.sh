@@ -25,7 +25,6 @@ prepare_users() {
     #
     # Normal exam mode.
     #
-    echo "      Scanning user objectives..."
 
     NEED_CONFIGURATION=0
     NEED_REPAIR=0
@@ -33,7 +32,6 @@ prepare_users() {
 
     while IFS= read -r ID
     do
-        echo "        Objective: $ID"
 
         case "$ID" in
 
@@ -79,14 +77,11 @@ prepare_users() {
     )
 
     if [ "$NEED_CONFIGURATION" -eq 1 ]; then
-        echo "      Running prepare_users_configuration ($CONFIG_OBJECTIVE)"
         prepare_users_configuration "$CONFIG_OBJECTIVE"
     fi
 
     if [ "$NEED_REPAIR" -eq 1 ]; then
-        echo "      Running prepare_users_repair"
         prepare_users_repair
     fi
 
-    echo "      prepare_users complete"
 }
